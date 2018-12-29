@@ -1,6 +1,6 @@
 <template>
     <div  class="home-view">
-        Hi! you view this page on mobile!
+        {{ $t("hi") }}! ! you view this page on mobile!
     </div>
 </template>
 
