@@ -1,0 +1,17 @@
+version: '3'
+services:
+  node:
+    build: .
+    image: hi.com
+    working_dir: /opt
+    command: ["npm", "run", "dev"]
+    volumes:
+      - ./src:/opt/src
+    ports:
+      - 3000:3000
+    container_name: dev.hi.com
+
+networks:
+  default:
+    external:
+      name: docker_default
