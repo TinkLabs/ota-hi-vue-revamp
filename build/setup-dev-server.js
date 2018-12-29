@@ -4,7 +4,6 @@ const MFS = require('memory-fs');
 const webpack = require('webpack');
 const clientConfig = require('./webpack.client.config');
 const serverConfig = require('./webpack.server.config');
-const PassThrough = require('stream').PassThrough;
 
 const readFile = (fs, file) => {
   try {
