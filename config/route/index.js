@@ -10,6 +10,7 @@ export default (app) => {
     opt.title = "app";
     opt.desc = "desc";
     opt.keyword = "keyword";
+    opt.isMobile = res.locals.isMobile;
     await req.app.locals.render(req, res, opt);
   });
   /**

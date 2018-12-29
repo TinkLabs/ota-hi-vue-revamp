@@ -1,6 +1,6 @@
 <template>
     <div  class="home-view">
-        Hi!
+        Hi! you view this page on desktop!
     </div>
 </template>
 

@@ -9,7 +9,7 @@ Vue.use(Vuex);
 const state = {
   example: null
 };
-export function createStore (context) {
+export function createDesktopStore (context) {
   return new Vuex.Store({
     state,
     actions,

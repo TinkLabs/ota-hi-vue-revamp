@@ -5,14 +5,9 @@
 </template>
 
 <script>
-  import Bus from '../component/bus'
   export default {
     name: "index",
     mounted() {
-      const that = this;
-      this.$refs.total_view.addEventListener('scroll', () => {
-        Bus.$emit('scroll', that.$refs.total_view.scrollTop);
-      }, false)
     }
   }
 </script>

@@ -5,7 +5,7 @@ Vue.use(Router);
 
 const Home = () => import('../views/home.vue');
 
-export function createRouter () {
+export function createMobileRouter () {
   return new Router({
     mode: 'history',
     fallback: false,
