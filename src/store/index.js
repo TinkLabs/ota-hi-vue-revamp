@@ -9,7 +9,8 @@ Vue.use(Vuex);
 const state = {
   example: null
 };
-export function createDesktopStore (context) {
+export function createStore (context) {
+  state.isMobile = context.isMobile;
   return new Vuex.Store({
     state,
     actions,

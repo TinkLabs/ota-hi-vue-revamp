@@ -1,1 +1,0 @@
-export const getAdminInfo = state => state.example;
