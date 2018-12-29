@@ -87,5 +87,14 @@
     "webpack-hot-middleware": "^2.18.2"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "nodemonConfig": {
+    "ignore": [
+      "pubilc/*",
+      "src/*",
+      "locales/*",
+      "package.json"
+    ],
+    "signal": "SIGINT"
+  }
 }

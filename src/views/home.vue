@@ -1,6 +1,6 @@
 <template>
     <div  class="home-view">
-        asdasd
+        Hi!
     </div>
 </template>
 
