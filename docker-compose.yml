@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   node:
     build: .
@@ -8,7 +8,7 @@ services:
     volumes:
       - ./src:/opt/src
     ports:
-      - 3000:3000
+      - 4000:3000
     container_name: dev.hi.com
 
 networks:
