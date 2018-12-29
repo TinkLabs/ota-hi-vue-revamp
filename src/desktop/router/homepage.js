@@ -1,4 +1,6 @@
 
 const Home = () => import('../views/home.vue');
 
-export default { path: '', component: Home }
+export default [
+  { path: '', component: Home },
+  ]
