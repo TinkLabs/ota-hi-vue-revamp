@@ -2,6 +2,7 @@ FROM node:lts
 WORKDIR /opt
 COPY ./package* ./
 COPY ./*.js ./
+COPY ./.babelrc ./.babelrc
 RUN npm install --no-optional && npm cache clean --force
 
 COPY ./build ./build
