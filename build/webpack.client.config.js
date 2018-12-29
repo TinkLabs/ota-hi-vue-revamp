@@ -76,11 +76,11 @@ if (process.env.NODE_ENV === 'production') {
     new WebpackOnBuildPlugin(function(stats) {
       const newlyCreatedAssets = stats.compilation.assets;
       const unlinked = [];
-      fs.readdir(path.resolve(__dirname, '../dist'), (err, files) => {
+      fs.readdir(path.resolve(__dirname, '../public/dist'), (err, files) => {
         files.forEach(file => {
           if (!newlyCreatedAssets[file]) {
             console.log(file, newlyCreatedAssets[file]);
-            fs.unlink(path.resolve(__dirname, '../dist/' + file), (err, data)=>{
+            fs.unlink(path.resolve(__dirname, '../public/dist/' + file), (err, data)=>{
               console.log(err, data);
             });
             unlinked.push(file);

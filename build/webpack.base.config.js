@@ -12,14 +12,14 @@ module.exports = {
     ? false
     : '#cheap-module-source-map',
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, '../public/dist'),
     publicPath: '/dist/',
     filename: '[name].[chunkhash].js'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json', '.css', '.less'],
     alias: {
-      'public': path.resolve(__dirname, '../dist')
+      'public': path.resolve(__dirname, '../public/dist')
     }
   },
   module: {

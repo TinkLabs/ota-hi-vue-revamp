@@ -30,6 +30,7 @@ module.exports = function setupDevServer (app, templatePath, cb) {
   };
   // read template from disk and watch
   template = fs.readFileSync(templatePath, 'utf-8');
+  console.log('isProd', isProd);
   if(isProd){
     clientManifest = JSON.parse(readFile(
       fs,

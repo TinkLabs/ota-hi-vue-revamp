@@ -82,3 +82,4 @@ redis_data
 .html/
 out/
 locales/
+public/
