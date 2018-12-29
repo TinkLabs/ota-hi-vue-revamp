@@ -10,6 +10,7 @@ const state = {
   example: null
 };
 export function createStore (context) {
+  if(!context){context = window.__INITIAL_STATE__}
   state.isMobile = context.isMobile;
   return new Vuex.Store({
     state,
