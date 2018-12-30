@@ -5,13 +5,17 @@ export default (app) => {
    *  vue - ssr 入口
    */
   app.get(/^\/(?!(api)).*$/, async (req, res, next) => {
-    await req.app.locals.readyPromise;
-    let opt = {};
-    opt.title = "app";
-    opt.desc = "desc";
-    opt.keyword = "keyword";
-    opt.isMobile = res.locals.isMobile;
-    await req.app.locals.render(req, res, opt);
+    try {
+      await req.app.locals.readyPromise;
+      let opt = {};
+      opt.title = "app";
+      opt.desc = "desc";
+      opt.keyword = "keyword";
+      opt.isMobile = res.locals.isMobile;
+      await req.app.locals.render(req, res, opt);
+    } catch (e) {
+      next(e);
+    }
   });
   /**
    * 循环遍历route目录下的JavaScript文件，并按文件名规则加入路由。

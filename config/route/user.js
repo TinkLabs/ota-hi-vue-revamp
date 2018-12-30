@@ -4,8 +4,12 @@ import {Router} from 'express';
 const router = Router();
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  res.sendCode('0000');
+router.get('/', async (req, res, next) => {
+  try {
+    res.sendCode('0000');
+  } catch (e) {
+    next(e);
+  }
 });
 
 
