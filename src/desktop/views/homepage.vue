@@ -1,6 +1,5 @@
 <template>
     <div  class="home-view">
-        {{ $t("hi") }}! you view this page on desktop?!
         <Header></Header>
     </div>
 </template>
@@ -31,7 +30,13 @@
       }
     }
   }
+
+
 </script>
 
 <style lang='less' scoped>
+  html,body{
+    width:100%;
+  }
+
 </style>
