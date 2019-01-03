@@ -8,7 +8,7 @@
       </ul>
       <header>
         <div class="logo">
-          <img src="" alt="hi.com logo">
+          <img src="../../images/homepage/hi_DotComLogo@3x.png" alt="hi.com logo">
           <span>Hotel</span>
           <span>Experience</span>
           <span>Restaurant</span>
@@ -87,7 +87,7 @@
 
 <script>
   export default {
-    name: "header",
+    // name: "header",
     data(){
       return {
         popular:['Hong Kong','London','Singapore','Tokyo','Thailland','Korea','Rome','Barcelona','London','Singapore'],
@@ -193,9 +193,9 @@
     font-weight: @font-weight;
     color:@color;
   }
-  @media screen and(max-width:980px) {
+  @media screen and(max-width:1280px) {
     body {
-      width: 980px;
+      width: 1280px;
     }
 
   }
@@ -227,6 +227,14 @@
 
       }
       .logo{
+        // height:60px;
+        // line-height:60px;
+        display:flex;
+        justify-content: flex-start;
+        align-items: center;
+        img{
+          width:100px;
+        }
         span{
           font-weight:bold;
           font-size:16px;
@@ -249,7 +257,7 @@
       box-sizing: border-box;
       background-color:#f5f5f5;
       box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.11);
-      padding-bottom:80px;
+      padding-bottom:60px;
       p{
         font-family: Montserrat;
         font-size: 40px;
@@ -372,6 +380,7 @@
           li{
             margin-right:40px;
             padding:12px 0;
+            cursor: pointer;
           }
         }
       }
