@@ -1,5 +1,55 @@
 @import "common.less";
 
+
+html {
+  font-size: 16px;
+}
+
+body {
+  color: #383838;
+  font-size: 14px;
+  font-family: SF PRO Text, Segoe UI, PingFang SC, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: SF PRO Display, Segoe UI, Tahoma, PingFang SC, sans-serif;
+}
+
+.font (@font-size, @font-weight: normal, @color: #333333,  @font-family: Segoe UI) {
+  font-family: @font-family;
+  font-size: @font-size;
+  font-weight: @font-weight;
+  color:@color;
+}
+@media screen and(max-width:1280px) {
+  body {
+    width: 1280px;
+  }
+}
+.h-container{
+  padding:0 12%;
+}
+
+p {
+  font-family: SF PRO Text, Segoe UI, Tahoma, PingFang SC, sans-serif;
+}
+
+/*list*/
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
 .font-success{
   color: @success;
 }
@@ -11,4 +61,44 @@
 }
 .font-info{
   color: @info;
+}
+
+a{
+  text-decoration: none;
+  color:#333;
+}
+
+.hide{
+  display:none;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.br5 {
+  border-radius: 5px;
+}
+
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsis-line(@line: 2) {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: @line;
+  line-clamp: @line;
+  -webkit-box-orient: vertical;
 }

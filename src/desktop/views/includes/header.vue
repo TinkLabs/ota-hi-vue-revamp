@@ -19,9 +19,9 @@
           <a href="#">Create an Account</a>
         </div>
       </header>
-      <div class="search">
-        <p>Say hi to your next destination!</p>
-        <div class="search-bar">
+      <div :class="searchBarFixed == true ? 'isFixed search' :'search'">
+        <p :class="searchBarFixed == true ? 'hide' :''">Say hi to your next destination!</p>
+        <div :class="searchBarFixed == true ? 'search-bar' :'search-bar'">
           <div class="location">
             <div class="title">LOCATION OR HOTEL</div>
             <!-- 自定义输入建议的显示 -->
@@ -62,23 +62,20 @@
             <div class="title">GUESTS</div>
             <div class="guest-num">
               <i class="far fa-user"></i>
-              <span>1 room,</span>
-              <span>2 adults,</span>
+              <span class="room-num">1 </span> room ,
+              <span class="adult-num">2 </span> adults ,
               <br>
-              <span>0 children</span>
+              <span class="children-num">0 </span> children
             </div>
             <!-- <input type="text" placeholder="GUESTS"> -->
           </div>
           <button>Search</button>
         </div>
-        <div class="popular-search">
+        <div :class="searchBarFixed == true ? 'hide popular-search' :'popular-search'">
           <div class="title">POPULAR SEARCHES</div>
           <ul class="popular-city">
             <li v-for="item in popular">{{item}}</li>
           </ul>
-
-
-
         </div>
 
       </div>
@@ -94,10 +91,16 @@
         restaurants: [],
         state3: '',
         value6:[ "2019-01-17T16:00:00.000Z", "2019-01-18T16:00:00.000Z" ],
+        // search bar fixed
+        searchBarFixed:false
       }
     },
     mounted() {
       this.restaurants = this.loadAll();
+      window.addEventListener('scroll', this.handleScroll)
+    },
+    destroyed () {
+      window.removeEventListener('scroll', this.handleScroll)
     },
     methods:{
       // search location or hotel
@@ -169,36 +172,27 @@
       },
       handleIconClick(ev) {
         console.log(ev);
-      }
+      },
+      // searchbar fixed
+      handleScroll () {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        var offsetTop = document.querySelector('.search-bar').offsetTop
+        if (scrollTop > offsetTop) {
+          this.searchBarFixed = true
+        } else {
+          this.searchBarFixed = false
+        }
+
+      },
+
 
     }
   }
 </script>
 
 <style lang="less" coped>
-  a{
-    text-decoration: none;
-    color:#333;
-  }
-  ul li{
-    list-style: none;
-  }
-  *{
-    margin:0;
-    padding:0;
-  }
-  .font (@font-size, @font-weight: normal, @color: #01337e,  @font-family: Segoe UI) {
-    font-family: @font-family;
-    font-size: @font-size;
-    font-weight: @font-weight;
-    color:@color;
-  }
-  @media screen and(max-width:1280px) {
-    body {
-      width: 1280px;
-    }
+  @import '../../common/main.less';
 
-  }
   .header{
     width:100%;
     color:#333;
@@ -249,7 +243,13 @@
 
         }
       }
-
+    }
+    .search.isFixed{
+      position:fixed;
+      background-color:#f1f1f1;
+      top:-26px;
+      z-index:999;
+      padding-bottom:16px;
     }
     .search{
       width:100%;
@@ -270,6 +270,7 @@
           opacity:0.5;
         }
       }
+
       .search-bar{
         display: flex;
         justify-content: space-between;
@@ -346,12 +347,18 @@
             font-weight:bolder;
             font-size:18px;
           }
+          .el-date-editor .el-range__close-icon{
+            display:none;
+          }
+          .el-date-editor--daterange.el-input__inner{
+            width:280px;
+          }
         }
 
         // guest number
         .guests{
           .guest-num{
-            min-width:114px;
+            min-width:140px;
             height:36px;
             background-color:#fff;
             border-radius:5px;

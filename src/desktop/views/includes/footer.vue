@@ -5,7 +5,6 @@
           <img src="../../images/homepage/Shape Copy@3x.png" alt="">
           <h1>More than 300,000 hotels</h1>
           <p>in 57,000 destinations in 200 countries</p>
-
         </li>
         <li class="money">
           <img src="../../images/homepage/money@3x.png" alt="">
@@ -80,53 +79,24 @@
 
         </div>
       </div>
-
-
-
     </div>
 </template>
 
 <script>
   export default {
-    // name: "header",
     data(){
       return {
-
       }
     },
     mounted() {
     },
     methods:{
-
-
     }
   }
 </script>
 
 <style lang="less" coped>
-  a{
-    text-decoration: none;
-    color:#333;
-  }
-  ul li{
-    list-style: none;
-  }
-  *{
-    margin:0;
-    padding:0;
-  }
-  .font (@font-size, @font-weight: normal, @color: #01337e,  @font-family: Segoe UI) {
-    font-family: @font-family;
-    font-size: @font-size;
-    font-weight: @font-weight;
-    color:@color;
-  }
-  @media screen and(max-width:1280px) {
-    body {
-      width: 1280px;
-    }
-
-  }
+  @import '../../common/main.less';
 
   .footer{
     .hi-items{
@@ -191,7 +161,4 @@
     }
 
   }
-
-
-
 </style>

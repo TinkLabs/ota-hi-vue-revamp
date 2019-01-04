@@ -10,8 +10,6 @@
               <h2 class="title">Featured</h2>
               <h1>4000 best hotels around the world</h1>
               <div class="view-hotel">View hotels now</div>
-
-
             </div>
             <div class="eat-like-locals">
               <h2 class="title">Eat Like Locals</h2>
@@ -145,18 +143,10 @@
             </ul>
 
           </div>
-
-          <!-- subscribe -->
-          <div class="subscribe">
-            <p>Subscribe to our newsletter</p>
-            <h1>Best deals directly to your inbox</h1>
-            <div class="subscribe-input">
-              <input type="text" placeholder="Enter your email address">
-              <button>Join Today</button>
-            </div>
-          </div>
         </div>
 
+        <!-- subscribe -->
+        <Subscribe></Subscribe>
         <!-- footer -->
         <Footer></Footer>
     </div>
@@ -166,6 +156,7 @@
   import Bus from '../component/bus'
   import Header from './includes/header.vue'
   import Footer from './includes/footer.vue'
+  import Subscribe from './includes/subscribe.vue'
   import locationImg from '../images/homepage/Location Image2@3x.png';
   import locationImg1 from '../images/homepage/Location Image4@3x.png';
   import locationImg2 from '../images/homepage/Location Image3@3x.png';
@@ -202,7 +193,8 @@
     },
     components:{
       Header,
-      Footer
+      Footer,
+      Subscribe
     },
     mounted() {
       const that = this;
@@ -223,23 +215,9 @@
 </script>
 
 <style lang='less' scoped>
-  html,body{
-    width:100%;
-  }
-  .font (@font-size, @font-weight: normal, @color: #01337e,  @font-family: Segoe UI) {
-    font-family: @font-family;
-    font-size: @font-size;
-    font-weight: @font-weight;
-    color:@color;
-  }
-  @media screen and(max-width:1280px) {
-    body {
-      width: 1280px;
-    }
+  @import '../common/main.less';
 
-  }
   .h-container{
-    padding:0 12%;
     h1.title{
       .font(26px,600,#002b55,Montserrat);
       padding-bottom:20px;
@@ -295,7 +273,7 @@
         }
         .view-hotel{
           .font(16px,bold,#fff,MerriweatherSans);
-          margin-top:150px;
+          margin-top:30%;
           width:188px;
           text-align: center;
           padding:15px 20px;
@@ -414,41 +392,7 @@
       }
     }
 
-    // subscribe
-    .subscribe{
-      width:100%;
-      padding:44px 80px;
-      box-sizing: border-box;
-      background-color: #d8d8d8;
-      margin-bottom:60px;
-      p{
-        .font(21px,300,#002b55,Roboto);
-      }
-      h1{
-        .font(21px,bold,#002b55,Roboto);
-        margin:10px 0;
-      }
-      input{
-        width:40%;
-        height:50px;
-        border-radius:4px 0 0 4px;
-        outline: none;
-        padding:0 18px;
-        font-size:14px;
-        appearance: none;
-        border:none;
 
-      }
-      button{
-        width:150px;
-        height:50px;
-        border-radius:0 4px  4px 0;
-        background-color: #cba052;
-        border:none;
-        color:#fff;
-        font-size: 14px;
-      }
-    }
 
   }
 
