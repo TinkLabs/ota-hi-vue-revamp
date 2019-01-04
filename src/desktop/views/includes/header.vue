@@ -19,9 +19,9 @@
           <a href="#">Create an Account</a>
         </div>
       </header>
-      <div :class="searchBarFixed == true ? 'isFixed search' :'search'">
-        <p :class="searchBarFixed == true ? 'hide' :''">Say hi to your next destination!</p>
-        <div :class="searchBarFixed == true ? 'search-bar' :'search-bar'">
+      <div :class="['search',searchBarFixed == true ? 'isFixed' :'',message == 'isHomepage'  ? '' :'notHomepage']">
+        <p :class="[searchBarFixed == true ? 'hide' :'']">Say hi to your next destination!</p>
+        <div :class="['search-bar']">
           <div class="location">
             <div class="title">LOCATION OR HOTEL</div>
             <!-- 自定义输入建议的显示 -->
@@ -62,8 +62,8 @@
             <div class="title">GUESTS</div>
             <div class="guest-num">
               <i class="far fa-user"></i>
-              <span class="room-num">1 </span> room ,
-              <span class="adult-num">2 </span> adults ,
+              <span class="room-num">1 </span> room,
+              <span class="adult-num">2 </span> adults,
               <br>
               <span class="children-num">0 </span> children
             </div>
@@ -71,7 +71,7 @@
           </div>
           <button>Search</button>
         </div>
-        <div :class="searchBarFixed == true ? 'hide popular-search' :'popular-search'">
+        <div :class="['popular-search',searchBarFixed == true ? 'hide' :'']">
           <div class="title">POPULAR SEARCHES</div>
           <ul class="popular-city">
             <li v-for="item in popular">{{item}}</li>
@@ -85,6 +85,7 @@
 <script>
   export default {
     // name: "header",
+    props:['message'],
     data(){
       return {
         popular:['Hong Kong','London','Singapore','Tokyo','Thailland','Korea','Rome','Barcelona','London','Singapore'],
@@ -92,7 +93,8 @@
         state3: '',
         value6:[ "2019-01-17T16:00:00.000Z", "2019-01-18T16:00:00.000Z" ],
         // search bar fixed
-        searchBarFixed:false
+        searchBarFixed:false,
+
       }
     },
     mounted() {
@@ -213,7 +215,7 @@
       }
     }
     header{
-      padding:20px 12%;
+      padding:10px 12%;
       display: flex;
       justify-content: space-between;
       span{
@@ -236,11 +238,11 @@
         }
       }
       .account{
+        line-height:40px;
         span,a{
           font-family:Rubik;
-          font-weight:bold;
+          font-weight:bolder;
           font-size:12px;
-
         }
       }
     }
@@ -250,6 +252,7 @@
       top:-26px;
       z-index:999;
       padding-bottom:16px;
+      transition:all .4s;
     }
     .search{
       width:100%;
@@ -282,6 +285,7 @@
           margin-right:15px;
         }
         .location{
+          min-width:260px;
           .my-autocomplete {
             li {
               line-height: normal;
@@ -311,12 +315,13 @@
         }
         // search button
         button,input{
-          padding:22px 44px ;
+          padding:22px 0 ;
           border-radius: 5px;
           border:none;
           -webkit-appearance: none;
           outline: none;
         }
+
         input{
           .font(14px,bold,#333,MerriweatherSans);
           height:28px;
@@ -358,25 +363,25 @@
         // guest number
         .guests{
           .guest-num{
-            min-width:140px;
+            min-width:114px;
             height:36px;
             background-color:#fff;
             border-radius:5px;
             padding:18px 18px 18px 46px;
-            span{
-              .font(14px,bold,#333,MerriweatherSans);
-            }
+            .font(14px,bold,#333,MerriweatherSans);
           }
-
-
         }
-
         // search button
         button{
+          width:20%;
+          min-width:120px;
+          max-width:160px;
           background-color: #cba052;
           .font(20px,bold,#fff,MerriweatherSans);
         }
       }
+
+
       .popular-search{
         .font(14px,bold,#333,MerriweatherSans);
         margin-top:40px;
@@ -391,6 +396,16 @@
           }
         }
       }
+    }
+
+    .notHomepage{
+      padding:10px 12%;
+      >p,.title,.popular-search{
+        display:none;
+      }
+    }
+    .notHomepage.isFixed{
+      top:0;
     }
   }
 

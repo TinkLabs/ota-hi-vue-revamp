@@ -26,9 +26,17 @@ h6 {
   font-weight: @font-weight;
   color:@color;
 }
-@media screen and(max-width:1280px) {
+
+@media screen and(max-width:1024px) {
   body {
-    width: 1280px;
+    width: 1024px;
+  }
+  .header .search{
+    width:1024px;
+  }
+  .header .isFixed{
+    padding-left:1%;
+    // padding-right:0;
   }
 }
 .h-container{
@@ -41,7 +49,7 @@ p {
 
 /*list*/
 
-ul {
+ul,p {
   margin: 0;
   padding: 0;
 }

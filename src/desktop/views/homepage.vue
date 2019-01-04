@@ -1,7 +1,7 @@
 <template>
     <div  class="home-view">
         <!--header  -->
-        <Header></Header>
+        <Header message="isHomepage"></Header>
 
         <!-- content -->
         <div class="h-container">
@@ -141,8 +141,23 @@
 
               </li>
             </ul>
+            <span class="arrow-right">
+              <i class="el-icon-arrow-right"></i>
+            </span>
+            <span class="arrow-left">
+              <i class="el-icon-arrow-left"></i>
+            </span>
 
           </div>
+
+          <div class="test">
+            <el-carousel type="card" height="200px"  arrow="always" indicator-position="none" :autoplay="false">
+              <el-carousel-item v-for="item in 6" :key="item">
+                <h3>{{ item }}</h3>
+              </el-carousel-item>
+            </el-carousel>
+          </div>
+
         </div>
 
         <!-- subscribe -->
@@ -166,6 +181,7 @@
     name: "home",
     data(){
       return {
+        isHomepage:true,
         destinationData:[{
           img:locationImg,
           location:'Sydney',
@@ -216,6 +232,25 @@
 
 <style lang='less' scoped>
   @import '../common/main.less';
+
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+  .el-carousel__item{
+    // transform: scale(1) !important;
+  }
 
   .h-container{
     h1.title{
@@ -339,8 +374,8 @@
             position:absolute;
             width:100%;
             left:0;
-            top:50%;
-            transform:translate(0,-50%);
+            top:24%;
+            // transform:translate(0,-50%);
             text-align: center;
             font-size:90px;
             color:#fff;
@@ -370,6 +405,28 @@
     }
     // Featured Hotels
     .featured-hotels{
+      position: relative;
+      .arrow-right,.arrow-left{
+        display: inline-block;
+        width:44px;
+        height:44px;
+        line-height:48px;
+        text-align: center;
+        position: absolute;
+        right:-22px;;
+        top:34%;
+        background-color:#fff;
+        border-radius:50%;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+        cursor: pointer;
+        i{
+          font-size:18px;
+          font-weight:900;
+        }
+      }
+      .arrow-left{
+        left:-22px;
+      }
       ul{
         li{
           width:24%;

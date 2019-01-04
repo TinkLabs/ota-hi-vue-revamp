@@ -14,9 +14,15 @@ h5,
 h6 {
   font-family: SF PRO Display, Segoe UI, Tahoma, PingFang SC, sans-serif;
 }
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1024px) {
   body {
-    width: 1280px;
+    width: 1024px;
+  }
+  .header .search {
+    width: 1024px;
+  }
+  .header .isFixed {
+    padding-left: 1%;
   }
 }
 .h-container {
@@ -26,7 +32,8 @@ p {
   font-family: SF PRO Text, Segoe UI, Tahoma, PingFang SC, sans-serif;
 }
 /*list*/
-ul {
+ul,
+p {
   margin: 0;
   padding: 0;
 }
