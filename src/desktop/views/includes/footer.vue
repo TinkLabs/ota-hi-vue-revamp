@@ -95,8 +95,8 @@
   }
 </script>
 
-<style lang="less" coped>
-  @import '../../common/main.less';
+<style lang="scss" scoped>
+  @import '../../common/main.scss';
 
   .footer{
     .hi-items{
@@ -110,13 +110,13 @@
           height:40px;
         }
         h1{
-          .font(16px,bold,#002b55,MerriweatherSans);
+          @include font(16px,bold,#002b55,MerriweatherSans);
           margin-top:38px;
         }
         p{
           width:60%;
           margin-left:20%;
-          .font(14px,normal,#333,Rubik);
+          @include font(14px,normal,#333,Rubik);
         }
       }
 
@@ -133,7 +133,7 @@
         }
         >div{
           margin-top:30px;
-          .font(11px,normal,#999,SFUIText);
+          @include font(11px,normal,#999,SFUIText);
         }
         ul{
           display: flex;
@@ -150,10 +150,10 @@
 
       }
       .logo ~ div{
-        .font(14px,bolder,#888,MerriweatherSans);
+        @include font(14px,bolder,#888,MerriweatherSans);
         ul{
           li{
-            .font(14px,bold,#333,MerriweatherSans);
+            @include font(14px,bold,#333,MerriweatherSans);
             margin:10px 0;
           }
         }

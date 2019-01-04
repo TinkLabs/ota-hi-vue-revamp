@@ -1,4 +1,4 @@
-@import "common.less";
+@import "common.scss";
 
 
 html {
@@ -20,11 +20,11 @@ h6 {
   font-family: SF PRO Display, Segoe UI, Tahoma, PingFang SC, sans-serif;
 }
 
-.font (@font-size, @font-weight: normal, @color: #333333,  @font-family: Segoe UI) {
-  font-family: @font-family;
-  font-size: @font-size;
-  font-weight: @font-weight;
-  color:@color;
+@mixin font ($font-size, $font-weight: normal, $color: #333333,  $font-family: Segoe UI) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  color:$color;
 }
 
 @media screen and(max-width:1024px) {
@@ -59,16 +59,16 @@ li {
 }
 
 .font-success{
-  color: @success;
+  color: $success;
 }
 .font-warning{
-  color: @warning;
+  color: $warning;
 }
 .font-danger{
-  color: @danger;
+  color: $danger;
 }
 .font-info{
-  color: @info;
+  color: $info;
 }
 
 a{
@@ -101,12 +101,12 @@ a{
   white-space: nowrap;
 }
 
-.ellipsis-line(@line: 2) {
+@mixin ellipsis-line($line: 2) {
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: @line;
-  line-clamp: @line;
+  -webkit-line-clamp: $line;
+  line-clamp: $line;
   -webkit-box-orient: vertical;
 }

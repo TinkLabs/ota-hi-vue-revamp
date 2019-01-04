@@ -192,8 +192,8 @@
   }
 </script>
 
-<style lang="less" coped>
-  @import '../../common/main.less';
+<style lang="scss" scoped>
+  @import '../../common/main.scss';
 
   .header{
     width:100%;
@@ -269,7 +269,7 @@
       }
       .search-bar,.popular-search{
         .title{
-          .font(12px,bold,#888,MerriweatherSans);
+          @include font(12px,bold,#888,MerriweatherSans);
           opacity:0.5;
         }
       }
@@ -323,7 +323,7 @@
         }
 
         input{
-          .font(14px,bold,#333,MerriweatherSans);
+          @include font(14px,bold,#333,MerriweatherSans);
           height:28px;
         }
         .el-input__inner{
@@ -368,7 +368,7 @@
             background-color:#fff;
             border-radius:5px;
             padding:18px 18px 18px 46px;
-            .font(14px,bold,#333,MerriweatherSans);
+            @include font(14px,bold,#333,MerriweatherSans);
           }
         }
         // search button
@@ -377,13 +377,13 @@
           min-width:120px;
           max-width:160px;
           background-color: #cba052;
-          .font(20px,bold,#fff,MerriweatherSans);
+          @include font(20px,bold,#fff,MerriweatherSans);
         }
       }
 
 
       .popular-search{
-        .font(14px,bold,#333,MerriweatherSans);
+        @include font(14px,bold,#333,MerriweatherSans);
         margin-top:40px;
         .popular-city{
           display: flex;

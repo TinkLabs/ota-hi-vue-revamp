@@ -1,7 +1,7 @@
 <template>
     <div  class="home-view">
         <!--header  -->
-        <Header message="isHomepage"></Header>
+          <Header message="isHomepage"></Header>
 
         <!-- content -->
         <div class="h-container">
@@ -230,8 +230,8 @@
 
 </script>
 
-<style lang='less' scoped>
-  @import '../common/main.less';
+<style lang='scss' scoped>
+  @import '../common/main.scss';
 
   .el-carousel__item h3 {
     color: #475669;
@@ -254,11 +254,11 @@
 
   .h-container{
     h1.title{
-      .font(26px,600,#002b55,Montserrat);
+      @include font(26px,600,#002b55,Montserrat);
       padding-bottom:20px;
     }
     .content{
-      .font(16px,normal,#333333,MerriweatherSans);
+      @include font(16px,normal,#333333,MerriweatherSans);
       padding-bottom:20px;
     }
     >div{
@@ -289,10 +289,10 @@
         border-radius:5px;
         padding:2%;
         h2{
-          .font(26px,400,#fff,Montserrat);
+          @include font(26px,400,#fff,Montserrat);
         }
         .content{
-          .font(16px,normal,#fff,Merriweather);
+          @include font(16px,normal,#fff,Merriweather);
         }
       }
       .featured{
@@ -302,12 +302,12 @@
         background-image: linear-gradient(to bottom, rgba(22, 46, 172,0.8), rgba(91, 181, 255,0.8));
         margin-left:0;
         h1{
-          .font(40px,bold,#fff,Montserrat);
+          @include font(40px,bold,#fff,Montserrat);
           margin-top:40px;
           width:320px;
         }
         .view-hotel{
-          .font(16px,bold,#fff,MerriweatherSans);
+          @include font(16px,bold,#fff,MerriweatherSans);
           margin-top:30%;
           width:188px;
           text-align: center;
@@ -354,10 +354,10 @@
 
           }
           h2.title{
-            .font(16px,bold,#fff,MerriweatherSans);
+            @include font(16px,bold,#fff,MerriweatherSans);
           }
           p{
-            .font(12px,bold,#fff,MerriweatherSans);
+            @include font(12px,bold,#fff,MerriweatherSans);
             margin-top:4px;
           }
         }
@@ -381,25 +381,25 @@
             color:#fff;
             font-weight:lighter;
             font-family:Bonita;
-            // .font(90px,200,#fff,Bonita);
+            // @include font(90px,200,#fff,Bonita);
           }
           h2{
             margin-top:10px;
-            .font(20px,bolder,#333,MerriweatherSans);
+            @include font(20px,bolder,#333,MerriweatherSans);
           }
           .hotel-num{
-            .font(14px,bold,#333,MerriweatherSans);
+            @include font(14px,bold,#333,MerriweatherSans);
             margin:10px 0;
           }
           .content{
-            .font(14px,normal,#333,MerriweatherSans);
+            @include font(14px,normal,#333,MerriweatherSans);
           }
         }
       }
       .city-life{
         .title{
           font-size:80px;
-          // .font(80px,200,#fff,HelveticaNeue);
+          // @include font(80px,200,#fff,HelveticaNeue);
         }
       }
     }
@@ -431,15 +431,15 @@
         li{
           width:24%;
           .hotel-location{
-            .font(12px,normal,#888,MerriweatherSans);
+            @include font(12px,normal,#888,MerriweatherSans);
             margin-top:4px;
           }
           .hotel-name{
-            .font(20px,bold,#333,MerriweatherSans);
+            @include font(20px,bold,#333,MerriweatherSans);
             margin:6px 0;
           }
           .hotel-price{
-            .font(16px,normal,#888,MerriweatherSans);
+            @include font(16px,normal,#888,MerriweatherSans);
           }
           .stars{
             margin-top:10px;

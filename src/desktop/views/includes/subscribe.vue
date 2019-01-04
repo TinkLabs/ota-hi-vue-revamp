@@ -26,8 +26,8 @@
   }
 </script>
 
-<style lang="less" coped>
-  @import '../../common/main.less';
+<style lang="scss" scoped>
+  @import '../../common/main.scss';
 
   // subscribe
   .subscribe{
@@ -37,10 +37,10 @@
     background-color: #d8d8d8;
     margin-bottom:60px;
     p{
-      .font(21px,300,#002b55,Roboto);
+      @include font(21px,300,#002b55,Roboto);
     }
     h1{
-      .font(21px,bold,#002b55,Roboto);
+      @include font(21px,bold,#002b55,Roboto);
       margin:10px 0;
     }
     input{
