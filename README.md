@@ -18,8 +18,27 @@ Hi.com Frontend
     - use eslint to check your code in src folder
   - **npm run lint-fix**
     - auto fix some eslint errors
-  - install **"ESLint"** extention in your VS Code
-  - add **["eslint.autoFixOnSave": true]** in User Settings
 
-## **5. Very Important**
-If you modified package.json file or config files about webpack, you need to rerun docker as step 1.
+## 5. install VS Code Extentions
+  - **Vetur**
+  - **ESLint**
+  - **Prettier - Code formatter**
+
+## 6. add VS Code User Settings
+```
+  {
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        {
+          "language": "vue",
+          "autoFix": true
+        }
+    ],
+    "eslint.autoFixOnSave": true,
+    "vetur.format.defaultFormatter.html": "js-beautify-html",
+  }
+```
+
+## **7. Very Important**
+**If you modified package.json file or config files about webpack, you need to rerun docker as step 1.**
