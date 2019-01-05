@@ -1,5 +1,7 @@
 export default {
   SET_Exmaple: (state, example) => {
-    state.example = example
+    const tmpState = state
+
+    tmpState.example = example
   },
 }

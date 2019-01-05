@@ -7,8 +7,8 @@ import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 import en from '../locales/en'
 import zh from '../locales/zh'
-import { createStore } from './store'
-import { createRouter } from './routes'
+import createStore from './store'
+import createRouter from './routes'
 import App from './index.vue'
 
 Vue.use(VueI18n)

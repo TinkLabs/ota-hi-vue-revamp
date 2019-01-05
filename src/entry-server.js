@@ -1,4 +1,4 @@
-import { createApp } from './app'
+import createApp from './app'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
@@ -12,8 +12,10 @@ export default context => new Promise((resolve, reject) => {
   const { app, router, store } = createApp(context)
   const { url } = context
   const { fullPath } = router.resolve(url).route
+  const tmpContext = context
 
   if (fullPath !== url) {
+    // eslint-disable-next-line prefer-promise-reject-errors
     return reject({ url: fullPath })
   }
 
@@ -25,6 +27,7 @@ export default context => new Promise((resolve, reject) => {
     const matchedComponents = router.getMatchedComponents()
     // no matched routes
     if (!matchedComponents.length) {
+      // eslint-disable-next-line prefer-promise-reject-errors
       return reject({ code: 404 })
     }
     // Call fetchData hooks on components matched by the route.
@@ -35,15 +38,21 @@ export default context => new Promise((resolve, reject) => {
       store,
       route: router.currentRoute,
     }))).then(() => {
-      isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
+      if (isDev) {
+        console.log(`data pre-fetch: ${Date.now() - s}ms`)
+      }
       // After all preFetch hooks are resolved, our store is now
       // filled with the state needed to render the app.
       // Expose the state on the render context, and let the request handler
       // inline the state in the HTML response. This allows the client-side
       // store to pick-up the server-side state without having to duplicate
       // the initial data fetching on the client.
-      context.state = store.state
+      tmpContext.state = store.state
       resolve(app)
     }).catch(reject)
+
+    return undefined
   }, reject)
+
+  return undefined
 })
