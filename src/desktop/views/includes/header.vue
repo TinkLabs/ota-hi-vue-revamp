@@ -1,10 +1,27 @@
 <template>
   <div class="header">
     <ul>
-      <li>Contact Us</li>
-      <li>Support</li>
-      <li>English</li>
-      <li><span>HKD</span></li>
+      <li>
+        <span>Contact Us</span>
+      </li>
+      <li>
+        <span>Support</span>
+      </li>
+      <li class="language"  @mouseenter=showLanguage @mouseleave=hideLanguage>
+        <span>English</span>
+        <ul class="language-list hide">
+          <li v-for="item in language" :class="[item.class]">
+            <img :src=item.img alt="">
+            <span>{{item.name}}</span>
+          </li>
+        </ul>
+      </li>
+      <li class="currency" @mouseenter=showCurrency @mouseleave=hideCurrency>
+        <span>HKD</span>
+        <ul class="currency-list hide">
+          <li v-for="item in currency" :class="[item.class]">{{item.name}}</li>
+        </ul>
+      </li>
     </ul>
     <header>
       <div class="logo">
@@ -26,10 +43,7 @@
         </a>
       </div>
     </header>
-    <div
-      :class="['search',searchBarFixed == true ?
-        'isFixed' :'',message == 'isHomepage' ? '' :'notHomepage']"
-    >
+    <div :class="['search',searchBarFixed == true ?'isFixed' :'',message == 'isHomepage' ? '' :'notHomepage']">
       <p :class="[searchBarFixed == true ? 'hide' :'']">
         Say hi to your next destination!
       </p>
@@ -44,8 +58,7 @@
             popper-class="my-autocomplete"
             :fetch-suggestions="querySearch"
             placeholder="Anywhere"
-            @select="handleSelect"
-          >
+            @select="handleSelect">
             <i
               slot="suffix"
               class="el-icon-search el-input__icon"
@@ -118,8 +131,13 @@
 </template>
 
 <script>
+import languageImg1 from '../../images/homepage/Mask Group 18@3x.png'
+import languageImg2 from '../../images/homepage/Mask Group 19@3x.png'
+import languageImg3 from '../../images/homepage/Mask Group 20@3x.png'
+
 export default {
   // name: "header",
+
   props: {
     message: {
       type: String,
@@ -137,8 +155,58 @@ export default {
         'Korea',
         'Rome',
         'Barcelona',
-        'London',
-        'Singapore',
+        'London2',
+        'Singapore2',
+      ],
+      currency:[
+        {
+          name:'GBP - Great British Sterling'
+        },
+        {
+          name:'HKD - Hong Kong Dollars',
+          class:"active"
+        },
+        {
+          name:'EUR - Euros'
+        },
+        {
+          name:'JPY - Japanese Yen Dollarsg'
+        },
+        {
+          name:'BHD - Bahraini Dinar'
+        },
+        {
+          name:'INR - Indian Rupees'
+        },
+        {
+          name:'USD - United States Dollars'
+        },
+        {
+          name:'CAD - Canadian Dollars'
+        },
+        {
+          name:'SAR - Saudi Arabia Riyals'
+        },
+      ],
+      language:[
+        {
+          name:'繁體中文',
+          img:languageImg3
+        },
+        {
+          name:'简体中文',
+          img:languageImg3
+        },
+        {
+          name:'日本語',
+          img:languageImg2
+        },
+        {
+          name:'English',
+          class:"active",
+          img:languageImg1
+        },
+
       ],
       restaurants: [],
       state3: '',
@@ -157,7 +225,7 @@ export default {
   methods: {
     // search location or hotel
     querySearch(queryString, cb) {
-      const { restaurants } = this.restaurants
+      const  restaurants  = this.restaurants
       const results = queryString
         ? restaurants.filter(this.createFilter(queryString))
         : restaurants
@@ -294,21 +362,36 @@ export default {
     },
     // searchbar fixed
     handleScroll() {
-      const scrollTop = window.pageYOffset
-        || document.documentElement.scrollTop
-        || document.body.scrollTop
-      const { offsetTop } = document.querySelector('.search-bar').offsetTop
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      const offsetTop = document.querySelector('.search-bar').offsetTop
+
       if (scrollTop > offsetTop) {
         this.searchBarFixed = true
       } else {
         this.searchBarFixed = false
       }
     },
+    showCurrency(){
+      document.querySelector('.currency-list').style.display="block";
+
+    },
+    hideCurrency(){
+      document.querySelector('.currency-list').style.display="none";
+
+    },
+    showLanguage(){
+      document.querySelector('.language-list').style.display="block";
+
+    },
+    hideLanguage(){
+      document.querySelector('.language-list').style.display="none";
+
+    }
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../../common/main.scss';
 
 .header {
@@ -321,13 +404,60 @@ export default {
     justify-content: flex-end;
     align-items: center;
     height: 30px;
-    font-family: Rubik;
-    color: #333;
-    font-size: 12px;
+    @include font(12px, bold, #333, Rubik);
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-    li {
+    >li {
       list-style: none;
-      margin-left: 44px;
+      margin-left: 20px;
+      position: relative;
+      cursor: pointer;
+      span{
+        display:inline-block;
+        padding:8px 14px;
+      }
+      .currency-list,.language-list{
+        position: absolute;
+        top:35px;
+        right:0;
+        background-color:#fff;
+        border-radius: 4px;
+        box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.16);
+        transition:all .4s;
+        padding:10px 0;
+        li.active{
+          color:#cba052;
+        }
+        li{
+          padding:10px 20px;
+          color:#505050;
+          width:180px;
+          &:hover{
+            color:#fff;
+            background-color:#002b55;
+            transition:all .4s;
+          }
+        }
+      }
+      .language-list{
+        li{
+          // padding-left:50px;
+          padding:0;
+          padding-left:18px;
+          box-sizing: border-box;
+          width:120px;
+          img{
+            width:18px;
+            margin-right:6px;
+          }
+        }
+      }
+    }
+    .currency,.language{
+      &:hover{
+        color:#fff;
+        background-color:#002b55;
+        transition:all .4s;
+      }
     }
   }
   header {
@@ -403,6 +533,11 @@ export default {
       }
       .location {
         min-width: 260px;
+        width:40%;
+        .el-autocomplete{
+          width:100%;
+
+        }
         .my-autocomplete {
           li {
             line-height: normal;

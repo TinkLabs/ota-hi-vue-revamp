@@ -308,8 +308,9 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 @import '../common/main.scss';
+
 
 .el-carousel__item h3 {
   color: #475669;
