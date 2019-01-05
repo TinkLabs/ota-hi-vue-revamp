@@ -4,7 +4,7 @@
       <li>Contact Us</li>
       <li>Support</li>
       <li>English</li>
-      <li>HKD</li>
+      <li><span>HKD</span></li>
     </ul>
     <header>
       <div class="logo">
