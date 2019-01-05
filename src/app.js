@@ -34,12 +34,10 @@ Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value),
 })
 
-export function createApp(context = null) {
+export default function createApp(context = null) {
   // create store and router instances
-  let store; let
-    router
-  store = createStore(context)
-  router = createRouter(store.getters.getIsMobile)
+  const store = createStore(context)
+  const router = createRouter(store.getters.getIsMobile)
   // create the app instance.
   // here we inject the router, store and ssr context to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
