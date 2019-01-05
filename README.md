@@ -39,6 +39,8 @@ Hi.com Frontend
     "vetur.format.defaultFormatter.html": "js-beautify-html",
   }
 ```
+## 7. format vue file
+  --
 
 ## **7. Very Important**
 **If you modified package.json file or config files about webpack, you need to rerun docker as step 1.**
