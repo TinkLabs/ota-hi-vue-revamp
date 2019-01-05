@@ -1,4 +1,1 @@
-import Vue from 'vue'
-export const example = ({ commit, state }) => {
-
-};
+export default function example() {}

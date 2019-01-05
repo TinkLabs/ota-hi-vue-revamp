@@ -1,1 +1,3 @@
-export const getIsMobile = state => state.isMobile;
+export default function getIsMobile(state) {
+  return state.isMobile
+}

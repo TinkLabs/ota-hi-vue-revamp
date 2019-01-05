@@ -64,7 +64,7 @@ module.exports = {
       },
       { test: /.(ttf|eot|woff|woff2)([?]?.*)$/, loader: "file-loader" },
       {
-        test: /\.less?$/,
+        test: /\.scss?$/,
         use: isProd
           ? ExtractTextPlugin.extract({
             use: [
@@ -72,11 +72,11 @@ module.exports = {
                 loader: 'css-loader',
                 options: { minimize: true }
               },
-              'less-loader'
+              'sass-loader'
             ],
             fallback: 'vue-style-loader'
           })
-          : ['vue-style-loader', 'css-loader', 'less-loader']
+          : ['vue-style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },

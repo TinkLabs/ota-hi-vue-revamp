@@ -2,20 +2,21 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import desktopHomePage from './desktop/router/homepage'
 import mobileHomePage from './mobile/router/homepage'
-Vue.use(Router);
+
+Vue.use(Router)
 
 
-export function createRouter (isMobile) {
-  let routes = [];
-  if(!isMobile){
-    routes = routes.concat(desktopHomePage);
+export default function createRouter(isMobile) {
+  let routes = []
+  if (!isMobile) {
+    routes = routes.concat(desktopHomePage)
   } else {
-    routes = routes.concat(mobileHomePage);
+    routes = routes.concat(mobileHomePage)
   }
   return new Router({
     mode: 'history',
     fallback: false,
     scrollBehavior: () => ({ y: 0 }),
-    routes
+    routes,
   })
 }
