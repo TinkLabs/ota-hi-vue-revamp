@@ -308,8 +308,9 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 @import '../common/main.scss';
+
 
 .el-carousel__item h3 {
   color: #475669;
@@ -353,7 +354,7 @@ export default {
 
   .items {
     overflow: hidden;
-    margin-top: -2.6%;
+    margin-top: -3.2%;
     // display:flex;
     // justify-content: space-between;
     // flex-wrap: wrap;
