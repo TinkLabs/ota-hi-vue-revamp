@@ -9,9 +9,14 @@ Vue.use(Vuex)
 const state = {
   example: null,
 }
-export function createStore(context) {
-  if (!context) { context = window.__INITIAL_STATE__ }
-  state.isMobile = context.isMobile
+export default function createStore(context) {
+  let tmpContext = { ...context }
+
+  if (!context) {
+    // eslint-disable-next-line no-underscore-dangle
+    tmpContext = window.__INITIAL_STATE__
+  }
+  state.isMobile = tmpContext.isMobile
   return new Vuex.Store({
     state,
     actions,

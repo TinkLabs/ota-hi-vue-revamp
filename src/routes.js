@@ -6,7 +6,7 @@ import mobileHomePage from './mobile/router/homepage'
 Vue.use(Router)
 
 
-export function createRouter(isMobile) {
+export default function createRouter(isMobile) {
   let routes = []
   if (!isMobile) {
     routes = routes.concat(desktopHomePage)
