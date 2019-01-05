@@ -1,29 +1,32 @@
 <template>
-    <!-- subscribe -->
-    <div class="h-container">
-      <div class="subscribe">
+  <!-- subscribe -->
+  <div class="h-container">
+    <div class="subscribe">
       <p>Subscribe to our newsletter</p>
       <h1>Best deals directly to your inbox</h1>
       <div class="subscribe-input">
-        <input type="text" placeholder="Enter your email address">
+        <input
+          type="text"
+          placeholder="Enter your email address"
+        >
         <button>Join Today</button>
       </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    data(){
-      return {
+export default {
+  data() {
+    return {
 
-      }
-    },
-    mounted() {
-    },
-    methods:{
     }
-  }
+  },
+  mounted() {
+  },
+  methods: {
+  },
+}
 </script>
 
 <style lang="scss" scoped>

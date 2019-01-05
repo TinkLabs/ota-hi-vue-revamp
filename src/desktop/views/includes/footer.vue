@@ -1,98 +1,186 @@
 <template>
-    <div  class="footer">
-      <ul class="hi-items">
-        <li>
-          <img src="../../images/homepage/Shape Copy@3x.png" alt="">
-          <h1>More than 300,000 hotels</h1>
-          <p>in 57,000 destinations in 200 countries</p>
-        </li>
-        <li class="money">
-          <img src="../../images/homepage/money@3x.png" alt="">
-          <h1>Save Money</h1>
-          <p>95% of our customers save up to 80%</p>
-        </li>
-        <li>
-          <img src="../../images/homepage/Combined Shape Copy@3x.png" alt="">
-          <h1>Our customers are satisfied</h1>
-          <p>We are always thinking about your satisfaction!</p>
-        </li>
-        <li>
-          <img src="../../images/homepage/team@3x.png" alt="">
-          <h1>Meet our team</h1>
-          <p>Experienced professionals help you all the way</p>
-        </li>
-      </ul>
-      <div class="main-links">
-        <div class="logo">
-          <img src="../../images/homepage/hi_DotComLogo@3x.png" alt="hi.com logo">
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-          <div>
-            <span>@hi Inc. 2018  </span>
-            <span> | </span>
-            <a href="#">Privacy Policy</a>
-            <span> | </span>
-            <a href="#">Terms & Conditions</a>
-          </div>
-        </div>
-        <div class="about">
-          <div class="title">About</div>
-          <ul>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Sign Up</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Investor Relations</a></li>
-            <li><a href="#">Partners</a></li>
-          </ul>
-        </div>
-        <div class="explore">
-          <div class="title">Explore</div>
-          <ul>
-            <li><a href="#"> Hotels & Resorts</a></li>
-            <li><a href="#">Deals</a></li>
-            <li><a href="#">Experiences</a></li>
-            <li><a href="#">Gallery</a></li>
-          </ul>
-
-        </div>
-        <div class="contact">
-          <div class="title">Contact</div>
-          <ul>
-            <li><a href="#"> Call Us</a></li>
-            <li><a href="#">Email Us</a></li>
-            <li><a href="#">Manage Booking</a></li>
-            <li><a href="#">Global Offices</a></li>
-          </ul>
-
-        </div>
-        <div class="press">
-          <div class="title">Press</div>
-          <ul>
-            <li><a href="#"> Newsroom</a></li>
-            <li><a href="#">Press Releases</a></li>
-            <li><a href="#">Press Kity</a></li>
-          </ul>
-
+  <div class="footer">
+    <ul class="hi-items">
+      <li>
+        <img
+          src="../../images/homepage/Shape Copy@3x.png"
+          alt=""
+        >
+        <h1>More than 300,000 hotels</h1>
+        <p>in 57,000 destinations in 200 countries</p>
+      </li>
+      <li class="money">
+        <img
+          src="../../images/homepage/money@3x.png"
+          alt=""
+        >
+        <h1>Save Money</h1>
+        <p>95% of our customers save up to 80%</p>
+      </li>
+      <li>
+        <img
+          src="../../images/homepage/Combined Shape Copy@3x.png"
+          alt=""
+        >
+        <h1>Our customers are satisfied</h1>
+        <p>We are always thinking about your satisfaction!</p>
+      </li>
+      <li>
+        <img
+          src="../../images/homepage/team@3x.png"
+          alt=""
+        >
+        <h1>Meet our team</h1>
+        <p>Experienced professionals help you all the way</p>
+      </li>
+    </ul>
+    <div class="main-links">
+      <div class="logo">
+        <img
+          src="../../images/homepage/hi_DotComLogo@3x.png"
+          alt="hi.com logo"
+        >
+        <ul>
+          <li />
+          <li />
+          <li />
+          <li />
+        </ul>
+        <div>
+          <span>@hi Inc. 2018  </span>
+          <span> | </span>
+          <a href="#">
+            Privacy Policy
+          </a>
+          <span> | </span>
+          <a href="#">
+            Terms & Conditions
+          </a>
         </div>
       </div>
+      <div class="about">
+        <div class="title">
+          About
+        </div>
+        <ul>
+          <li>
+            <a href="#">
+              About Us
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Sign Up
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Careers
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Investor Relations
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Partners
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="explore">
+        <div class="title">
+          Explore
+        </div>
+        <ul>
+          <li>
+            <a href="#">
+              Hotels & Resorts
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Deals
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Experiences
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Gallery
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="contact">
+        <div class="title">
+          Contact
+        </div>
+        <ul>
+          <li>
+            <a href="#">
+              Call Us
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Email Us
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Manage Booking
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Global Offices
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="press">
+        <div class="title">
+          Press
+        </div>
+        <ul>
+          <li>
+            <a href="#">
+              Newsroom
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Press Releases
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Press Kity
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    data(){
-      return {
-      }
-    },
-    mounted() {
-    },
-    methods:{
+export default {
+  data() {
+    return {
     }
-  }
+  },
+  mounted() {
+  },
+  methods: {
+  },
+}
 </script>
 
 <style lang="scss" scoped>

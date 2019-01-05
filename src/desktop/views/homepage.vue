@@ -1,231 +1,304 @@
 <template>
-    <div  class="home-view">
-        <!--header  -->
-          <Header message="isHomepage"></Header>
+  <div class="home-view">
+    <!--header  -->
+    <Header message="isHomepage" />
 
-        <!-- content -->
-        <div class="h-container">
-          <div class="items" >
-            <div class="featured">
-              <h2 class="title">Featured</h2>
-              <h1>4000 best hotels around the world</h1>
-              <div class="view-hotel">View hotels now</div>
-            </div>
-            <div class="eat-like-locals">
-              <h2 class="title">Eat Like Locals</h2>
-              <div class="content">Lorem ipsum dolor</div>
-
-            </div>
-            <div class="find-gems">
-              <h2 class="title">Find Hidden Gems</h2>
-              <div class="content">Lorem ipsum dolor</div>
-
-            </div>
-            <div class="hot-deals">
-              <h2 class="title">Hot Deals</h2>
-              <div class="content">Lorem ipsum dolor</div>
-
-            </div>
-            <div class="handy">
-              <h2 class="title">handy</h2>
-              <div class="content">Your travelling companion</div>
-
-            </div>
+    <!-- content -->
+    <div class="h-container">
+      <div class="items">
+        <div class="featured">
+          <h2 class="title">
+            Featured
+          </h2>
+          <h1>4000 best hotels around the world</h1>
+          <div class="view-hotel">
+            View hotels now
           </div>
-
-          <!-- Top Destinations -->
-          <div class="top-destination">
-            <h1 class="title">Top Destinations</h1>
-            <ul>
-              <li v-for="item in destinationData">
-                <!-- <img src="../images/homepage/Location Image@3x.png" alt=""> -->
-                <img :src="item.img">
-                <div class="content">
-                  <h2 class="title">{{item.location}}</h2>
-                  <p>{{item.price}}</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <!-- where to stay -->
-          <div class="to-stay">
-            <h1 class="title">Where to Stay</h1>
-            <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
-            <ul>
-              <li>
-                <img src="../images/homepage/stay@3x.png" alt="">
-                <div class="title">Tropical</div>
-                <h2>Tropical</h2>
-                <div class="hotel-num">62 Hotels</div>
-                <div class="content">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut condimentum ligula felis, tempor volutpat orci fermentum sagittis.
-                </div>
-              </li>
-              <li class="city-life">
-                <img src="../images/homepage/stay2@3x.png" alt="">
-                <div class="title">City LIFE</div>
-                <h2>City Life</h2>
-                <div class="hotel-num">45 Hotels</div>
-                <div class="content">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut condimentum ligula felis, tempor volutpat orci fermentum sagittis.
-                </div>
-              </li>
-            </ul>
-
-          </div>
-          <!--  Featured Hotels ???-->
-          <div class="featured-hotels">
-            <h1 class="title">Featured Hotels</h1>
-            <ul>
-              <li>
-                <img src="../images/homepage/Hotel Image2@3x.png" alt="">
-                <div class="hotel-location">Westminster Borough, London</div>
-                <div class="hotel-name">London Marriott Hotel</div>
-                <div class="hotel-price">
-                  <span>$199</span>/night
-                </div>
-                <div class="stars">
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-off"></i>
-                </div>
-              </li>
-              <li>
-                <img src="../images/homepage/Hotel Image@3x.png" alt="">
-                <div class="hotel-location">Kensington and Chelsea, London</div>
-                <div class="hotel-name">The Kensingotn Hotel</div>
-                <div class="hotel-price">
-                  <span>$298</span>/night
-                </div>
-                <div class="stars">
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                </div>
-              </li>
-              <li>
-                <img src="../images/homepage/Hotel Image2@3x.png" alt="">
-                <div class="hotel-location">Lambeth, London</div>
-                <div class="hotel-name">Plaza on the River</div>
-                <div class="hotel-price">
-                  <span>$100</span>/night
-                </div>
-                <div class="stars">
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-off"></i>
-                </div>
-
-              </li>
-              <li>
-                <img src="../images/homepage/Hotel Image@3x.png" alt="">
-                <div class="hotel-location">Lambeth, London</div>
-                <div class="hotel-name">London Marriott Hotel</div>
-                <div class="hotel-price">
-                  <span>$90</span>/night
-                </div>
-                <div class="stars">
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                  <i class="el-icon-star-on"></i>
-                </div>
-
-              </li>
-            </ul>
-            <span class="arrow-right">
-              <i class="el-icon-arrow-right"></i>
-            </span>
-            <span class="arrow-left">
-              <i class="el-icon-arrow-left"></i>
-            </span>
-
-          </div>
-
-          <div class="test">
-            <el-carousel type="card" height="200px"  arrow="always" indicator-position="none" :autoplay="false">
-              <el-carousel-item v-for="item in 6" :key="item">
-                <h3>{{ item }}</h3>
-              </el-carousel-item>
-            </el-carousel>
-          </div>
-
         </div>
+        <div class="eat-like-locals">
+          <h2 class="title">
+            Eat Like Locals
+          </h2>
+          <div class="content">
+            Lorem ipsum dolor
+          </div>
+        </div>
+        <div class="find-gems">
+          <h2 class="title">
+            Find Hidden Gems
+          </h2>
+          <div class="content">
+            Lorem ipsum dolor
+          </div>
+        </div>
+        <div class="hot-deals">
+          <h2 class="title">
+            Hot Deals
+          </h2>
+          <div class="content">
+            Lorem ipsum dolor
+          </div>
+        </div>
+        <div class="handy">
+          <h2 class="title">
+            handy
+          </h2>
+          <div class="content">
+            Your travelling companion
+          </div>
+        </div>
+      </div>
 
-        <!-- subscribe -->
-        <Subscribe></Subscribe>
-        <!-- footer -->
-        <Footer></Footer>
+      <!-- Top Destinations -->
+      <div class="top-destination">
+        <h1 class="title">
+          Top Destinations
+        </h1>
+        <ul>
+          <li v-for="item in destinationData">
+            <!-- <img src="../images/homepage/Location Image@3x.png" alt=""> -->
+            <img :src="item.img">
+            <div class="content">
+              <h2 class="title">
+                {{ item.location }}
+              </h2>
+              <p>{{ item.price }}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- where to stay -->
+      <div class="to-stay">
+        <h1 class="title">
+          Where to Stay
+        </h1>
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit
+        </div>
+        <ul>
+          <li>
+            <img
+              src="../images/homepage/stay@3x.png"
+              alt=""
+            >
+            <div class="title">
+              Tropical
+            </div>
+            <h2>Tropical</h2>
+            <div class="hotel-num">
+              62 Hotels
+            </div>
+            <div class="content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut condimentum ligula felis, tempor volutpat orci fermentum sagittis.
+            </div>
+          </li>
+          <li class="city-life">
+            <img
+              src="../images/homepage/stay2@3x.png"
+              alt=""
+            >
+            <div class="title">
+              City LIFE
+            </div>
+            <h2>City Life</h2>
+            <div class="hotel-num">
+              45 Hotels
+            </div>
+            <div class="content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut condimentum ligula felis, tempor volutpat orci fermentum sagittis.
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!--  Featured Hotels ???-->
+      <div class="featured-hotels">
+        <h1 class="title">
+          Featured Hotels
+        </h1>
+        <ul>
+          <li>
+            <img
+              src="../images/homepage/Hotel Image2@3x.png"
+              alt=""
+            >
+            <div class="hotel-location">
+              Westminster Borough, London
+            </div>
+            <div class="hotel-name">
+              London Marriott Hotel
+            </div>
+            <div class="hotel-price">
+              <span>$199</span>/night
+            </div>
+            <div class="stars">
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-off" />
+            </div>
+          </li>
+          <li>
+            <img
+              src="../images/homepage/Hotel Image@3x.png"
+              alt=""
+            >
+            <div class="hotel-location">
+              Kensington and Chelsea, London
+            </div>
+            <div class="hotel-name">
+              The Kensingotn Hotel
+            </div>
+            <div class="hotel-price">
+              <span>$298</span>/night
+            </div>
+            <div class="stars">
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+            </div>
+          </li>
+          <li>
+            <img
+              src="../images/homepage/Hotel Image2@3x.png"
+              alt=""
+            >
+            <div class="hotel-location">
+              Lambeth, London
+            </div>
+            <div class="hotel-name">
+              Plaza on the River
+            </div>
+            <div class="hotel-price">
+              <span>$100</span>/night
+            </div>
+            <div class="stars">
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-off" />
+            </div>
+          </li>
+          <li>
+            <img
+              src="../images/homepage/Hotel Image@3x.png"
+              alt=""
+            >
+            <div class="hotel-location">
+              Lambeth, London
+            </div>
+            <div class="hotel-name">
+              London Marriott Hotel
+            </div>
+            <div class="hotel-price">
+              <span>$90</span>/night
+            </div>
+            <div class="stars">
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+              <i class="el-icon-star-on" />
+            </div>
+          </li>
+        </ul>
+        <span class="arrow-right">
+          <i class="el-icon-arrow-right" />
+        </span>
+        <span class="arrow-left">
+          <i class="el-icon-arrow-left" />
+        </span>
+      </div>
+
+      <div class="test">
+        <el-carousel
+          type="card"
+          height="200px"
+          arrow="always"
+          indicator-position="none"
+          :autoplay="false"
+        >
+          <el-carousel-item
+            v-for="item in 6"
+            :key="item"
+          >
+            <h3>{{ item }}</h3>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
     </div>
+
+    <!-- subscribe -->
+    <Subscribe />
+    <!-- footer -->
+    <Footer />
+  </div>
 </template>
 
 <script>
-  import Bus from '../component/bus'
-  import Header from './includes/header.vue'
-  import Footer from './includes/footer.vue'
-  import Subscribe from './includes/subscribe.vue'
-  import locationImg from '../images/homepage/Location Image2@3x.png';
-  import locationImg1 from '../images/homepage/Location Image4@3x.png';
-  import locationImg2 from '../images/homepage/Location Image3@3x.png';
-  import locationImg3 from '../images/homepage/Location Image4@3x.png';
-  import locationImg4 from '../images/homepage/Location Image@3x.png';
-  export default {
-    name: "home",
-    data(){
-      return {
-        isHomepage:true,
-        destinationData:[{
-          img:locationImg,
-          location:'Sydney',
-          price:'Average $000/night'
-        },
-        {
-          img:locationImg1,
-          location:'Dubai',
-          price:'Average $000/night'
-        },{
-          img:locationImg2,
-          location:'London',
-          price:'Average $000/night'
-        },{
-          img:locationImg3,
-          location:'Tokyo',
-          price:'Average $000/night'
-        },{
-          img:locationImg4,
-          location:'New York',
-          price:'Average $000/night'
-        }
-        ]
-      }
-    },
-    components:{
-      Header,
-      Footer,
-      Subscribe
-    },
-    mounted() {
-      const that = this;
-      Bus.$on('scroll', (h)=>{
-        console.log(that);
-        that.isTop = !(h > 10);
-      })
-    },
-    methods:{
-      toggleModal(){
-        console.log(this.display);
-        this.display = "none" === this.display ? "flex" : "none";
-      }
+import Bus from '../component/bus'
+import Header from './includes/header.vue'
+import Footer from './includes/footer.vue'
+import Subscribe from './includes/subscribe.vue'
+import locationImg from '../images/homepage/Location Image2@3x.png'
+import locationImg1 from '../images/homepage/Location Image4@3x.png'
+import locationImg2 from '../images/homepage/Location Image3@3x.png'
+import locationImg3 from '../images/homepage/Location Image4@3x.png'
+import locationImg4 from '../images/homepage/Location Image@3x.png'
+
+export default {
+  name: 'Home',
+  components: {
+    Header,
+    Footer,
+    Subscribe,
+  },
+  data() {
+    return {
+      isHomepage: true,
+      destinationData: [{
+        img: locationImg,
+        location: 'Sydney',
+        price: 'Average $000/night',
+      },
+      {
+        img: locationImg1,
+        location: 'Dubai',
+        price: 'Average $000/night',
+      }, {
+        img: locationImg2,
+        location: 'London',
+        price: 'Average $000/night',
+      }, {
+        img: locationImg3,
+        location: 'Tokyo',
+        price: 'Average $000/night',
+      }, {
+        img: locationImg4,
+        location: 'New York',
+        price: 'Average $000/night',
+      },
+      ],
     }
-  }
+  },
+  mounted() {
+    const that = this
+    Bus.$on('scroll', (h) => {
+      console.log(that)
+      that.isTop = !(h > 10)
+    })
+  },
+  methods: {
+    toggleModal() {
+      console.log(this.display)
+      this.display = this.display === 'none' ? 'flex' : 'none'
+    },
+  },
+}
 
 
 </script>
@@ -448,7 +521,6 @@
         }
       }
     }
-
 
 
   }

@@ -1,15 +1,18 @@
 <template>
-  <div id="app" ref="total_view">
-    <router-view class="view"></router-view>
+  <div
+    id="app"
+    ref="total_view"
+  >
+    <router-view class="view" />
   </div>
 </template>
 
 <script>
-  export default {
-    name: "index",
-    mounted() {
-    }
-  }
+export default {
+  name: 'Index',
+  mounted() {
+  },
+}
 </script>
 
 <style scoped>
