@@ -42,5 +42,5 @@ Hi.com Frontend
 ## 7. format vue file
   - shift + option + f
 
-## **7. Very Important**
+## **8. Very Important**
 **If you modified package.json file or config files about webpack, you need to rerun docker as step 1.**
