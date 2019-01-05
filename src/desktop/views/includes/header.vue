@@ -7,22 +7,47 @@
       <li>
         <span>Support</span>
       </li>
-      <li class="language"  @mouseenter=showLanguage @mouseleave=hideLanguage>
+      <li
+        class="language"
+        @mouseenter="showLanguage"
+        @mouseleave="hideLanguage"
+      >
         <span>English</span>
         <transition name="show-language">
-          <ul class="language-list" v-show="languageShow">
-            <li v-for="item in language" :class="[item.class]">
-              <img :src=item.img alt="">
-              <span>{{item.name}}</span>
+          <ul
+            v-show="languageShow"
+            class="language-list"
+          >
+            <li
+              v-for="item in language"
+              :class="[item.class]"
+            >
+              <img
+                :src="item.img"
+                alt=""
+              >
+              <span>{{ item.name }}</span>
             </li>
           </ul>
         </transition>
       </li>
-      <li class="currency" @mouseenter=showCurrency @mouseleave=hideCurrency>
+      <li
+        class="currency"
+        @mouseenter="showCurrency"
+        @mouseleave="hideCurrency"
+      >
         <span>HKD</span>
         <transition name="show-currency">
-          <ul class="currency-list"  v-show="currencyShow">
-            <li v-for="item in currency" :class="[item.class]">{{item.name}}</li>
+          <ul
+            v-show="currencyShow"
+            class="currency-list"
+          >
+            <li
+              v-for="item in currency"
+              :class="[item.class]"
+            >
+              {{ item.name }}
+            </li>
           </ul>
         </transition>
       </li>
@@ -47,7 +72,7 @@
         </a>
       </div>
     </header>
-    <div :class="['search',searchBarFixed == true ?'isFixed' :'',message == 'isHomepage' ? '' :'notHomepage']">
+    <div :class="['search',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']">
       <p :class="[searchBarFixed == true ? 'hide' :'']">
         Say hi to your next destination!
       </p>
@@ -61,13 +86,14 @@
             v-model="state4"
             :fetch-suggestions="querySearchAsync"
             placeholder="Anywhere"
-            @select="handleSelect">
+            @select="handleSelect"
+          >
             <i
               slot="prefix"
               class="el-icon-search el-input__icon"
               @click="handleIconClick"
             />
-            </el-autocomplete>
+          </el-autocomplete>
         </div>
         <div class="check">
           <div class="title">
@@ -131,12 +157,11 @@ import languageImg2 from '../../images/homepage/Mask Group 19@3x.png'
 import languageImg3 from '../../images/homepage/Mask Group 20@3x.png'
 
 export default {
-  // name: "header",
-
+  name: 'Header',
   props: {
-    message: {
-      type: String,
-      default: '',
+    homepage: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -153,62 +178,62 @@ export default {
         'London2',
         'Singapore2',
       ],
-      currency:[
+      currency: [
         {
-          name:'GBP - Great British Sterling'
+          name: 'GBP - Great British Sterling',
         },
         {
-          name:'HKD - Hong Kong Dollars',
-          class:"active"
+          name: 'HKD - Hong Kong Dollars',
+          class: 'active',
         },
         {
-          name:'EUR - Euros'
+          name: 'EUR - Euros',
         },
         {
-          name:'JPY - Japanese Yen Dollarsg'
+          name: 'JPY - Japanese Yen Dollarsg',
         },
         {
-          name:'BHD - Bahraini Dinar'
+          name: 'BHD - Bahraini Dinar',
         },
         {
-          name:'INR - Indian Rupees'
+          name: 'INR - Indian Rupees',
         },
         {
-          name:'USD - United States Dollars'
+          name: 'USD - United States Dollars',
         },
         {
-          name:'CAD - Canadian Dollars'
+          name: 'CAD - Canadian Dollars',
         },
         {
-          name:'SAR - Saudi Arabia Riyals'
+          name: 'SAR - Saudi Arabia Riyals',
         },
       ],
-      language:[
+      language: [
         {
-          name:'繁體中文',
-          img:languageImg3
+          name: '繁體中文',
+          img: languageImg3,
         },
         {
-          name:'简体中文',
-          img:languageImg3
+          name: '简体中文',
+          img: languageImg3,
         },
         {
-          name:'日本語',
-          img:languageImg2
+          name: '日本語',
+          img: languageImg2,
         },
         {
-          name:'English',
-          class:"active",
-          img:languageImg1
+          name: 'English',
+          class: 'active',
+          img: languageImg1,
         },
 
       ],
-      languageShow:false,
-      currencyShow:false,
+      languageShow: false,
+      currencyShow: false,
       restaurants: [],
       state3: '',
       state4: '',
-      timeout:  null,
+      timeout: null,
       // datepicker
       value6: ['2019-01-17T16:00:00.000Z', '2019-01-18T16:00:00.000Z'],
       // search bar fixed
@@ -344,20 +369,18 @@ export default {
       ]
     },
     querySearchAsync(queryString, cb) {
-        var restaurants = this.restaurants;
-        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          cb(results);
-        }, 1000 * Math.random());
-      },
+      const restaurants = this.restaurants
+      const results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        cb(results)
+      }, 1000 * Math.random())
+    },
     createStateFilter(queryString) {
-      return (state) => {
-        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-      };
+      return state => (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
     },
     handleSelect(item) {
-      console.log(item);
+      console.log(item)
       // check in focus
     },
     handleIconClick(ev) {
@@ -373,18 +396,18 @@ export default {
         this.searchBarFixed = false
       }
     },
-    showCurrency(){
+    showCurrency() {
       this.currencyShow = true
     },
-    hideCurrency(){
+    hideCurrency() {
       this.currencyShow = false
     },
-    showLanguage(){
+    showLanguage() {
       this.languageShow = true
     },
-    hideLanguage(){
+    hideLanguage() {
       this.languageShow = false
-    }
+    },
   },
 }
 </script>
