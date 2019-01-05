@@ -1,5 +1,11 @@
 module.exports = {
-  "parser": "babel-eslint",
-  "extends": "airbnb-base",
-  "plugins": ["vue"]
-};
+  env: {
+    browser: true,
+    es6: true,
+    node: true
+  },
+  parserOptions: {
+    parser: 'babel-eslint'
+  },
+  extends: ['airbnb-base', 'plugin:vue/recommended']
+}
