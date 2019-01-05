@@ -1,10 +1,31 @@
 <template>
   <div class="header">
     <ul>
-      <li>Contact Us</li>
-      <li>Support</li>
-      <li>English</li>
-      <li>HKD</li>
+      <li>
+        <span>Contact Us</span>
+      </li>
+      <li>
+        <span>Support</span>
+      </li>
+      <li class="language"  @mouseenter=showLanguage @mouseleave=hideLanguage>
+        <span>English</span>
+        <transition name="show-language">
+          <ul class="language-list" v-show="languageShow">
+            <li v-for="item in language" :class="[item.class]">
+              <img :src=item.img alt="">
+              <span>{{item.name}}</span>
+            </li>
+          </ul>
+        </transition>
+      </li>
+      <li class="currency" @mouseenter=showCurrency @mouseleave=hideCurrency>
+        <span>HKD</span>
+        <transition name="show-currency">
+          <ul class="currency-list"  v-show="currencyShow">
+            <li v-for="item in currency" :class="[item.class]">{{item.name}}</li>
+          </ul>
+        </transition>
+      </li>
     </ul>
     <header>
       <div class="logo">
@@ -26,10 +47,7 @@
         </a>
       </div>
     </header>
-    <div
-      :class="['search',searchBarFixed == true ?
-        'isFixed' :'',message == 'isHomepage' ? '' :'notHomepage']"
-    >
+    <div :class="['search',searchBarFixed == true ?'isFixed' :'',message == 'isHomepage' ? '' :'notHomepage']">
       <p :class="[searchBarFixed == true ? 'hide' :'']">
         Say hi to your next destination!
       </p>
@@ -38,28 +56,18 @@
           <div class="title">
             LOCATION OR HOTEL
           </div>
-          <!-- 自定义输入建议的显示 -->
+          <!-- 自定义输入建议的显示  服务端搜索数据-->
           <el-autocomplete
-            v-model="state3"
-            popper-class="my-autocomplete"
-            :fetch-suggestions="querySearch"
+            v-model="state4"
+            :fetch-suggestions="querySearchAsync"
             placeholder="Anywhere"
-            @select="handleSelect"
-          >
+            @select="handleSelect">
             <i
-              slot="suffix"
+              slot="prefix"
               class="el-icon-search el-input__icon"
               @click="handleIconClick"
             />
-            <template slot-scope="{ item }">
-              <div class="name">
-                {{ item.value }}
-              </div>
-              <span class="addr">
-                {{ item.address }}
-              </span>
-            </template>
-          </el-autocomplete>
+            </el-autocomplete>
         </div>
         <div class="check">
           <div class="title">
@@ -118,8 +126,13 @@
 </template>
 
 <script>
+import languageImg1 from '../../images/homepage/Mask Group 18@3x.png'
+import languageImg2 from '../../images/homepage/Mask Group 19@3x.png'
+import languageImg3 from '../../images/homepage/Mask Group 20@3x.png'
+
 export default {
   // name: "header",
+
   props: {
     message: {
       type: String,
@@ -137,11 +150,66 @@ export default {
         'Korea',
         'Rome',
         'Barcelona',
-        'London',
-        'Singapore',
+        'London2',
+        'Singapore2',
       ],
+      currency:[
+        {
+          name:'GBP - Great British Sterling'
+        },
+        {
+          name:'HKD - Hong Kong Dollars',
+          class:"active"
+        },
+        {
+          name:'EUR - Euros'
+        },
+        {
+          name:'JPY - Japanese Yen Dollarsg'
+        },
+        {
+          name:'BHD - Bahraini Dinar'
+        },
+        {
+          name:'INR - Indian Rupees'
+        },
+        {
+          name:'USD - United States Dollars'
+        },
+        {
+          name:'CAD - Canadian Dollars'
+        },
+        {
+          name:'SAR - Saudi Arabia Riyals'
+        },
+      ],
+      language:[
+        {
+          name:'繁體中文',
+          img:languageImg3
+        },
+        {
+          name:'简体中文',
+          img:languageImg3
+        },
+        {
+          name:'日本語',
+          img:languageImg2
+        },
+        {
+          name:'English',
+          class:"active",
+          img:languageImg1
+        },
+
+      ],
+      languageShow:false,
+      currencyShow:false,
       restaurants: [],
       state3: '',
+      state4: '',
+      timeout:  null,
+      // datepicker
       value6: ['2019-01-17T16:00:00.000Z', '2019-01-18T16:00:00.000Z'],
       // search bar fixed
       searchBarFixed: false,
@@ -156,17 +224,6 @@ export default {
   },
   methods: {
     // search location or hotel
-    querySearch(queryString, cb) {
-      const { restaurants } = this.restaurants
-      const results = queryString
-        ? restaurants.filter(this.createFilter(queryString))
-        : restaurants
-      // 调用 callback 返回建议列表的数据
-      cb(results)
-    },
-    createFilter(queryString) {
-      return restaurant => restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-    },
     loadAll() {
       return [
         { value: '三全鲜食（北新泾店）', address: '长宁区新渔路144号' },
@@ -286,31 +343,54 @@ export default {
         },
       ]
     },
+    querySearchAsync(queryString, cb) {
+        var restaurants = this.restaurants;
+        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          cb(results);
+        }, 1000 * Math.random());
+      },
+    createStateFilter(queryString) {
+      return (state) => {
+        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
     handleSelect(item) {
-      console.log(item)
+      console.log(item);
+      // check in focus
     },
     handleIconClick(ev) {
       console.log(ev)
     },
     // searchbar fixed
     handleScroll() {
-      const scrollTop = window.pageYOffset
-        || document.documentElement.scrollTop
-        || document.body.scrollTop
-      const { offsetTop } = document.querySelector('.search-bar').offsetTop
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      const offsetTop = document.querySelector('.search-bar').offsetTop
       if (scrollTop > offsetTop) {
         this.searchBarFixed = true
       } else {
         this.searchBarFixed = false
       }
     },
+    showCurrency(){
+      this.currencyShow = true
+    },
+    hideCurrency(){
+      this.currencyShow = false
+    },
+    showLanguage(){
+      this.languageShow = true
+    },
+    hideLanguage(){
+      this.languageShow = false
+    }
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../../common/main.scss';
-
 .header {
   width: 100%;
   color: #333;
@@ -321,13 +401,60 @@ export default {
     justify-content: flex-end;
     align-items: center;
     height: 30px;
-    font-family: Rubik;
-    color: #333;
-    font-size: 12px;
+    @include font(12px, bold, #333, Rubik);
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-    li {
+    >li {
       list-style: none;
-      margin-left: 44px;
+      margin-left: 20px;
+      position: relative;
+      cursor: pointer;
+      span{
+        display:inline-block;
+        padding:8px 14px;
+      }
+      .currency-list,.language-list{
+        position: absolute;
+        top:35px;
+        right:0;
+        background-color:#fff;
+        border-radius: 4px;
+        box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.16);
+        transition:all .4s;
+        padding:10px 0;
+        li.active{
+          color:#cba052;
+        }
+        li{
+          padding:10px 20px;
+          color:#505050;
+          width:180px;
+          &:hover{
+            color:#fff;
+            background-color:#002b55;
+            transition:all .4s;
+          }
+        }
+      }
+      .language-list{
+        li{
+          // padding-left:50px;
+          padding:0;
+          padding-left:18px;
+          box-sizing: border-box;
+          width:120px;
+          img{
+            width:18px;
+            margin-right:6px;
+          }
+        }
+      }
+    }
+    .currency,.language{
+      &:hover{
+        color:#fff;
+        background-color:#002b55;
+        transition:all .4s;
+      }
     }
   }
   header {
@@ -403,6 +530,11 @@ export default {
       }
       .location {
         min-width: 260px;
+        width:40%;
+        .el-autocomplete{
+          width:100%;
+
+        }
         .my-autocomplete {
           li {
             line-height: normal;
@@ -421,9 +553,8 @@ export default {
             }
           }
         }
-        .el-input__suffix {
-          left: 20px;
-          right: auto;
+        .el-input__prefix {
+          left: 12px;
           .el-input__icon {
             font-weight: bold;
             font-size: 18px;
@@ -441,7 +572,7 @@ export default {
       }
 
       input {
-        @include font(14px, bold, #333, MerriweatherSans);
+        @include font(14px, bolder, #333, MerriweatherSans);
         height: 28px;
       }
       .el-input__inner {
@@ -485,7 +616,7 @@ export default {
           background-color: #fff;
           border-radius: 5px;
           padding: 18px 18px 18px 46px;
-          @include font(14px, bold, #333, MerriweatherSans);
+          @include font(14px, bolder, #333, MerriweatherSans);
         }
       }
       // search button
@@ -525,5 +656,18 @@ export default {
   .notHomepage.isFixed {
     top: 0;
   }
+}
+// transition
+.show-language-enter-active, .show-language-leave-active {
+  transition: opacity .5s;
+}
+.show-language-enter, .show-language-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+.show-currency-enter-active, .show-currency-leave-active {
+  transition: opacity .5s;
+}
+.show-currency-enter, .show-currency-leave-to {
+  opacity: 0;
 }
 </style>
