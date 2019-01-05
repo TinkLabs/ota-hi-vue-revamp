@@ -354,7 +354,7 @@ export default {
 
   .items {
     overflow: hidden;
-    margin-top: -2.6%;
+    margin-top: -3.2%;
     // display:flex;
     // justify-content: space-between;
     // flex-wrap: wrap;
