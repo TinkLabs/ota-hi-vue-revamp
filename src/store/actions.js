@@ -1,3 +1,1 @@
-import Vue from 'vue'
-
-export default function example({ commit, state }) {}
+export default function example() {}
