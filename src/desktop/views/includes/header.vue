@@ -28,7 +28,7 @@
     </header>
     <div
       :class="['search',searchBarFixed == true ?
-        'isFixed' :'',message == 'isHomepage' ? '' :'notHomepage']"
+        'isFixed' :'',homepage ? '' :'notHomepage']"
     >
       <p :class="[searchBarFixed == true ? 'hide' :'']">
         Say hi to your next destination!
@@ -119,11 +119,11 @@
 
 <script>
 export default {
-  // name: "header",
+  name: 'Header',
   props: {
-    message: {
-      type: String,
-      default: '',
+    homepage: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

@@ -1,7 +1,7 @@
 <template>
   <div class="home-view">
     <!--header  -->
-    <Header message="isHomepage" />
+    <!-- <Header message="isHomepage" /> -->
 
     <!-- content -->
     <div class="h-container">
@@ -238,9 +238,9 @@
     </div>
 
     <!-- subscribe -->
-    <Subscribe />
+    <!-- <Subscribe /> -->
     <!-- footer -->
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
