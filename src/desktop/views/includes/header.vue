@@ -94,7 +94,6 @@
             <i
               slot="prefix"
               class="el-icon-search el-input__icon"
-              @click="handleIconClick"
             />
             <template slot-scope="{ item }">
               <div v-if=item.type class="search-result-list">
@@ -377,7 +376,6 @@ export default {
     querySearchAsync(queryString, cb) {
       const restaurants = this.restaurants
       const results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants
-      console.log(results)
       cb(results)
     },
     createStateFilter(queryString) {
@@ -386,12 +384,8 @@ export default {
       };
     },
     handleSelect(item) {
-      console.log(item)
       // check in focus
       document.querySelector('.el-range-input').focus();
-    },
-    handleIconClick(ev) {
-      console.log(ev)
     },
     // searchbar fixed
     handleScroll() {
