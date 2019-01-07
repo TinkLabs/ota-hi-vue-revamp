@@ -12,7 +12,7 @@
         @mouseenter="showLanguage"
         @mouseleave="hideLanguage"
       >
-        <span>English</span>
+        <span ref="language">English</span>
         <transition name="show-language">
           <ul
             v-show="languageShow"
@@ -21,6 +21,7 @@
             <li
               v-for="item in language"
               :class="[item.class]"
+              @click="selectLanguage($event)"
             >
               <img
                 :src="item.img"
@@ -36,7 +37,7 @@
         @mouseenter="showCurrency"
         @mouseleave="hideCurrency"
       >
-        <span>HKD</span>
+        <span ref="currency">HKD</span>
         <transition name="show-currency">
           <ul
             v-show="currencyShow"
@@ -45,6 +46,7 @@
             <li
               v-for="item in currency"
               :class="[item.class]"
+              @click="selectCurrency($event)"
             >
               {{ item.name }}
             </li>
@@ -52,7 +54,7 @@
         </transition>
       </li>
     </ul>
-    <header>
+    <header :class="[searchBarFixed == true ? 'headerFixed' :'']">
       <div class="logo">
         <img
           src="../../images/homepage/hi_DotComLogo@3x.png"
@@ -83,6 +85,7 @@
           </div>
           <!-- 自定义输入建议的显示  服务端搜索数据-->
           <el-autocomplete
+            popper-class="my-autocomplete"
             v-model="state4"
             :fetch-suggestions="querySearchAsync"
             placeholder="Anywhere"
@@ -91,8 +94,45 @@
             <i
               slot="prefix"
               class="el-icon-search el-input__icon"
-              @click="handleIconClick"
             />
+            <template slot-scope="{ item }">
+              <div v-if=item.type class="search-result-list">
+                <div class="result-name">
+                  <i class="el-icon-location-outline"></i>
+                  {{item.value}}
+                </div>
+                <div class="type">{{item.type}}</div>
+              </div>
+              <div v-else>
+                <div class="title" v-if=item.title>{{item.title}}</div>
+                <div v-else-if=item.checkin :class="['history-list',item.isLast == true?'isLast':'']">
+                  <div class="name">
+                    <span></span>
+                    <span>{{ item.value }}</span>
+                  </div>
+                  <div class="info">
+                    <div class="check-date">
+                      <span>{{item.checkin}} - {{item.checkout}}</span>
+                    </div>
+                    <div class="guest-info">
+                      <span>{{item.room}} room, {{item.adult}} adults, {{item.children}} children</span>
+                    </div>
+                  </div>
+                </div>
+                <div v-else class="cities">
+                  <div class="keyword">
+                    <i class="el-icon-location"></i>
+                    <span>{{item.value}}</span>
+                  </div>
+                  <div class="number">
+                    <span>{{item.number}}</span>
+                    properties
+                  </div>
+                </div>
+              </div>
+
+
+            </template>
           </el-autocomplete>
         </div>
         <div class="check">
@@ -242,7 +282,8 @@ export default {
   },
   mounted() {
     this.restaurants = this.loadAll()
-    window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('scroll', this.handleScroll);
+    document.querySelector('.el-input__inner').addEventListener('input',this.getSearchList)
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
@@ -251,140 +292,100 @@ export default {
     // search location or hotel
     loadAll() {
       return [
-        { value: '三全鲜食（北新泾店）', address: '长宁区新渔路144号' },
         {
-          value: 'Hot honey 首尔炸鸡（仙霞路）',
-          address: '上海市长宁区淞虹路661号',
+          title:'Search History',
+          value:'',
+        },
+        { value: 'Bangkok, Thailand',
+          checkin:'14 Feb 2018',
+          checkout:'16 Feb 2018',
+          room:1,
+          adult:2,
+          children:2
         },
         {
-          value: '新旺角茶餐厅',
-          address: '上海市普陀区真北路988号创邑金沙谷6号楼113',
-        },
-        { value: '泷千家(天山西路店)', address: '天山西路438号' },
-        {
-          value: '胖仙女纸杯蛋糕（上海凌空店）',
-          address: '上海市长宁区金钟路968号1幢18号楼一层商铺18-101',
-        },
-        { value: '贡茶', address: '上海市长宁区金钟路633号' },
-        {
-          value: '豪大大香鸡排超级奶爸',
-          address: '上海市嘉定区曹安公路曹安路1685号',
+          value: 'Hong Kong, Hong Kong',
+          checkin:'14 Feb 2018',
+          checkout:'16 Feb 2018',
+          room:1,
+          adult:2,
+          children:2
         },
         {
-          value: '茶芝兰（奶茶，手抓饼）',
-          address: '上海市普陀区同普路1435号',
-        },
-        { value: '十二泷町', address: '上海市北翟路1444弄81号B幢-107' },
-        { value: '星移浓缩咖啡', address: '上海市嘉定区新郁路817号' },
-        { value: '阿姨奶茶/豪大大', address: '嘉定区曹安路1611号' },
-        { value: '新麦甜四季甜品炸鸡', address: '嘉定区曹安公路2383弄55号' },
-        {
-          value: 'Monica摩托主题咖啡店',
-          address: '嘉定区江桥镇曹安公路2409号1F，2383弄62号1F',
+          value: 'Sheraton Grande Walkerhill Casino, Seoul',
+          checkin:'14 Feb 2018',
+          checkout:'16 Feb 2018',
+          room:1,
+          adult:2,
+          children:2,
+          isLast:true,
         },
         {
-          value: '浮生若茶（凌空soho店）',
-          address: '上海长宁区金钟路968号9号楼地下一层',
-        },
-        { value: 'NONO JUICE  鲜榨果汁', address: '上海市长宁区天山西路119号' },
-        { value: 'CoCo都可(北新泾店）', address: '上海市长宁区仙霞西路' },
-        {
-          value: '快乐柠檬（神州智慧店）',
-          address: '上海市长宁区天山西路567号1层R117号店铺',
+          value:'London, United Kingdom',
+          number:5254,
         },
         {
-          value: 'Merci Paul cafe',
-          address: '上海市普陀区光复西路丹巴路28弄6号楼819',
+          value:'London, Canada',
+          number:355,
         },
         {
-          value: '猫山王（西郊百联店）',
-          address: '上海市长宁区仙霞西路88号第一层G05-F01-1-306',
+          value:'London, South Africa',
+          number:768,
         },
-        { value: '枪会山', address: '上海市普陀区棕榈路' },
-        { value: '纵食', address: '元丰天山花园(东门) 双流路267号' },
-        { value: '钱记', address: '上海市长宁区天山西路' },
-        { value: '壹杯加', address: '上海市长宁区通协路' },
+      ]
+    },
+    loadAllResult() {
+      return [
         {
-          value: '唦哇嘀咖',
-          address: '上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元',
+          value:'London, Marriott Hotel Regents Park, England, UK',
+          type:'Hotel',
+          icon:''
         },
-        { value: '爱茜茜里(西郊百联)', address: '长宁区仙霞西路88号1305室' },
-        {
-          value: '爱茜茜里(近铁广场)',
-          address:
-            '上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺',
-        },
-        {
-          value: '鲜果榨汁（金沙江路和美广店）',
-          address: '普陀区金沙江路2239号金沙和美广场B1-10-6',
+         {
+          value:'London, Fleming Mayfair, Small Luxury Hotels of the World',
+          type:'Hotel',
+          icon:''
         },
         {
-          value: '开心丽果（缤谷店）',
-          address: '上海市长宁区威宁路天山路341号',
-        },
-        { value: '超级鸡车（丰庄路店）', address: '上海市嘉定区丰庄路240号' },
-        { value: '妙生活果园（北新泾店）', address: '长宁区新渔路144号' },
-        { value: '香宜度麻辣香锅', address: '长宁区淞虹路148号' },
-        {
-          value: '凡仔汉堡（老真北路店）',
-          address: '上海市普陀区老真北路160号',
-        },
-        { value: '港式小铺', address: '上海市长宁区金钟路968号15楼15-105室' },
-        { value: '蜀香源麻辣香锅（剑河路店）', address: '剑河路443-1' },
-        { value: '北京饺子馆', address: '长宁区北新泾街道天山西路490-1号' },
-        {
-          value: '饭典*新简餐（凌空SOHO店）',
-          address: '上海市长宁区金钟路968号9号楼地下一层9-83室',
+          value:'London Hotel, Glyfada, Greece',
+          type:'Hotel',
+          icon:''
         },
         {
-          value: '焦耳·川式快餐（金钟路店）',
-          address: '上海市金钟路633号地下一层甲部',
-        },
-        { value: '动力鸡车', address: '长宁区仙霞西路299弄3号101B' },
-        { value: '浏阳蒸菜', address: '天山西路430号' },
-        { value: '四海游龙（天山西路店）', address: '上海市长宁区天山西路' },
-        {
-          value: '樱花食堂（凌空店）',
-          address: '上海市长宁区金钟路968号15楼15-105室',
-        },
-        { value: '壹分米客家传统调制米粉(天山店)', address: '天山西路428号' },
-        {
-          value: '福荣祥烧腊（平溪路店）',
-          address: '上海市长宁区协和路福泉路255弄57-73号',
+          value:'London, Ontario, Canada',
+          type:'City',
+          icon:''
         },
         {
-          value: '速记黄焖鸡米饭',
-          address: '上海市长宁区北新泾街道金钟路180号1层01号摊位',
+          value:'London City Centre',
+          type:'City',
+          icon:''
         },
-        { value: '红辣椒麻辣烫', address: '上海市长宁区天山西路492号' },
         {
-          value: '(小杨生煎)西郊百联餐厅',
-          address: '长宁区仙霞西路88号百联2楼',
+          value:'London Heathrow Airport',
+          type:'Airport',
+          icon:''
         },
-        { value: '阳阳麻辣烫', address: '天山西路389号' },
         {
-          value: '南拳妈妈龙虾盖浇饭',
-          address: '普陀区金沙江路1699号鑫乐惠美食广场A13',
+          value:'London Bridge, London UK',
+          type:'Landmarks',
+          icon:''
         },
       ]
     },
     querySearchAsync(queryString, cb) {
       const restaurants = this.restaurants
       const results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants
-      clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        cb(results)
-      }, 1000 * Math.random())
+      cb(results)
     },
     createStateFilter(queryString) {
-      return state => (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
     },
     handleSelect(item) {
-      console.log(item)
       // check in focus
-    },
-    handleIconClick(ev) {
-      console.log(ev)
+      document.querySelector('.el-range-input').focus();
     },
     // searchbar fixed
     handleScroll() {
@@ -408,6 +409,25 @@ export default {
     hideLanguage() {
       this.languageShow = false
     },
+    selectCurrency(event){
+      event.currentTarget.parentNode.getElementsByClassName('active')[0].className=""
+      this.$refs.currency.innerHTML=event.currentTarget.innerHTML.split('-')[0]
+      event.currentTarget.className='active'
+      this.currencyShow = false
+      // 切换货币
+    },
+    selectLanguage(event){
+      event.currentTarget.parentNode.getElementsByClassName('active')[0].className=""
+      this.languageShow = false
+      this.$refs.language.innerHTML=event.target.innerHTML
+      event.currentTarget.className='active'
+      // 切换语言
+    },
+    // search with typing
+    getSearchList(){
+      this.restaurants = this.loadAllResult()
+
+    }
   },
 }
 </script>
@@ -512,6 +532,9 @@ export default {
       }
     }
   }
+  header.headerFixed{
+    margin-bottom:200px;
+  }
   .search.isFixed {
     position: fixed;
     background-color: #f1f1f1;
@@ -527,6 +550,7 @@ export default {
     background-color: #f5f5f5;
     box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.11);
     padding-bottom: 60px;
+    transition: all 0.4s;
     p {
       font-family: Montserrat;
       font-size: 40px;
@@ -606,6 +630,7 @@ export default {
         padding-left: 52px;
         font-weight: bolder;
         border: none;
+        padding-right: 20px;
         .el-range-separator {
           line-height: 64px;
         }
@@ -649,6 +674,7 @@ export default {
         max-width: 160px;
         background-color: #cba052;
         @include font(20px, bold, #fff, MerriweatherSans);
+        cursor: pointer;
       }
     }
 
@@ -679,6 +705,106 @@ export default {
   .notHomepage.isFixed {
     top: 0;
   }
+}
+// search suggestion list
+.el-popper[x-placement^=bottom]{
+  margin-top:6px;
+}
+.el-autocomplete-suggestion.el-popper[x-placement^=bottom]{
+  width:auto !important;
+  min-width:500px;
+  overflow: unset;
+  border-radius: 4px;
+  .el-scrollbar{
+    border-radius:4px;
+    .el-autocomplete-suggestion__wrap{
+      max-height:300px;
+    }
+  }
+  .el-scrollbar__view{
+    list-style-type: disc !important;
+    li{
+      padding:0;
+      &:hover{
+        background-color:#fff;
+      }
+      .title{
+        @include font(12px,bold, #8dc8e8,MerriweatherSans);
+        padding:0 20px;
+        cursor: auto;
+      }
+      .history-list,.cities,.search-result-list{
+        list-style-type: disc;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height:44px;
+        padding:0 20px;
+        &:hover{
+          background-color:#002b55;
+          transition: all .4s;
+          .name,.info,.keyword,.number,.number span,.result-name,.type{
+            color:#fff;
+            transition: all .4s;
+          }
+          .name span:first-child{
+            background-color:#fff;
+            transition: all .4s;
+          }
+        }
+      }
+      // search with typing
+      .search-result-list{
+        border-bottom:2px solid rgba(150, 150, 150, 0.12);
+        height:50px;
+
+      }
+
+      .history-list.isLast{
+        border-bottom:2px solid rgba(69, 116, 235,0.1);
+        margin-bottom:10px;
+      }
+      color:#505050;
+
+      .name,.keyword,.result-name{
+        @include font(14px,bold, #505050,MerriweatherSans);
+        margin-right:50px;
+        span:first-child{
+          display:inline-block;
+          width:6px ;
+          height:6px;
+          background-color:#000;
+          border-radius:50%;
+          margin:2px 20px 2px 10px;
+        }
+        i{
+          margin:0 12px 0 10px;
+        }
+
+      }
+      .type{
+        @include font(14px,normal, #888,MerriweatherSans);
+      }
+      .number{
+        @include font(14px,bold, #505050,MerriweatherSans);
+        span{
+          color:#cba052;
+        }
+      }
+      .info{
+        @include font(10px,normal, #888,Rubik);
+        >div{
+          line-height:16px;
+        }
+      }
+
+
+    }
+  }
+
+}
+.my-autocomplete,.el-popper[x-placement^=bottom]{
+
 }
 // transition
 .show-language-enter-active, .show-language-leave-active {
