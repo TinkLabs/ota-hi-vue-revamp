@@ -331,7 +331,7 @@ export default {
 .h-container {
   h1.title {
     @include font(26px, 600, #002b55, Montserrat);
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
   }
   .content {
     @include font(16px, normal, #333333, MerriweatherSans);
