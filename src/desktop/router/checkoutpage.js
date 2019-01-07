@@ -1,8 +1,8 @@
 
 // const Home = () => import('../views/home.vue');
-const Homepage = () => import('../views/homepage.vue')
+const Checkoutpage = () => import('../views/checkout/checkoutpage.vue')
 
 export default [
   // { path: '', component: Home },
-  { path: '', component: Homepage },
+  { path: '/checkoutpage', component: Checkoutpage },
 ]
