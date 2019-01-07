@@ -417,7 +417,6 @@ export default {
     },
     selectCurrency(event){
       event.currentTarget.parentNode.getElementsByClassName('active')[0].className=""
-      console.log(event.currentTarget.parentNode.getElementsByClassName('active'))
       this.$refs.currency.innerHTML=event.currentTarget.innerHTML.split('-')[0]
       event.currentTarget.className='active'
       this.currencyShow = false
@@ -432,7 +431,6 @@ export default {
     },
     // search with typing
     getSearchList(){
-      console.log(12)
       this.restaurants = this.loadAllResult()
 
     }
