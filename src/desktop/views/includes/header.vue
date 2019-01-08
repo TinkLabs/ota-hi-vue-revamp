@@ -288,13 +288,14 @@ export default {
           this.endDate=maxDate;
         },
         disabledDate:(time) =>{
+          console.log(time)
           if(this.startDate){
             let minDate = (this.startDate).getTime();
             let one = 30 * 24 * 3600 * 1000;
             let oneMonth = minDate + one;
-            return time.getTime() < Date.now() - 8.64e7 || time.getTime() > oneMonth;
+            return time.getTime() < Date.now() - 24*60*60*1000 || time.getTime() > oneMonth;
           }else{
-            return time.getTime() < Date.now() - 8.64e7;
+            return time.getTime() < Date.now() - 24*60*60*1000;
           }
         },
       },
