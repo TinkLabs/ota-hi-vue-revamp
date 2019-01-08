@@ -150,6 +150,7 @@
               range-separator="-"
               start-placeholder="CHECK IN"
               end-placeholder="CHECK OUT"
+              :picker-options="pickerOptions"
             />
           </div>
         </div>
@@ -277,9 +278,18 @@ export default {
       state4: '',
       timeout: null,
       // datepicker
-      value6: ['2019-01-17T16:00:00.000Z', '2019-01-18T16:00:00.000Z'],
+      value6: ['2019-01-17T16:00:00.000Z', '2019-01-26T16:00:00.000Z'],
       // search bar fixed
       searchBarFixed: false,
+       pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now() - 8.64e7;
+          // let curDate = (new Date()).getTime();
+          // let one = 30 * 24 * 3600 * 1000;
+          // let oneMonth = curDate + one;
+          // return time.getTime() <= Date.now() - 8.64e7 || time.getTime() > oneMonth;;
+        }
+      },
     }
   },
   mounted() {
@@ -656,6 +666,7 @@ export default {
         .el-date-editor--daterange.el-input__inner {
           width: 280px;
         }
+
       }
 
       // guest number
@@ -803,6 +814,68 @@ export default {
 
     }
   }
+
+}
+
+// datepicker
+.el-date-range-picker{
+  .el-date-table{
+    td span{
+      color:#000;
+      font-weight:600;
+    }
+    td.disabled div{
+      background-color:#fff;
+    }
+    .disabled span{
+      color:#a5a5a5;
+    }
+    .today span{
+      border: 2px solid #cba052;
+      border-radius: 2px;
+    }
+    td.in-range.start-date,td.in-range.end-date{
+      div{
+        background-color:#002b55;
+        border-radius:2px;
+        position: relative;
+      }
+      span{
+        background-color:#002b55;
+        border-radius:2px;
+        color:#fff;
+      }
+    }
+    .start-date div:after{
+      content:"";
+      width:12px;
+      height:30px;
+      // background-color:#002b55;
+      position: absolute;  /*日常绝对定位*/
+      top:0;
+      left:30px;
+      width: 0;
+      height: 0;
+      border:15px solid transparent;
+      // left:-12px;
+      border-left-color: #002b55;
+    }
+
+
+  }
+  .el-date-table td.in-range div, .el-date-table td.in-range div:hover, .el-date-table.is-week-mode .el-date-table__row.current div, .el-date-table.is-week-mode .el-date-table__row:hover div{
+    background-color:#e8e8e8;
+
+  }
+  .el-date-table td.in-range div:hover{
+    span{
+      color:#fff;
+    }
+  }
+  .el-date-table td.in-range div:hover{
+    background-color:#002b55;
+  }
+
 
 }
 .my-autocomplete,.el-popper[x-placement^=bottom]{
