@@ -288,7 +288,6 @@ export default {
           this.endDate=maxDate;
         },
         disabledDate:(time) =>{
-          console.log(time)
           if(this.startDate){
             let minDate = (this.startDate).getTime();
             let one = 30 * 24 * 3600 * 1000;
