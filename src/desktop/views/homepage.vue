@@ -354,10 +354,9 @@ export default {
 
   .items {
     overflow: hidden;
-    margin-top: -3.2%;
-    // display:flex;
-    // justify-content: space-between;
-    // flex-wrap: wrap;
+    position: relative;
+    top:-40px;
+    padding-bottom:10px;
     > div {
       float: left;
       margin-left: 1%;
