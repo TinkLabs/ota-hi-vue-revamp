@@ -118,7 +118,9 @@
             GUESTS
           </div>
           <div class="guest-num">
-            <i class="far fa-user" />
+            <i class="fas fa-user" />
+            <!-- <i class="fas fa-user" /> -->
+            <!-- <font-awesome-icon :icon="['fas','coffee']" /> -->
             <span class="room-num">
               1
             </span> room,
