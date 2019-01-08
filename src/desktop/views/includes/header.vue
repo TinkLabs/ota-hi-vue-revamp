@@ -1,195 +1,197 @@
 <template>
-  <div class="header">
-    <ul>
-      <li>
-        <span>Contact Us</span>
-      </li>
-      <li>
-        <span>Support</span>
-      </li>
-      <li
-        class="language"
-        @mouseenter="languageShow=true;"
-        @mouseleave="languageShow=false;"
-      >
-        <span ref="language">English</span>
-        <transition name="show-language">
-          <ul
-            v-show="languageShow"
-            class="language-list"
-          >
-            <li
-              v-for="(item,index) in language"
-              :class="[item.class]"
-              @click="selectLanguage($event,index)"
-            >
-              <img
-                :src="item.img"
-                alt=""
-              >
-              <span>{{ item.name }}</span>
-            </li>
-          </ul>
-        </transition>
-      </li>
-      <li
-        class="currency"
-        @mouseenter="currencyShow=true"
-        @mouseleave="currencyShow=false"
-      >
-        <span ref="currency">HKD</span>
-        <transition name="show-currency">
-          <ul
-            v-show="currencyShow"
-            class="currency-list"
-          >
-            <li
-              v-for="(item,index) in currency"
-              :class="[item.class]"
-              @click="selectCurrency($event,index)"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
-        </transition>
-      </li>
-    </ul>
-    <header :class="[searchBarFixed == true ? 'headerFixed' :'']">
-      <div class="logo">
-        <img
-          src="../../images/homepage/hi_DotComLogo@3x.png"
-          alt="hi.com logo"
+  <div :class="['header-wrapper',searchBarFixed == true ?'isFixed' :'']">
+    <div :class="['header',searchBarFixed == true ?'isFixed' :'']">
+      <ul>
+        <li>
+          <span>Contact Us</span>
+        </li>
+        <li>
+          <span>Support</span>
+        </li>
+        <li
+          class="language"
+          @mouseenter="languageShow=true;"
+          @mouseleave="languageShow=false;"
         >
-        <span>Hotel</span>
-        <span>Experience</span>
-        <span>Restaurant</span>
-      </div>
-      <div class="account">
-        <a href="#">
-          Sign In
-        </a>
-        <span> | </span>
-        <a href="#">
-          Create an Account
-        </a>
-      </div>
-    </header>
-    <div :class="['search',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']">
-      <p :class="[searchBarFixed == true ? 'hide' :'']">
-        Say hi to your next destination!
-      </p>
-      <div :class="['search-bar']">
-        <div class="location">
-          <div class="title">
-            LOCATION OR HOTEL
-          </div>
-          <!-- 自定义输入建议的显示  服务端搜索数据-->
-          <el-autocomplete
-            popper-class="my-autocomplete"
-            v-model="searhResult"
-            :fetch-suggestions="querySearchAsync"
-            placeholder="Anywhere"
-            @select="handleSelect"
+          <span ref="language">English</span>
+          <transition name="show-language">
+            <ul
+              v-show="languageShow"
+              class="language-list"
+            >
+              <li
+                v-for="(item,index) in language"
+                :class="[item.class]"
+                @click="selectLanguage($event,index)"
+              >
+                <img
+                  :src="item.img"
+                  alt=""
+                >
+                <span>{{ item.name }}</span>
+              </li>
+            </ul>
+          </transition>
+        </li>
+        <li
+          class="currency"
+          @mouseenter="currencyShow=true"
+          @mouseleave="currencyShow=false"
+        >
+          <span ref="currency">HKD</span>
+          <transition name="show-currency">
+            <ul
+              v-show="currencyShow"
+              class="currency-list"
+            >
+              <li
+                v-for="(item,index) in currency"
+                :class="[item.class]"
+                @click="selectCurrency($event,index)"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </transition>
+        </li>
+      </ul>
+      <header>
+        <div class="logo">
+          <img
+            src="../../images/homepage/hi_DotComLogo@3x.png"
+            alt="hi.com logo"
           >
-            <i
-              slot="prefix"
-              class="el-icon-search el-input__icon"
-            />
-            <template slot-scope="{ item }">
-              <div v-if=item.type class="search-result-list">
-                <div class="result-name">
-                  <i class="el-icon-location-outline"></i>
-                  {{item.value}}
-                </div>
-                <div class="type">{{item.type}}</div>
-              </div>
-              <div v-else>
-                <div class="title" v-if=item.title>{{item.title}}</div>
-                <!-- history list -->
-                <div v-else-if=item.checkin :class="['history-list',item.isLast == true?'isLast':'']">
-                  <div class="name">
-                    <span></span>
-                    <span>{{ item.value }}</span>
+          <span>Hotel</span>
+          <span>Experience</span>
+          <span>Restaurant</span>
+        </div>
+        <div class="account">
+          <a href="#">
+            Sign In
+          </a>
+          <span> | </span>
+          <a href="#">
+            Create an Account
+          </a>
+        </div>
+      </header>
+      <div :class="['search',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']">
+        <p :class="[searchBarFixed == true ? 'hide' :'']">
+          Say hi to your next destination!
+        </p>
+        <div :class="['search-bar']">
+          <div class="location">
+            <div class="title">
+              LOCATION OR HOTEL
+            </div>
+            <!-- 自定义输入建议的显示  服务端搜索数据-->
+            <el-autocomplete
+              popper-class="my-autocomplete"
+              v-model="searhResult"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="Anywhere"
+              @select="handleSelect"
+            >
+              <i
+                slot="prefix"
+                class="el-icon-search el-input__icon"
+              />
+              <template slot-scope="{ item }">
+                <div v-if=item.type class="search-result-list">
+                  <div class="result-name">
+                    <i class="el-icon-location-outline"></i>
+                    {{item.value}}
                   </div>
-                  <div class="info">
-                    <div class="check-date">
-                      <span>{{item.checkin}} - {{item.checkout}}</span>
+                  <div class="type">{{item.type}}</div>
+                </div>
+                <div v-else>
+                  <div class="title" v-if=item.title>{{item.title}}</div>
+                  <!-- history list -->
+                  <div v-else-if=item.checkin :class="['history-list',item.isLast == true?'isLast':'']">
+                    <div class="name">
+                      <span></span>
+                      <span>{{ item.value }}</span>
                     </div>
-                    <div class="guest-info">
-                      <span>{{item.room}} room, {{item.adult}} adults, {{item.children}} children</span>
+                    <div class="info">
+                      <div class="check-date">
+                        <span>{{item.checkin}} - {{item.checkout}}</span>
+                      </div>
+                      <div class="guest-info">
+                        <span>{{item.room}} room, {{item.adult}} adults, {{item.children}} children</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- cities -->
+                  <div v-else class="cities">
+                    <div class="keyword">
+                      <i class="el-icon-location"></i>
+                      <span>{{item.value}}</span>
+                    </div>
+                    <div class="number">
+                      <span>{{item.number}}</span>
+                      properties
                     </div>
                   </div>
                 </div>
-                 <!-- cities -->
-                <div v-else class="cities">
-                  <div class="keyword">
-                    <i class="el-icon-location"></i>
-                    <span>{{item.value}}</span>
-                  </div>
-                  <div class="number">
-                    <span>{{item.number}}</span>
-                    properties
-                  </div>
-                </div>
-              </div>
-            </template>
-          </el-autocomplete>
+              </template>
+            </el-autocomplete>
+          </div>
+          <div class="check">
+            <div class="title">
+              CHECK IN & OUT
+            </div>
+            <!-- <input type="text" placeholder="CHECK IN & OUT"> -->
+            <!-- datepicker -->
+            <div class="block">
+              <!-- <span class="demonstration">默认</span> -->
+              <!-- {{value6}} -->
+              <el-date-picker
+                v-model="defaultDate"
+                type="daterange"
+                range-separator="-"
+                start-placeholder="CHECK IN"
+                end-placeholder="CHECK OUT"
+                :picker-options="pickerOptions"
+                ref="datePicker"
+              />
+            </div>
+          </div>
+          <div class="guests">
+            <div class="title">
+              GUESTS
+            </div>
+            <div class="guest-num">
+              <i class="far fa-user" />
+              <!-- <i class="fas fa-user" /> -->
+              <!-- <font-awesome-icon :icon="['fas','coffee']" /> -->
+              <span class="room-num">
+                1
+              </span> room,
+              <span class="adult-num">
+                2
+              </span> adults,
+              <br>
+              <span class="children-num">
+                0
+              </span> children
+            </div>
+            <!-- <input type="text" placeholder="GUESTS"> -->
+          </div>
+          <button>Search</button>
         </div>
-        <div class="check">
+        <div :class="['popular-search',searchBarFixed == true ? 'hide' :'']">
           <div class="title">
-            CHECK IN & OUT
+            POPULAR SEARCHES
           </div>
-          <!-- <input type="text" placeholder="CHECK IN & OUT"> -->
-          <!-- datepicker -->
-          <div class="block">
-            <!-- <span class="demonstration">默认</span> -->
-            <!-- {{value6}} -->
-            <el-date-picker
-              v-model="defaultDate"
-              type="daterange"
-              range-separator="-"
-              start-placeholder="CHECK IN"
-              end-placeholder="CHECK OUT"
-              :picker-options="pickerOptions"
-              ref="datePicker"
-            />
-          </div>
+          <ul class="popular-city">
+            <li
+              v-for="item in popular"
+              :key="item"
+            >
+              {{ item }}
+            </li>
+          </ul>
         </div>
-        <div class="guests">
-          <div class="title">
-            GUESTS
-          </div>
-          <div class="guest-num">
-            <i class="far fa-user" />
-            <!-- <i class="fas fa-user" /> -->
-            <!-- <font-awesome-icon :icon="['fas','coffee']" /> -->
-            <span class="room-num">
-              1
-            </span> room,
-            <span class="adult-num">
-              2
-            </span> adults,
-            <br>
-            <span class="children-num">
-              0
-            </span> children
-          </div>
-          <!-- <input type="text" placeholder="GUESTS"> -->
-        </div>
-        <button>Search</button>
-      </div>
-      <div :class="['popular-search',searchBarFixed == true ? 'hide' :'']">
-        <div class="title">
-          POPULAR SEARCHES
-        </div>
-        <ul class="popular-city">
-          <li
-            v-for="item in popular"
-            :key="item"
-          >
-            {{ item }}
-          </li>
-        </ul>
       </div>
     </div>
   </div>
@@ -462,9 +464,13 @@ export default {
 
 <style lang="scss">
 @import '../../common/main.scss';
+.header-wrapper.isFixed{
+  height:460px;
+}
 .header {
   width: 100%;
   color: #333;
+  min-width:1024px;
   > ul {
     padding: 0 12%;
     // margin:0 auto;
@@ -473,7 +479,6 @@ export default {
     align-items: center;
     height: 30px;
     @include font(12px, bold, #333, Rubik);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     >li {
       list-style: none;
       margin-left: 20px;
@@ -513,7 +518,7 @@ export default {
           padding:0;
           padding-left:18px;
           box-sizing: border-box;
-          width:120px;
+          width:130px;
           img{
             width:18px;
             margin-right:6px;
@@ -533,6 +538,7 @@ export default {
     padding: 10px 12%;
     display: flex;
     justify-content: space-between;
+    border-bottom:2px solid #ebebeb;
     span {
       display: inline-clock;
     }
@@ -541,7 +547,7 @@ export default {
       // line-height:60px;
       display: flex;
       justify-content: flex-start;
-      align-items: center;
+      align-items: flex-end;
       img {
         width: 100px;
       }
@@ -559,25 +565,15 @@ export default {
         font-weight: bolder;
         font-size: 12px;
       }
+      a:first-child{
+        color:#cba052;
+      }
     }
-  }
-  header.headerFixed{
-    margin-bottom:200px;
-  }
-  .search.isFixed {
-    position: fixed;
-    background-color: #f1f1f1;
-    top: -26px;
-    z-index: 999;
-    padding-bottom: 16px;
-    transition: all 0.4s;
   }
   .search {
     width: 100%;
     padding: 0 12%;
     box-sizing: border-box;
-    background-color: #f5f5f5;
-    box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.11);
     padding-bottom: 60px;
     transition: all 0.4s;
     p {
@@ -660,6 +656,7 @@ export default {
         font-weight: bolder;
         border: none;
         padding-right: 20px;
+        background-color:#ebebeb;
         .el-range-separator {
           line-height: 64px;
         }
@@ -691,7 +688,7 @@ export default {
         .guest-num {
           min-width: 114px;
           height: 36px;
-          background-color: #fff;
+          background-color:#ebebeb;
           border-radius: 5px;
           padding: 18px 18px 18px 46px;
           @include font(14px, bolder, #333, MerriweatherSans);
@@ -733,9 +730,9 @@ export default {
       }
     }
   }
-  .notHomepage {
+  .notHomepage,.isFixed {
     padding: 10px 12%;
-    > p,
+     p,
     .title,
     .popular-search {
       display: none;
@@ -744,6 +741,13 @@ export default {
   .notHomepage.isFixed {
     top: 0;
   }
+}
+.header.isFixed {
+  position: fixed;
+  background-color: #ffff;
+  z-index: 999;
+  transition: all 0.4s;
+  top:0;
 }
 // search suggestion list
 .el-popper[x-placement^=bottom]{
@@ -858,6 +862,7 @@ export default {
       @include font(13px,500, #8dc8e8,Rubik);
     }
   }
+
   .el-date-table{
     td span{
       color:#000;
@@ -914,6 +919,9 @@ export default {
   .el-date-table td.in-range div:hover{
     background-color:#002b55;
   }
+}
+.el-range-input{
+  background-color:#ebebeb;
 }
 
 // transition

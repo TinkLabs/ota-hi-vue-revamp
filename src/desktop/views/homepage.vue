@@ -354,7 +354,11 @@ export default {
 
   .items {
     overflow: hidden;
-    margin-top: -3.2%;
+    position: relative;
+    top:-40px;
+    padding-bottom:10px;
+    // margin-top: -3.2%;
+    // transform:translate(0,-3.2%)
     // display:flex;
     // justify-content: space-between;
     // flex-wrap: wrap;
