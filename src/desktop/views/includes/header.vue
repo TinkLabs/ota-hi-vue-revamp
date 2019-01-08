@@ -9,8 +9,8 @@
       </li>
       <li
         class="language"
-        @mouseenter="showLanguage"
-        @mouseleave="hideLanguage"
+        @mouseenter="languageShow=true;"
+        @mouseleave="languageShow=false;"
       >
         <span ref="language">English</span>
         <transition name="show-language">
@@ -19,9 +19,9 @@
             class="language-list"
           >
             <li
-              v-for="item in language"
+              v-for="(item,index) in language"
               :class="[item.class]"
-              @click="selectLanguage($event)"
+              @click="selectLanguage($event,index)"
             >
               <img
                 :src="item.img"
@@ -34,8 +34,8 @@
       </li>
       <li
         class="currency"
-        @mouseenter="showCurrency"
-        @mouseleave="hideCurrency"
+        @mouseenter="currencyShow=true"
+        @mouseleave="currencyShow=false"
       >
         <span ref="currency">HKD</span>
         <transition name="show-currency">
@@ -44,9 +44,9 @@
             class="currency-list"
           >
             <li
-              v-for="item in currency"
+              v-for="(item,index) in currency"
               :class="[item.class]"
-              @click="selectCurrency($event)"
+              @click="selectCurrency($event,index)"
             >
               {{ item.name }}
             </li>
@@ -86,7 +86,7 @@
           <!-- 自定义输入建议的显示  服务端搜索数据-->
           <el-autocomplete
             popper-class="my-autocomplete"
-            v-model="state4"
+            v-model="searhResult"
             :fetch-suggestions="querySearchAsync"
             placeholder="Anywhere"
             @select="handleSelect"
@@ -105,6 +105,7 @@
               </div>
               <div v-else>
                 <div class="title" v-if=item.title>{{item.title}}</div>
+                <!-- history list -->
                 <div v-else-if=item.checkin :class="['history-list',item.isLast == true?'isLast':'']">
                   <div class="name">
                     <span></span>
@@ -119,6 +120,7 @@
                     </div>
                   </div>
                 </div>
+                 <!-- cities -->
                 <div v-else class="cities">
                   <div class="keyword">
                     <i class="el-icon-location"></i>
@@ -130,8 +132,6 @@
                   </div>
                 </div>
               </div>
-
-
             </template>
           </el-autocomplete>
         </div>
@@ -145,12 +145,13 @@
             <!-- <span class="demonstration">默认</span> -->
             <!-- {{value6}} -->
             <el-date-picker
-              v-model="value6"
+              v-model="defaultDate"
               type="daterange"
               range-separator="-"
               start-placeholder="CHECK IN"
               end-placeholder="CHECK OUT"
               :picker-options="pickerOptions"
+              ref="datePicker"
             />
           </div>
         </div>
@@ -159,7 +160,7 @@
             GUESTS
           </div>
           <div class="guest-num">
-            <i class="fas fa-user" />
+            <i class="far fa-user" />
             <!-- <i class="fas fa-user" /> -->
             <!-- <font-awesome-icon :icon="['fas','coffee']" /> -->
             <span class="room-num">
@@ -274,28 +275,37 @@ export default {
       languageShow: false,
       currencyShow: false,
       restaurants: [],
-      state3: '',
-      state4: '',
-      timeout: null,
-      // datepicker
-      value6: ['2019-01-17T16:00:00.000Z', '2019-01-26T16:00:00.000Z'],
+      searhResult: '',
       // search bar fixed
       searchBarFixed: false,
-       pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() < Date.now() - 8.64e7;
-          // let curDate = (new Date()).getTime();
-          // let one = 30 * 24 * 3600 * 1000;
-          // let oneMonth = curDate + one;
-          // return time.getTime() <= Date.now() - 8.64e7 || time.getTime() > oneMonth;;
-        }
+      // datepicker
+      defaultDate: [],
+      startDate:'',
+      endDate:'',
+      pickerOptions: {
+        onPick:({ maxDate, minDate })=>{
+          this.startDate=minDate;
+          this.endDate=maxDate;
+        },
+        disabledDate:(time) =>{
+          if(this.startDate){
+            let minDate = (this.startDate).getTime();
+            let one = 30 * 24 * 3600 * 1000;
+            let oneMonth = minDate + one;
+            return time.getTime() < Date.now() - 8.64e7 || time.getTime() > oneMonth;
+          }else{
+            return time.getTime() < Date.now() - 8.64e7;
+          }
+        },
       },
     }
   },
   mounted() {
     this.restaurants = this.loadAll()
     window.addEventListener('scroll', this.handleScroll);
-    document.querySelector('.el-input__inner').addEventListener('input',this.getSearchList)
+    // el-autocomplete 没有input change 事件
+    document.querySelector('.el-input__inner').addEventListener('input',this.getSearchList);
+    this.getDefaultTime();
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
@@ -396,8 +406,8 @@ export default {
       };
     },
     handleSelect(item) {
-      // check in focus
-      document.querySelector('.el-range-input').focus();
+      // check in&out focus
+      this.$refs.datePicker.focus();
     },
     // searchbar fixed
     handleScroll() {
@@ -409,36 +419,42 @@ export default {
         this.searchBarFixed = false
       }
     },
-    showCurrency() {
-      this.currencyShow = true
-    },
-    hideCurrency() {
-      this.currencyShow = false
-    },
-    showLanguage() {
-      this.languageShow = true
-    },
-    hideLanguage() {
-      this.languageShow = false
-    },
-    selectCurrency(event){
-      event.currentTarget.parentNode.getElementsByClassName('active')[0].className=""
-      this.$refs.currency.innerHTML=event.currentTarget.innerHTML.split('-')[0]
-      event.currentTarget.className='active'
+    // select currency
+    selectCurrency(event,index){
+      for(let i in this.currency){
+        this.currency[i].class=null;
+      }
+      this.currency[index].class='active';
+      this.$refs.currency.innerHTML=this.currency[index].name.split('-')[0]
       this.currencyShow = false
       // 切换货币
     },
-    selectLanguage(event){
-      event.currentTarget.parentNode.getElementsByClassName('active')[0].className=""
+    // select language
+    selectLanguage(event,index){
+      for(let i in this.language){
+        this.language[i].class=null;
+      }
+      this.language[index].class='active';
+      this.$refs.language.innerHTML=this.language[index].name
       this.languageShow = false
-      this.$refs.language.innerHTML=event.target.innerHTML
-      event.currentTarget.className='active'
       // 切换语言
     },
     // search with typing
     getSearchList(){
       this.restaurants = this.loadAllResult()
-
+    },
+    getDefaultTime(){
+      // default date
+      let startDate = new Date().getTime()+14*24*60*60*1000
+      let endDate=new Date().getTime()+15*24*60*60*1000
+      this.defaultDate=[this.formatDate(new Date(startDate)),this.formatDate(new Date(endDate))]
+    },
+    formatDate(date){
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      let d = date.getDate()
+      let time = y + '-' + m + '-' + d
+      return time;
     }
   },
 }
@@ -476,6 +492,7 @@ export default {
         box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.16);
         transition:all .4s;
         padding:10px 0;
+        z-index:1;
         li.active{
           color:#cba052;
         }
@@ -678,6 +695,16 @@ export default {
           border-radius: 5px;
           padding: 18px 18px 18px 46px;
           @include font(14px, bolder, #333, MerriweatherSans);
+          position: relative;
+          svg{
+            position: absolute;
+            left:12px;
+            top:50%;
+            font-size:16px;
+            font-weight:bolder;
+            transform:translate(0,-50%);
+
+          }
         }
       }
       // search button
@@ -706,7 +733,6 @@ export default {
       }
     }
   }
-
   .notHomepage {
     padding: 10px 12%;
     > p,
@@ -810,15 +836,28 @@ export default {
           line-height:16px;
         }
       }
-
-
     }
   }
-
 }
 
 // datepicker
 .el-date-range-picker{
+  // year arrow
+  .el-picker-panel__icon-btn.el-icon-d-arrow-left,.el-icon-d-arrow-right{
+    display:none;
+  }
+  // month arrow
+  .el-picker-panel__icon-btn.el-icon-arrow-left,.el-icon-arrow-right{
+    font-size:14px;
+    color:#c9c9c9;
+    font-weight:bolder;
+  }
+  // datepicker header
+  .el-date-range-picker__header{
+    div{
+      @include font(13px,500, #8dc8e8,Rubik);
+    }
+  }
   .el-date-table{
     td span{
       color:#000;
@@ -833,6 +872,10 @@ export default {
     .today span{
       border: 2px solid #cba052;
       border-radius: 2px;
+      box-sizing: border-box;
+      line-height:22px;
+      font-weight:900;
+
     }
     td.in-range.start-date,td.in-range.end-date{
       div{
@@ -844,24 +887,20 @@ export default {
         background-color:#002b55;
         border-radius:2px;
         color:#fff;
+        border:none;
+        line-height:24px;
       }
     }
-    .start-date div:after{
-      content:"";
-      width:12px;
-      height:30px;
-      // background-color:#002b55;
-      position: absolute;  /*日常绝对定位*/
-      top:0;
-      left:30px;
-      width: 0;
-      height: 0;
-      border:15px solid transparent;
-      // left:-12px;
-      border-left-color: #002b55;
-    }
-
-
+    // .start-date div:after{
+    //   content:"";
+    //   position: absolute;  /*日常绝对定位*/
+    //   top:0;
+    //   left:30px;
+    //   width: 0;
+    //   height: 0;
+    //   border:15px solid transparent;
+    //   border-left-color: #002b55;
+    // }
   }
   .el-date-table td.in-range div, .el-date-table td.in-range div:hover, .el-date-table.is-week-mode .el-date-table__row.current div, .el-date-table.is-week-mode .el-date-table__row:hover div{
     background-color:#e8e8e8;
@@ -875,12 +914,8 @@ export default {
   .el-date-table td.in-range div:hover{
     background-color:#002b55;
   }
-
-
 }
-.my-autocomplete,.el-popper[x-placement^=bottom]{
 
-}
 // transition
 .show-language-enter-active, .show-language-leave-active {
   transition: opacity .5s;
