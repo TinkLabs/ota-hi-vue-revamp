@@ -7,18 +7,19 @@
                     alt="hi.com logo"
                 >
             </div>
-            <div class="progessbar__box">
+            <div class="progressbar__box">
+                <div class="progressbar-line"></div>
                 <ul>
-                    <li class="progessbar__item item-complete">
-                        <p class="progessbar__flag"><span>1</span></p>
+                    <li class="progressbar__item item-complete">
+                        <p class="progressbar__flag"><span>1</span></p>
                         <p>Customer information</p>
                     </li>
-                    <li class="progessbar__item item-complete">
-                        <p class="progessbar__flag"><span>2</span></p>
+                    <li class="progressbar__item item-complete">
+                        <p class="progressbar__flag"><span>2</span></p>
                         <p>Payment information</p>
                     </li>
-                    <li class="progessbar__item">
-                        <p class="progessbar__flag"><i class="fal fa-check">3</i></p>
+                    <li class="progressbar__item">
+                        <p class="progressbar__flag"><span class="fal fa-check">3</span></p>
                         <p>Booking is confirmed</p>
                     </li>
                 </ul>
@@ -33,7 +34,7 @@
 </template>
 <style lang="scss" scoped>
 @import '../../common/main.scss';
-$light-blue:#4574eb;
+$light-blue:#4474ea;
 $white:#fff;
 
 .header{
@@ -63,11 +64,16 @@ $white:#fff;
             }
         
         }
-        .progessbar__box{
+        .progressbar__box{
             width:60%;
+            margin-top:1%;
+            position:relative;
             >ul{
                 width:100%;
                 color:#888;
+                overflow: hidden;
+                zoom: 1;
+                margin-top:-2%;
                 >li{
                     float:left;
                     width:calc(100% / 3);
@@ -84,7 +90,7 @@ $white:#fff;
                             background-color:$light-blue;
                         }
                     }
-                    .progessbar__flag{
+                    .progressbar__flag{
                         margin-bottom: 12px;
                     }
                 }
@@ -92,9 +98,20 @@ $white:#fff;
                     color:$light-blue;
                 }
             }
+            .progressbar-line{
+                margin: 0 auto;
+                // position:absolute;
+                // top:3%;
+                // left:5%;
+                margin-left:15%;
+                width:70%;
+                height: 6px;
+                background-color: #eaeaea;
+                border-radius: 3px;
+            }
         }
         .support-us{
-            width:20%;
+            width:13%;
             @include font(12px,normal,$light-blue,MerriweatherSans);
             >i{
                 float:left;
