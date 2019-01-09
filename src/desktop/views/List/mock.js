@@ -52,3 +52,4 @@ function DG(n = 10) {
     .split(',')
     .map(m => new Dest())
 }
+export { DG, HG }

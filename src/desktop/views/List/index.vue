@@ -150,7 +150,7 @@ import Loading from './Loading.vue'
 import SortBar from './SortBar.vue'
 import NearBy from './NearBy.vue'
 import HandyAd from './HandyAd.vue'
-import './mock'
+import { DG, HG } from './mock'
 
 const ratingList = [
   { name: 'rate9', text: 'Super: 9+', checked: false },
