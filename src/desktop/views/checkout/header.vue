@@ -8,7 +8,9 @@
                 >
             </div>
             <div class="progressbar__box">
-                <div class="progressbar-line"></div>
+                <div class="progressbar-line">
+                    <div class="progressbar-status"></div>
+                </div>
                 <ul>
                     <li class="progressbar__item item-complete">
                         <p class="progressbar__flag"><span>1</span></p>
@@ -19,13 +21,13 @@
                         <p>Payment information</p>
                     </li>
                     <li class="progressbar__item">
-                        <p class="progressbar__flag"><span class="fal fa-check">3</span></p>
+                        <p class="progressbar__flag"><span class="el-icon-check font-check"></span></p>
                         <p>Booking is confirmed</p>
                     </li>
                 </ul>
             </div>
             <div class="support-us">
-                <i class="fal fa-headset"></i>
+                <i class="el-icon-service"></i>
                 <span>Customer Suport</span>
                 <span class="statistics">24/7</span>
             </div>
@@ -34,7 +36,7 @@
 </template>
 <style lang="scss" scoped>
 @import '../../common/main.scss';
-$light-blue:#4474ea;
+
 $white:#fff;
 
 .header{
@@ -86,16 +88,25 @@ $white:#fff;
                             line-height:20px;
                             display:inline-block;
                             border-radius:50%;
-                            color: $white;
-                            background-color:$light-blue;
+                            color: #888;
+                            background-color:#eaeaea;
                         }
                     }
                     .progressbar__flag{
                         margin-bottom: 12px;
+                        .font-check{
+                            @include font(11px,#888,MerriweatherSans);
+                        }
                     }
                 }
                 .item-complete{
-                    color:$light-blue;
+                    p{
+                        >span{
+                            background-color: $dark-blue;
+                            color:$main_color4 !important;
+                        }
+                    }
+                    // color:$main_color4 !important;
                 }
             }
             .progressbar-line{
@@ -103,22 +114,28 @@ $white:#fff;
                 // position:absolute;
                 // top:3%;
                 // left:5%;
-                margin-left:15%;
-                width:70%;
+                margin-left:17%;
+                width:67%;
                 height: 6px;
                 background-color: #eaeaea;
                 border-radius: 3px;
+                .progressbar-status{
+                    width:50%;
+                    height:inherit;
+                    background-color: $dark-blue;
+                }
             }
         }
         .support-us{
             width:13%;
-            @include font(12px,normal,$light-blue,MerriweatherSans);
+            @include font(12px,normal,$dark-blue,MerriweatherSans);
             >i{
                 float:left;
+                @include font(18px,bold,$dark-blue,MerriweatherSans);
             }
             >span{
                 float:left;
-                margin-right:5px;
+                margin:0 5px;
             }
         }
     }

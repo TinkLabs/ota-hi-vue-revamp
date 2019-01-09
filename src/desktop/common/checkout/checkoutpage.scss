@@ -1,0 +1,168 @@
+.container-box{
+    width:76%;
+    margin:0 auto;
+    overflow: hidden;
+    zoom: 1;
+    .content-left{
+      width:54%;
+      float:left;
+      margin-right:4%;
+      .sign-notice{
+        padding:10px 10px;
+        overflow: hidden;
+        zoom:1;
+        @include font(12px,normal,$main_color4,MerriweatherSans);
+        border-radius: 5px;
+        background:$dark-blue;
+        .warm-text{
+            width:77%;
+            float:left;
+            p:nth-child(1){
+              @include font(14px,normal,$main_color4,MerriweatherSans);
+            }
+            p:nth-child(2){
+              @include font(12px,normal,$main_color4,MerriweatherSans);
+            }
+          }
+        .sign-in-area{
+            float:right;
+            margin-right:10px;
+            .sign-in-btn{
+              width: 99px;
+              height: 35px;
+              border-radius: 5px;
+              border:none;
+              @include font(14px,normal,$main_color4,Montserrat);
+              background-color: $deep-orange;
+            }
+        }
+      }
+      .checkout-item{
+        width:100%;
+        margin-bottom:10px;
+        border-bottom:1.3px solid #ebecef;
+        .item-title{
+          margin:23px 0 13px 0;
+          @include font(20px,normal,#333333,Montserrat);
+        }
+        .msg-ipt{
+          margin:20px 0;
+          position:relative;
+          // vertical-align:bottom;
+          .countryCode{
+            width:30%;
+            margin-right: 5%;
+          }
+          .phoneNum{
+            width:65%;
+          }
+          .checkout-fake{
+            width:19px;
+            height:20px;
+          }
+          .check-detail{
+            margin-left:15px; 
+            margin-bottom: -5px;
+            position:absolute;
+            top:5px;
+            @include font(14px,normal,#505050,MerriweatherSans);
+          }
+        }
+        .confirm-notice{
+          @include font(12px,normal,#333333,MerriweatherSans);
+        }
+        .requirement-notice{
+          @include font(14px,normal,#505050,MerriweatherSans);
+        }
+        .add-requirements{
+          color:#ffffff;
+          margin:20px 0;
+          >i{
+            @include font(16px,bolder,$deep-orange);
+          }
+          >span{
+            margin-left:10px;
+            font-size:14px;
+          }
+        }
+      }
+      .term-and-policy{
+          margin:15px 0  35px 0;
+          @include font(14px,normal,#505050,MerriweatherSans);
+          >a{
+            color:$dark-blue;
+          }
+      }
+      .left-notice{
+        text-align: right;
+        margin-bottom: 15px;
+        @include font(20px,bold,#ff4141,MerriweatherSans);
+      }
+      .next-btn{
+        width:223px;
+        height:50px;
+        background-color: $deep-orange;
+        border-radius: 10px;
+        float: right;
+        @include font(16px,bold,$main_color4,MerriweatherSans);
+      }
+    }
+    .content-right{
+      width:42%;
+      float:left;
+      .extra-msg-item{
+        border-radius: 5px;
+        padding:25px 20px;
+        box-shadow: 2px 3px 12px 0 rgba(0, 0, 0, 0.08);
+        background-color: #ffffff;
+        .book-info-detail{
+          .hotel-name{
+            @include font(20px,bold,#333,Montserrat);
+          }
+          .hotel-level{
+            margin:7px 0;
+            @include font(11px,normal,#fec800);
+          }
+          .hotel-location{
+            margin:7px 0;
+          }
+          .warm-area{
+              padding:15px 10px;
+              color:#ff8600;
+              margin:10px 0;
+              overflow: hidden;
+              zoom: 1;
+              background-color: rgba(255, 134, 0, 0.05);
+              >i{
+                float:left;
+                width:35px;
+                @include font(22px,normal,MerriweatherSans);
+              }
+              >span{
+                float:left;
+                width:calc(100% - 35px);
+                @include font(12px,normal,MerriweatherSans);
+              }
+          }
+          .book-time{
+            @include font(16px,bold,MerriweatherSans);
+          }
+        }
+        p{
+            @include font(16px,normal,#333,Montserrat);
+            .book-days{
+                float:right;
+            }
+        }
+        .suiteItems{
+            .changeBtn{
+                float:right;
+            }
+        }
+      }
+      
+    }
+    input{
+      height:50px;
+    }
+  }
