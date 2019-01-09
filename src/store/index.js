@@ -8,6 +8,13 @@ Vue.use(Vuex)
 
 const state = {
   example: null,
+  global: {
+    lang: 'English',
+    currency: 'GBP',
+  },
+  user: {
+    isLoggin: false,
+  },
 }
 export default function createStore(context) {
   let tmpContext = { ...context }

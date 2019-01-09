@@ -10,6 +10,7 @@ import zh from '../locales/zh'
 import createStore from './store'
 import createRouter from './routes'
 import App from './index.vue'
+import './filter'
 
 Vue.use(VueI18n)
 Vue.prototype.axios = axios

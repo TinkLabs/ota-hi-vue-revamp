@@ -25,3 +25,14 @@ $success: #67c23a;
 $warning: #e6a23c;
 $danger: #f56c6c;
 $info: #909399;
+
+.clearfix{
+  &:before,&:after{
+      display: table;
+      content:'';
+      height:0;
+  }
+  &:after{
+    clear: both;
+  }
+}
