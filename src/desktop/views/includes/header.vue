@@ -1,193 +1,197 @@
 <template>
-  <div class="header">
-    <ul>
-      <li>
-        <span>Contact Us</span>
-      </li>
-      <li>
-        <span>Support</span>
-      </li>
-      <li
-        class="language"
-        @mouseenter="showLanguage"
-        @mouseleave="hideLanguage"
-      >
-        <span ref="language">English</span>
-        <transition name="show-language">
-          <ul
-            v-show="languageShow"
-            class="language-list"
-          >
-            <li
-              v-for="item in language"
-              :class="[item.class]"
-              @click="selectLanguage($event)"
-            >
-              <img
-                :src="item.img"
-                alt=""
-              >
-              <span>{{ item.name }}</span>
-            </li>
-          </ul>
-        </transition>
-      </li>
-      <li
-        class="currency"
-        @mouseenter="showCurrency"
-        @mouseleave="hideCurrency"
-      >
-        <span ref="currency">HKD</span>
-        <transition name="show-currency">
-          <ul
-            v-show="currencyShow"
-            class="currency-list"
-          >
-            <li
-              v-for="item in currency"
-              :class="[item.class]"
-              @click="selectCurrency($event)"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
-        </transition>
-      </li>
-    </ul>
-    <header :class="[searchBarFixed == true ? 'headerFixed' :'']">
-      <div class="logo">
-        <img
-          src="../../images/homepage/hi_DotComLogo@3x.png"
-          alt="hi.com logo"
+  <div :class="['header-wrapper',searchBarFixed == true ?'isFixed' :'']">
+    <div :class="['header',searchBarFixed == true ?'isFixed' :'']">
+      <ul>
+        <li>
+          <span>Contact Us</span>
+        </li>
+        <li>
+          <span>Support</span>
+        </li>
+        <li
+          class="language"
+          @mouseenter="languageShow=true;"
+          @mouseleave="languageShow=false;"
         >
-        <span>Hotel</span>
-        <span>Experience</span>
-        <span>Restaurant</span>
-      </div>
-      <div class="account">
-        <a href="#">
-          Sign In
-        </a>
-        <span> | </span>
-        <a href="#">
-          Create an Account
-        </a>
-      </div>
-    </header>
-    <div :class="['search',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']">
-      <p :class="[searchBarFixed == true ? 'hide' :'']">
-        Say hi to your next destination!
-      </p>
-      <div :class="['search-bar']">
-        <div class="location">
-          <div class="title">
-            LOCATION OR HOTEL
-          </div>
-          <!-- 自定义输入建议的显示  服务端搜索数据-->
-          <el-autocomplete
-            popper-class="my-autocomplete"
-            v-model="state4"
-            :fetch-suggestions="querySearchAsync"
-            placeholder="Anywhere"
-            @select="handleSelect"
+          <span ref="language">English</span>
+          <transition name="show-language">
+            <ul
+              v-show="languageShow"
+              class="language-list"
+            >
+              <li
+                v-for="(item,index) in language"
+                :class="[item.class]"
+                @click="selectLanguage($event,index)"
+              >
+                <img
+                  :src="item.img"
+                  alt=""
+                >
+                <span>{{ item.name }}</span>
+              </li>
+            </ul>
+          </transition>
+        </li>
+        <li
+          class="currency"
+          @mouseenter="currencyShow=true"
+          @mouseleave="currencyShow=false"
+        >
+          <span ref="currency">HKD</span>
+          <transition name="show-currency">
+            <ul
+              v-show="currencyShow"
+              class="currency-list"
+            >
+              <li
+                v-for="(item,index) in currency"
+                :class="[item.class]"
+                @click="selectCurrency($event,index)"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </transition>
+        </li>
+      </ul>
+      <header>
+        <div class="logo">
+          <img
+            src="../../images/homepage/hi_DotComLogo@3x.png"
+            alt="hi.com logo"
           >
-            <i
-              slot="prefix"
-              class="el-icon-search el-input__icon"
-            />
-            <template slot-scope="{ item }">
-              <div v-if=item.type class="search-result-list">
-                <div class="result-name">
-                  <i class="el-icon-location-outline"></i>
-                  {{item.value}}
-                </div>
-                <div class="type">{{item.type}}</div>
-              </div>
-              <div v-else>
-                <div class="title" v-if=item.title>{{item.title}}</div>
-                <div v-else-if=item.checkin :class="['history-list',item.isLast == true?'isLast':'']">
-                  <div class="name">
-                    <span></span>
-                    <span>{{ item.value }}</span>
+          <span>Hotel</span>
+          <span>Experience</span>
+          <span>Restaurant</span>
+        </div>
+        <div class="account">
+          <a href="#">
+            Sign In
+          </a>
+          <span> | </span>
+          <a href="#">
+            Create an Account
+          </a>
+        </div>
+      </header>
+      <div :class="['search',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']">
+        <p :class="[searchBarFixed == true ? 'hide' :'']">
+          Say hi to your next destination!
+        </p>
+        <div :class="['search-bar']">
+          <div class="location">
+            <div class="title">
+              LOCATION OR HOTEL
+            </div>
+            <!-- 自定义输入建议的显示  服务端搜索数据-->
+            <el-autocomplete
+              popper-class="my-autocomplete"
+              v-model="searhResult"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="Anywhere"
+              @select="handleSelect"
+            >
+              <i
+                slot="prefix"
+                class="el-icon-search el-input__icon"
+              />
+              <template slot-scope="{ item }">
+                <div v-if=item.type class="search-result-list">
+                  <div class="result-name">
+                    <i class="el-icon-location-outline"></i>
+                    {{item.value}}
                   </div>
-                  <div class="info">
-                    <div class="check-date">
-                      <span>{{item.checkin}} - {{item.checkout}}</span>
+                  <div class="type">{{item.type}}</div>
+                </div>
+                <div v-else>
+                  <div class="title" v-if=item.title>{{item.title}}</div>
+                  <!-- history list -->
+                  <div v-else-if=item.checkin :class="['history-list',item.isLast == true?'isLast':'']">
+                    <div class="name">
+                      <span></span>
+                      <span>{{ item.value }}</span>
                     </div>
-                    <div class="guest-info">
-                      <span>{{item.room}} room, {{item.adult}} adults, {{item.children}} children</span>
+                    <div class="info">
+                      <div class="check-date">
+                        <span>{{item.checkin}} - {{item.checkout}}</span>
+                      </div>
+                      <div class="guest-info">
+                        <span>{{item.room}} room, {{item.adult}} adults, {{item.children}} children</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- cities -->
+                  <div v-else class="cities">
+                    <div class="keyword">
+                      <i class="el-icon-location"></i>
+                      <span>{{item.value}}</span>
+                    </div>
+                    <div class="number">
+                      <span>{{item.number}}</span>
+                      properties
                     </div>
                   </div>
                 </div>
-                <div v-else class="cities">
-                  <div class="keyword">
-                    <i class="el-icon-location"></i>
-                    <span>{{item.value}}</span>
-                  </div>
-                  <div class="number">
-                    <span>{{item.number}}</span>
-                    properties
-                  </div>
-                </div>
-              </div>
-
-
-            </template>
-          </el-autocomplete>
+              </template>
+            </el-autocomplete>
+          </div>
+          <div class="check">
+            <div class="title">
+              CHECK IN & OUT
+            </div>
+            <!-- <input type="text" placeholder="CHECK IN & OUT"> -->
+            <!-- datepicker -->
+            <div class="block">
+              <!-- <span class="demonstration">默认</span> -->
+              <!-- {{value6}} -->
+              <el-date-picker
+                v-model="defaultDate"
+                type="daterange"
+                range-separator="-"
+                start-placeholder="CHECK IN"
+                end-placeholder="CHECK OUT"
+                :picker-options="pickerOptions"
+                ref="datePicker"
+              />
+            </div>
+          </div>
+          <div class="guests">
+            <div class="title">
+              GUESTS
+            </div>
+            <div class="guest-num">
+              <i class="far fa-user" />
+              <!-- <i class="fas fa-user" /> -->
+              <!-- <font-awesome-icon :icon="['fas','coffee']" /> -->
+              <span class="room-num">
+                1
+              </span> room,
+              <span class="adult-num">
+                2
+              </span> adults,
+              <br>
+              <span class="children-num">
+                0
+              </span> children
+            </div>
+            <!-- <input type="text" placeholder="GUESTS"> -->
+          </div>
+          <button>Search</button>
         </div>
-        <div class="check">
+        <div :class="['popular-search',searchBarFixed == true ? 'hide' :'']">
           <div class="title">
-            CHECK IN & OUT
+            POPULAR SEARCHES
           </div>
-          <!-- <input type="text" placeholder="CHECK IN & OUT"> -->
-          <!-- datepicker -->
-          <div class="block">
-            <!-- <span class="demonstration">默认</span> -->
-            <!-- {{value6}} -->
-            <el-date-picker
-              v-model="value6"
-              type="daterange"
-              range-separator="-"
-              start-placeholder="CHECK IN"
-              end-placeholder="CHECK OUT"
-            />
-          </div>
+          <ul class="popular-city">
+            <li
+              v-for="item in popular"
+              :key="item"
+            >
+              {{ item }}
+            </li>
+          </ul>
         </div>
-        <div class="guests">
-          <div class="title">
-            GUESTS
-          </div>
-          <div class="guest-num">
-            <i class="fas fa-user" />
-            <!-- <i class="fas fa-user" /> -->
-            <!-- <font-awesome-icon :icon="['fas','coffee']" /> -->
-            <span class="room-num">
-              1
-            </span> room,
-            <span class="adult-num">
-              2
-            </span> adults,
-            <br>
-            <span class="children-num">
-              0
-            </span> children
-          </div>
-          <!-- <input type="text" placeholder="GUESTS"> -->
-        </div>
-        <button>Search</button>
-      </div>
-      <div :class="['popular-search',searchBarFixed == true ? 'hide' :'']">
-        <div class="title">
-          POPULAR SEARCHES
-        </div>
-        <ul class="popular-city">
-          <li
-            v-for="item in popular"
-            :key="item"
-          >
-            {{ item }}
-          </li>
-        </ul>
       </div>
     </div>
   </div>
@@ -273,19 +277,37 @@ export default {
       languageShow: false,
       currencyShow: false,
       restaurants: [],
-      state3: '',
-      state4: '',
-      timeout: null,
-      // datepicker
-      value6: ['2019-01-17T16:00:00.000Z', '2019-01-18T16:00:00.000Z'],
+      searhResult: '',
       // search bar fixed
       searchBarFixed: false,
+      // datepicker
+      defaultDate: [],
+      startDate:'',
+      endDate:'',
+      pickerOptions: {
+        onPick:({ maxDate, minDate })=>{
+          this.startDate=minDate;
+          this.endDate=maxDate;
+        },
+        disabledDate:(time) =>{
+          if(this.startDate){
+            let minDate = (this.startDate).getTime();
+            let one = 30 * 24 * 3600 * 1000;
+            let oneMonth = minDate + one;
+            return time.getTime() < Date.now() - 24*60*60*1000 || time.getTime() > oneMonth;
+          }else{
+            return time.getTime() < Date.now() - 24*60*60*1000;
+          }
+        },
+      },
     }
   },
   mounted() {
     this.restaurants = this.loadAll()
     window.addEventListener('scroll', this.handleScroll);
-    document.querySelector('.el-input__inner').addEventListener('input',this.getSearchList)
+    // el-autocomplete 没有input change 事件
+    document.querySelector('.el-input__inner').addEventListener('input',this.getSearchList);
+    this.getDefaultTime();
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
@@ -386,8 +408,8 @@ export default {
       };
     },
     handleSelect(item) {
-      // check in focus
-      document.querySelector('.el-range-input').focus();
+      // check in&out focus
+      this.$refs.datePicker.focus();
     },
     // searchbar fixed
     handleScroll() {
@@ -399,36 +421,42 @@ export default {
         this.searchBarFixed = false
       }
     },
-    showCurrency() {
-      this.currencyShow = true
-    },
-    hideCurrency() {
-      this.currencyShow = false
-    },
-    showLanguage() {
-      this.languageShow = true
-    },
-    hideLanguage() {
-      this.languageShow = false
-    },
-    selectCurrency(event){
-      event.currentTarget.parentNode.getElementsByClassName('active')[0].className=""
-      this.$refs.currency.innerHTML=event.currentTarget.innerHTML.split('-')[0]
-      event.currentTarget.className='active'
+    // select currency
+    selectCurrency(event,index){
+      for(let i in this.currency){
+        this.currency[i].class=null;
+      }
+      this.currency[index].class='active';
+      this.$refs.currency.innerHTML=this.currency[index].name.split('-')[0]
       this.currencyShow = false
       // 切换货币
     },
-    selectLanguage(event){
-      event.currentTarget.parentNode.getElementsByClassName('active')[0].className=""
+    // select language
+    selectLanguage(event,index){
+      for(let i in this.language){
+        this.language[i].class=null;
+      }
+      this.language[index].class='active';
+      this.$refs.language.innerHTML=this.language[index].name
       this.languageShow = false
-      this.$refs.language.innerHTML=event.target.innerHTML
-      event.currentTarget.className='active'
       // 切换语言
     },
     // search with typing
     getSearchList(){
       this.restaurants = this.loadAllResult()
-
+    },
+    getDefaultTime(){
+      // default date
+      let startDate = new Date().getTime()+14*24*60*60*1000
+      let endDate=new Date().getTime()+15*24*60*60*1000
+      this.defaultDate=[this.formatDate(new Date(startDate)),this.formatDate(new Date(endDate))]
+    },
+    formatDate(date){
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      let d = date.getDate()
+      let time = y + '-' + m + '-' + d
+      return time;
     }
   },
 }
@@ -436,9 +464,13 @@ export default {
 
 <style lang="scss">
 @import '../../common/main.scss';
+.header-wrapper.isFixed{
+  height:460px;
+}
 .header {
   width: 100%;
   color: #333;
+  min-width:1024px;
   > ul {
     padding: 0 12%;
     // margin:0 auto;
@@ -447,7 +479,6 @@ export default {
     align-items: center;
     height: 30px;
     @include font(12px, bold, #333, Rubik);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     >li {
       list-style: none;
       margin-left: 20px;
@@ -466,6 +497,7 @@ export default {
         box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.16);
         transition:all .4s;
         padding:10px 0;
+        z-index:1;
         li.active{
           color:#cba052;
         }
@@ -486,7 +518,7 @@ export default {
           padding:0;
           padding-left:18px;
           box-sizing: border-box;
-          width:120px;
+          width:130px;
           img{
             width:18px;
             margin-right:6px;
@@ -506,6 +538,7 @@ export default {
     padding: 10px 12%;
     display: flex;
     justify-content: space-between;
+    border-bottom:2px solid #ebebeb;
     span {
       display: inline-clock;
     }
@@ -514,7 +547,7 @@ export default {
       // line-height:60px;
       display: flex;
       justify-content: flex-start;
-      align-items: center;
+      align-items: flex-end;
       img {
         width: 100px;
       }
@@ -532,25 +565,15 @@ export default {
         font-weight: bolder;
         font-size: 12px;
       }
+      a:first-child{
+        color:#cba052;
+      }
     }
-  }
-  header.headerFixed{
-    margin-bottom:200px;
-  }
-  .search.isFixed {
-    position: fixed;
-    background-color: #f1f1f1;
-    top: -26px;
-    z-index: 999;
-    padding-bottom: 16px;
-    transition: all 0.4s;
   }
   .search {
     width: 100%;
     padding: 0 12%;
     box-sizing: border-box;
-    background-color: #f5f5f5;
-    box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.11);
     padding-bottom: 60px;
     transition: all 0.4s;
     p {
@@ -633,6 +656,7 @@ export default {
         font-weight: bolder;
         border: none;
         padding-right: 20px;
+        background-color:#ebebeb;
         .el-range-separator {
           line-height: 64px;
         }
@@ -656,6 +680,7 @@ export default {
         .el-date-editor--daterange.el-input__inner {
           width: 280px;
         }
+
       }
 
       // guest number
@@ -663,10 +688,20 @@ export default {
         .guest-num {
           min-width: 114px;
           height: 36px;
-          background-color: #fff;
+          background-color:#ebebeb;
           border-radius: 5px;
           padding: 18px 18px 18px 46px;
           @include font(14px, bolder, #333, MerriweatherSans);
+          position: relative;
+          svg{
+            position: absolute;
+            left:12px;
+            top:50%;
+            font-size:16px;
+            font-weight:bolder;
+            transform:translate(0,-50%);
+
+          }
         }
       }
       // search button
@@ -695,10 +730,9 @@ export default {
       }
     }
   }
-
-  .notHomepage {
+  .notHomepage,.isFixed {
     padding: 10px 12%;
-    > p,
+     p,
     .title,
     .popular-search {
       display: none;
@@ -707,6 +741,13 @@ export default {
   .notHomepage.isFixed {
     top: 0;
   }
+}
+.header.isFixed {
+  position: fixed;
+  background-color: #ffff;
+  z-index: 999;
+  transition: all 0.4s;
+  top:0;
 }
 // search suggestion list
 .el-popper[x-placement^=bottom]{
@@ -799,15 +840,90 @@ export default {
           line-height:16px;
         }
       }
+    }
+  }
+}
 
-
+// datepicker
+.el-date-range-picker{
+  // year arrow
+  .el-picker-panel__icon-btn.el-icon-d-arrow-left,.el-icon-d-arrow-right{
+    display:none;
+  }
+  // month arrow
+  .el-picker-panel__icon-btn.el-icon-arrow-left,.el-icon-arrow-right{
+    font-size:14px;
+    color:#c9c9c9;
+    font-weight:bolder;
+  }
+  // datepicker header
+  .el-date-range-picker__header{
+    div{
+      @include font(13px,500, #8dc8e8,Rubik);
     }
   }
 
-}
-.my-autocomplete,.el-popper[x-placement^=bottom]{
+  .el-date-table{
+    td span{
+      color:#000;
+      font-weight:600;
+    }
+    td.disabled div{
+      background-color:#fff;
+    }
+    .disabled span{
+      color:#a5a5a5;
+    }
+    .today span{
+      border: 2px solid #cba052;
+      border-radius: 2px;
+      box-sizing: border-box;
+      line-height:22px;
+      font-weight:900;
 
+    }
+    td.in-range.start-date,td.in-range.end-date{
+      div{
+        background-color:#002b55;
+        border-radius:2px;
+        position: relative;
+      }
+      span{
+        background-color:#002b55;
+        border-radius:2px;
+        color:#fff;
+        border:none;
+        line-height:24px;
+      }
+    }
+    // .start-date div:after{
+    //   content:"";
+    //   position: absolute;  /*日常绝对定位*/
+    //   top:0;
+    //   left:30px;
+    //   width: 0;
+    //   height: 0;
+    //   border:15px solid transparent;
+    //   border-left-color: #002b55;
+    // }
+  }
+  .el-date-table td.in-range div, .el-date-table td.in-range div:hover, .el-date-table.is-week-mode .el-date-table__row.current div, .el-date-table.is-week-mode .el-date-table__row:hover div{
+    background-color:#e8e8e8;
+
+  }
+  .el-date-table td.in-range div:hover{
+    span{
+      color:#fff;
+    }
+  }
+  .el-date-table td.in-range div:hover{
+    background-color:#002b55;
+  }
 }
+.el-range-input{
+  background-color:#ebebeb;
+}
+
 // transition
 .show-language-enter-active, .show-language-leave-active {
   transition: opacity .5s;
