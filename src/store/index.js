@@ -13,7 +13,7 @@ const state = {
     currency: 'GBP',
   },
   user: {
-    isLoggin: false,
+    isLogIn: false,
   },
 }
 export default function createStore(context) {

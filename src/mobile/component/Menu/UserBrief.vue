@@ -11,7 +11,7 @@
         {{ name }}
       </div>
       <div
-        v-if="user.isLoggin"
+        v-if="user.isLogIn"
         class="location"
       >
         {{ location }}
@@ -34,19 +34,19 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      // user: { isLoggin: false },
+      // user: { isLogIn: false },
     }
   },
   computed: {
     ...mapGetters(['user']),
     avatarUrl() {
-      return this.user.isLoggin ? this.user.avatar : ''
+      return this.user.isLogIn ? this.user.avatar : ''
     },
     name() {
-      return this.user.isLoggin ? this.user.name : 'Welcome!'
+      return this.user.isLogIn ? this.user.name : 'Welcome!'
     },
     location() {
-      return this.user.isLoggin ? this.user.name : ''
+      return this.user.isLogIn ? this.user.name : ''
     },
   },
 }

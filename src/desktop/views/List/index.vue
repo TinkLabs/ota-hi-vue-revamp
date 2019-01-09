@@ -127,7 +127,6 @@
                 <ul>
                   <li class="result-item">
                     <sort-bar @sortList="sortHandler" />
-                    a
                   </li>
                 </ul>
               </div>

@@ -1,20 +1,13 @@
 import Vue from 'vue'
+import moment from 'moment'
 
 Vue.filter('calendar', (date) => {
   if (!date) return ''
-  const tempDate = new Date(date)
-  const day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'][tempDate.getDay()]
-  const dayday = tempDate.getDate()
-  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][tempDate.getMonth()]
-  return `${day} ${dayday} ${month}`
+  // moment 已对非法输入做了错误处理，自动返回 'Invalid date'
+  return moment(date).format('ddd DD MMM')
 })
 
-Vue.filter('checkDate', (date) => {
+Vue.filter('d422', (date) => {
   if (!date) return ''
-  const tempDate = new Date(date)
-  const y = tempDate.getFullYear()
-  let m = tempDate.getMonth() + 1
-  m = m < 10 ? `0${m}` : m
-  const d = tempDate.getDate() < 10 ? `0${tempDate.getDate()}` : tempDate.getDate()
-  return `${y}-${m}-${d}`
+  return moment(date).format('YYYY-MM-DD')
 })
