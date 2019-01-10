@@ -76,10 +76,11 @@
         </div>
       </header>
       <div :class="['search',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']">
-        <p :class="[searchBarFixed == true ? 'hide' :'']">
+        <p :class="['title',searchBarFixed == true ? 'hide' :'']">
           Say hi to your next destination!
         </p>
         <div :class="['search-bar']">
+          <!-- Location input-->
           <div class="location">
             <div class="title">
               LOCATION OR HOTEL
@@ -90,6 +91,7 @@
               v-model="searhResult"
               :fetch-suggestions="querySearchAsync"
               placeholder="Anywhere"
+              :select-when-unmatched="true"
               @select="handleSelect"
             >
               <i
@@ -136,15 +138,14 @@
               </template>
             </el-autocomplete>
           </div>
+
+          <!-- Date Picker -->
           <div class="check">
             <div class="title">
               CHECK IN & OUT
             </div>
-            <!-- <input type="text" placeholder="CHECK IN & OUT"> -->
             <!-- datepicker -->
             <div class="block">
-              <!-- <span class="demonstration">默认</span> -->
-              <!-- {{value6}} -->
               <el-date-picker
                 v-model="defaultDate"
                 type="daterange"
@@ -152,30 +153,84 @@
                 start-placeholder="CHECK IN"
                 end-placeholder="CHECK OUT"
                 :picker-options="pickerOptions"
+                @change="getSelectedDate"
                 ref="datePicker"
               />
             </div>
           </div>
-          <div class="guests">
+
+          <!-- Adults,Room,Children Picker -->
+          <div class="guests" @click="showRoompicker=true;" ref="roompicker">
             <div class="title">
               GUESTS
             </div>
             <div class="guest-num">
               <i class="far fa-user" />
-              <!-- <i class="fas fa-user" /> -->
-              <!-- <font-awesome-icon :icon="['fas','coffee']" /> -->
               <span class="room-num">
-                1
+                {{roomList.length}}
               </span> room,
               <span class="adult-num">
-                2
+                {{adultTotalNumber}}
               </span> adults,
               <br>
               <span class="children-num">
-                0
+                {{childTotalNumber}}
               </span> children
             </div>
-            <!-- <input type="text" placeholder="GUESTS"> -->
+            <transition name="room-picker">
+              <div class="room-picker" v-show="showRoompicker">
+                <ul class="room-list">
+                  <li v-for="(item,index) in roomList">
+                    <h1 class="room-num">Room {{index+1}}</h1>
+                    <div class="adults">
+                      <h2>Adults</h2>
+                      <div class="count">
+                        <span class="minus" @click="reduceAdultNumber($event,index)">-</span>
+                        <span>{{item.adultNumber}}</span>
+                        <span class="plus" @click="addAdultNumber($event,index)">+</span>
+                      </div>
+                    </div>
+                    <div class="children">
+                      <h2>Children</h2>
+                      <div class="count">
+                        <span class="minus"  @click="reduceChildNumber($event,index)">-</span>
+                        <span>{{item.childNumber}}</span>
+                        <span class="plus"  @click="addChildNumber($event,index)">+</span>
+                      </div>
+                    </div>
+                    <div :class="['children-age',item.childNumber>0?'':'border-none']">
+                      <p v-show="item.childNumber>0">Children’s age at time of booking. </p>
+                      <ul class="child-list">
+                        <li v-for="(item,index) in item.childAgeList">
+                          <p>Child {{index+1}} age</p>
+                          <template>
+                            <el-select v-model="item.value" placeholder="1">
+                              <el-option
+                                v-for="item in item.age"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                              </el-option>
+                            </el-select>
+                          </template>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+                <div class="operate-room">
+                  <div class="add-room" @click="addRoom">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Add another room</span>
+                  </div>
+                  <div class="remove-room" @click="removeRoom" v-show="roomList.length>1">
+                    <i class="fas fa-minus-circle"></i>
+                    <span>Remove</span>
+                  </div>
+                </div>
+              </div>
+            </transition>
+
           </div>
           <button>Search</button>
         </div>
@@ -274,8 +329,19 @@ export default {
         },
 
       ],
+      age:'',
       languageShow: false,
       currencyShow: false,
+      showRoompicker:false,
+      adultTotalNumber:2,
+      childTotalNumber:0,
+      roomList:[
+        {
+          adultNumber:2,
+          childNumber:0,
+          childAgeList:[],
+        }
+      ],
       restaurants: [],
       searhResult: '',
       // search bar fixed
@@ -307,7 +373,15 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
     // el-autocomplete 没有input change 事件
     document.querySelector('.el-input__inner').addEventListener('input',this.getSearchList);
+    // Date Picker default date
     this.getDefaultTime();
+    var _this=this;
+    document.addEventListener('click',function(e){
+      if(!_this.$refs.roompicker.contains(e.target)){
+        _this.showRoompicker=false;
+        // get room adults children number
+      }
+    })
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
@@ -457,7 +531,50 @@ export default {
       let d = date.getDate()
       let time = y + '-' + m + '-' + d
       return time;
-    }
+    },
+    getSelectedDate(){
+    // Adults,Room,Children Picker focus
+      this.showRoompicker=true;
+    },
+    //  add room
+    addRoom(){
+      this.roomList.push({
+        adultNumber:2,
+        childNumber:0,
+        childAgeList:[],
+      })
+      this.adultTotalNumber+=2;
+    },
+    // remove room
+    removeRoom(){
+      this.roomList.pop();
+    },
+    addAdultNumber(event,index){
+      this.roomList[index].adultNumber++;
+      this.adultTotalNumber++;
+    },
+    reduceAdultNumber(event,index){
+      if(this.roomList[index].adultNumber>1){
+        this.roomList[index].adultNumber--;
+        this.adultTotalNumber--;
+      }
+    },
+    addChildNumber(event,index){
+      this.roomList[index].childNumber++;
+      this.childTotalNumber++;
+      this.roomList[index].childAgeList.push({
+        age:[0,1,2,3,4,5,6,7,8,9,10],
+        value:1
+      })
+    },
+    reduceChildNumber(event,index){
+      let target=this.roomList[index];
+      if(target.childNumber>0){
+        target.childNumber--;
+        target.childAgeList.pop();
+        this.childTotalNumber--;
+      }
+    },
   },
 }
 </script>
@@ -685,8 +802,9 @@ export default {
 
       // guest number
       .guests {
+        position: relative;
         .guest-num {
-          min-width: 114px;
+          min-width: 120px;
           height: 36px;
           background-color:#ebebeb;
           border-radius: 5px;
@@ -701,6 +819,104 @@ export default {
             font-weight:bolder;
             transform:translate(0,-50%);
 
+          }
+        }
+        .room-picker{
+          position: absolute;
+          right:0;
+          top:112px;
+          border-radius: 4px;
+          width:280px;
+          box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.16);
+          background-color: #ffffff;
+          z-index:3;
+          padding: 0 0 20px 0;
+          max-height:640px;
+          overflow-y: auto;
+          h1,.room-list>li>div{
+            padding:0 20px;
+          }
+          .room-list{
+            .adults,.children{
+              display:flex;
+              justify-content: space-between;
+              align-items: center;
+              .count {
+                span{
+                  display:inline-block;
+                  margin:0 14px;
+                }
+                .minus,.plus{
+                  color:#888;
+                  font-weight:bolder;
+                  font-size:18px;
+                  cursor: pointer;
+                  user-select: none;
+                }
+              }
+            }
+            >li{
+              box-shadow: inset 0 -12px 33px 0 rgba(0, 0, 0, 0.05);
+              padding:10px 0 30px 0;
+              h1{
+                @include font(20px, bolder, #333, Montserrat);
+                opacity: 1;
+              }
+              h2,.count span{
+                @include font(14px, bolder, #333, MerriweatherSans);
+              }
+              .count{
+                span:nth-child(2){
+                  display:inline-block;
+                  width:20px;
+                  text-align: center;
+                }
+              }
+
+            }
+            .children-age{
+              border-top:1px solid rgba(112, 112, 112 , 0.28);
+              margin-top:10px;
+              p{
+                 @include font(12px, bolder, #888, MerriweatherSans);
+                 padding:10px 0 4px 0;
+              }
+              ul{
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                li{
+                  width:46%;
+                  .el-input__inner{
+                    height:36px;
+                    padding:10px;
+                    border-radius: 5px;
+                    border:2px solid #d4d4d4;
+                    background-color:#fff;
+                    font-size:12px;
+
+                  }
+                }
+              }
+              .el-input__suffix i{
+                color:#4574eb;
+              }
+            }
+            .children-age.border-none{
+              border:none;
+            }
+          }
+          .operate-room{
+            display: flex;
+            justify-content: space-between;
+            padding:16px 20px 0 20px;
+          }
+          .add-room,.remove-room{
+            @include font(12px, bolder, #4574eb, MerriweatherSans);
+            cursor: pointer;
+            svg{
+              margin-right:10px;
+            }
           }
         }
       }
@@ -732,7 +948,7 @@ export default {
   }
   .notHomepage,.isFixed {
     padding: 10px 12%;
-     p,
+     p.title,
     .title,
     .popular-search {
       display: none;
@@ -746,11 +962,15 @@ export default {
   position: fixed;
   background-color: #ffff;
   z-index: 999;
-  transition: all 0.4s;
+  // transition: all 0.4s;
   top:0;
+  .search .search-bar .guests .room-picker{
+    top:76px;
+  }
 }
 // search suggestion list
 .el-popper[x-placement^=bottom]{
+  border:none;
   margin-top:6px;
 }
 .el-autocomplete-suggestion.el-popper[x-placement^=bottom]{
@@ -935,6 +1155,12 @@ export default {
   transition: opacity .5s;
 }
 .show-currency-enter, .show-currency-leave-to {
+  opacity: 0;
+}
+.room-picker-enter-active, .room-picker-leave-active {
+  transition: all .5s;
+}
+.room-picker-enter, .room-picker-leave-to {
   opacity: 0;
 }
 </style>
