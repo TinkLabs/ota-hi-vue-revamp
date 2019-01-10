@@ -56,6 +56,8 @@
                 <price-slider
                   :min="0"
                   :max="9897"
+                  name="price"
+                  @priceRangeChange="reCheck"
                 />
               </div>
               <div class="by-rating">
@@ -74,7 +76,7 @@
                 </h4>
                 <check-list
                   :list="amenities"
-                  name="amen"
+                  name="amenIds"
                   @checking="reCheck"
                 />
               </div>
@@ -83,7 +85,7 @@
                   Cancellation
                 </h4>
                 <p>
-                  <el-checkbox v-model="filters.FC">
+                  <el-checkbox v-model="filters.isFreeCancel">
                     Free Cancellation
                   </el-checkbox>
                 </p>
@@ -103,6 +105,11 @@
             <div
               class="result-list"
             >
+              <console
+                :fetching="isFetching"
+                :params="fetchParams"
+                @listResponse="receive"
+              />
               <!-- zero page -->
               <div
                 v-if="result.length===0"
@@ -124,10 +131,14 @@
               </div>
               <!-- result - page -->
               <div class="result-page">
+                <sort-bar @sortList="sortHandler" />
+
                 <ul>
-                  <li class="result-item">
-                    <sort-bar @sortList="sortHandler" />
-                  </li>
+                  <list-item
+                    v-for="(item,index) in rList"
+                    :key="index"
+                    :data="item"
+                  />
                 </ul>
               </div>
             </div>
@@ -149,19 +160,37 @@ import Loading from './Loading.vue'
 import SortBar from './SortBar.vue'
 import NearBy from './NearBy.vue'
 import HandyAd from './HandyAd.vue'
-import { DG, HG } from './mock'
+import Console from './Console.vue'
+import ListItem from './ListItem.vue'
+
 
 const ratingList = [
-  { name: 'rate9', text: 'Super: 9+', checked: false },
-  { name: 'rate8', text: 'Very good: 8+', checked: false },
-  { name: 'rate7', text: 'Good: 7+', checked: false },
-  { name: 'rate6', text: 'Pleasant: 6+', checked: false },
+  {
+    name: 'rate9', text: 'Super: 9+', checked: false, id: 9,
+  },
+  {
+    name: 'rate8', text: 'Very good: 8+', checked: false, id: 8,
+  },
+  {
+    name: 'rate7', text: 'Good: 7+', checked: false, id: 7,
+  },
+  {
+    name: 'rate6', text: 'Pleasant: 6+', checked: false, id: 6,
+  },
 ]
 const amenities = [
-  { name: 'WiFi', text: 'Free WiFi', checked: false },
-  { name: 'Pet', text: 'Pet Friendly', checked: false },
-  { name: 'Swimming', text: 'Swimming Pool', checked: false },
-  { name: 'Fitness', text: 'Fitness Available', checked: false },
+  {
+    name: 'WiFi', text: 'Free WiFi', checked: false, id: 1,
+  },
+  {
+    name: 'Pet', text: 'Pet Friendly', checked: false, id: 2,
+  },
+  {
+    name: 'Swimming', text: 'Swimming Pool', checked: false, id: 3,
+  },
+  {
+    name: 'Fitness', text: 'Fitness Available', checked: false, id: 4,
+  },
 ]
 const starsArr = [5.0, 4.0, 3.0, 2.0, 1.0]
 export default {
@@ -175,17 +204,26 @@ export default {
     SortBar,
     NearBy,
     HandyAd,
+    Console,
+    ListItem,
   },
   data() {
     return {
+      //  stars, searchName, price, rating, amenIds, isFreeCancel, pageCount, pageSize, sortId,
       filters: {
         searchName: '',
-        rating: [],
         stars: [],
-        amen: [],
-        FC: false,
+        price: [],
+        rating: [],
+        amenIds: [],
+        isFreeCancel: false,
       },
-      sort: 0,
+      sortId: 0,
+      page: {
+        count: 1,
+        size: 10,
+        total: 1,
+      },
       isLoading: false,
       search: {
         city: 'London',
@@ -193,12 +231,15 @@ export default {
       },
       result: [],
       nearby: [],
+      isFetching: false,
+      fetchParams: null,
     }
   },
   computed: {
     locations() {
       return ['Europe', 'United Kingdom', 'London']
     },
+    // optional setting params
     ratingList() {
       return ratingList
     },
@@ -208,32 +249,53 @@ export default {
     starsArr() {
       return starsArr
     },
+    // for render
+    rList() {
+      return this.result
+    },
   },
   watch: {
-    rating(n) {
-      console.log(n)
+    // fetching params
+    filters: {
+      handler(val, oldVal) {
+        //
+      },
+      deep: true,
     },
-    amen(n) {
-      console.log(n)
-    },
-    stars(n) {
-      console.log(n)
-    },
+  },
+  created() {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.fetchData()
   },
   mounted() {
-    const that = this
-    setTimeout(() => {
-      that.result = HG(10)
-    //   that.nearby = DG(8)
-    }, 0)
   },
   methods: {
+    fetchData(c) {
+      this.isLoading = true
+      const params = {
+        ...JSON.parse(JSON.stringify(this.filters)), sortId: this.sortId, pageCount: c || this.page.count, pageSize: this.page.size,
+      }
+      this.fetchParams = params
+      this.isFetching = false
+      const that = this
+      setTimeout(() => {
+        that.isFetching = true
+      }, 1000)
+      setTimeout(() => {
+        that.isFetching = false
+      }, 1000)
+    },
     reCheck(n, v) {
       this.filters[n] = v
     },
     sortHandler(id) {
-      this.sort = id
-      console.log(this.sort)
+      this.sortId = id
+    },
+    receive(list) {
+      console.log('receive:')
+      this.result = list
+      this.isLoading = false
     },
   },
 }

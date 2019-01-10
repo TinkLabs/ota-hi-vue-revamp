@@ -11,3 +11,15 @@ Vue.filter('d422', (date) => {
   if (!date) return ''
   return moment(date).format('YYYY-MM-DD')
 })
+Vue.filter('price', str => (
+  // 'HK$ 100000' -> 'HK$ 100,000'
+  str.replace(/[0-9.]+/, (o) => {
+    const comp = o.split('.')
+    const ending = comp[1].length > 0 ? `.${comp[1]}` : ''
+    return comp[0].split('').reverse().join('').replace(/\d{3}/g, n => ((`${n},`)))
+      .split('')
+      .reverse()
+      .join('')
+      .replace(/^,/, '') + ending
+  })
+))

@@ -18,6 +18,7 @@
 </template>
 
 <script>
+// [{text:String,checked:Boolean,id: Number}]
 export default {
   props: {
     list: Array,
@@ -30,7 +31,7 @@ export default {
   },
   computed: {
     selected() {
-      return this.innerList.filter(n => n.checked === true).map(n => n.name)
+      return this.innerList.filter(n => n.checked === true).map(n => n.id)
     },
   },
   // watch: {

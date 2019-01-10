@@ -17,13 +17,27 @@
 <script>
 export default {
   props: {
+    name: String,
     min: Number,
     max: Number,
   },
   data() {
     return {
+      delayTime: 300,
+      Timer: null,
       priceRange: [Number(this.min), Number(this.max)],
     }
+  },
+  watch: {
+    priceRange(n) {
+      if (this.Timer) {
+        clearTimeout(this.Timer)
+      }
+      const that = this
+      this.Timer = setTimeout(() => {
+        that.$emit('priceRangeChange', this.name, n)
+      }, that.delayTime)
+    },
   },
 }
 </script>
