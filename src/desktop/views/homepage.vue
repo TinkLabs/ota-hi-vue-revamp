@@ -6,6 +6,7 @@
     <!-- content -->
     <div class="h-container">
       <div class="items">
+        <!-- featured -->
         <div class="featured">
           <h2 class="title">
             Featured
@@ -15,6 +16,7 @@
             View hotels now
           </div>
         </div>
+        <!-- eat like locals -->
         <div class="eat-like-locals">
           <h2 class="title">
             Eat Like Locals
@@ -23,6 +25,7 @@
             Lorem ipsum dolor
           </div>
         </div>
+        <!-- find gems -->
         <div class="find-gems">
           <h2 class="title">
             Find Hidden Gems
@@ -31,6 +34,7 @@
             Lorem ipsum dolor
           </div>
         </div>
+        <!-- hot deals -->
         <div class="hot-deals">
           <h2 class="title">
             Hot Deals
@@ -39,6 +43,7 @@
             Lorem ipsum dolor
           </div>
         </div>
+        <!-- handy -->
         <div class="handy">
           <h2 class="title">
             handy

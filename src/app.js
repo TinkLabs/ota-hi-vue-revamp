@@ -15,6 +15,7 @@ import zh from '../locales/zh'
 import createStore from './store'
 import createRouter from './routes'
 import App from './index.vue'
+import './filter'
 
 fontawesome.library.add(solid)
 fontawesome.library.add(regular)

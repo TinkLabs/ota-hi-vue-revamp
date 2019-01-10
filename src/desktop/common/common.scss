@@ -7,9 +7,11 @@ $main_color_green: #4e9b32;
 $blue1:#01337e;
 $blue2:#0f8ac2;
 $blue3:#002e7c;
+$blue4:#002b55;
 $black1:#383838;
 $black2:#6c6c6c;
 $black3:#707070;
+$black4:#888888;
 $green1: #3a8e1b;
 $green2: #14ac03;
 $green3: #4e9b32;
@@ -21,7 +23,19 @@ $white1:#fff;
 $text_color: #383838;
 $green: #79b264;
 $gray: #f5f5f5;
+$gray1: #cecece;
 $success: #67c23a;
 $warning: #e6a23c;
 $danger: #f56c6c;
 $info: #909399;
+
+.clearfix{
+  &:before,&:after{
+      display: table;
+      content:'';
+      height:0;
+  }
+  &:after{
+    clear: both;
+  }
+}
