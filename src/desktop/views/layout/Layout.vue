@@ -1,12 +1,14 @@
 <template>
   <div class="g-container">
     <Header :homepage="isHomepage" />
-    <AppMain />
+    <div class="app-main">
+      <slot v-if="isSlot" />
+      <router-view v-if="!isSlot" />
+    </div>
     <Footer />
   </div>
 </template>
 <script>
-import AppMain from './components/AppMian'
 import Header from '../includes/header'
 import Footer from '../includes/footer'
 
@@ -14,8 +16,8 @@ export default {
   components: {
     Header,
     Footer,
-    AppMain,
   },
+  props: ['isSlot'],
   data() {
     return {
     }
@@ -30,3 +32,9 @@ export default {
   },
 }
 </script>
+<style lang='scss'>
+  html, body{
+    margin: 0;
+    padding: 0;
+  }
+</style>
