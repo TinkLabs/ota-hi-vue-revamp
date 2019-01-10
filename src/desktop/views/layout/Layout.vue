@@ -19,7 +19,6 @@ export default {
   },
   props: ['isSlot'],
   data() {
-    console.log('isSlot', this.isSlot);
     return {
     }
   },
@@ -33,3 +32,9 @@ export default {
   },
 }
 </script>
+<style lang='scss'>
+  html, body{
+    margin: 0;
+    padding: 0;
+  }
+</style>
