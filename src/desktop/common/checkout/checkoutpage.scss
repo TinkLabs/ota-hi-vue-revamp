@@ -75,14 +75,13 @@
           @include font(14px,normal,#505050,MerriweatherSans);
         }
         .add-requirements{
-          color:#ffffff;
           margin:20px 0;
           >i{
             @include font(16px,bolder,$deep-orange);
           }
           >span{
             margin-left:10px;
-            font-size:14px;
+            @include font(14px,normal,$deep-orange);
           }
         }
       }
@@ -149,15 +148,37 @@
           }
         }
         p{
+            margin:15px 0 25px 0;
             @include font(16px,normal,#333,Montserrat);
             .book-days{
                 float:right;
             }
         }
         .suiteItems{
+            margin-top:15px;
+            padding-bottom: 15px;
+            border-bottom: 1.3px solid #ebecef;
             .changeBtn{
                 float:right;
+                @include font(12px,normal,$deep-orange,MerriweatherSans);
             }
+            .info-title{
+                @include font(14px,bold,#333,MerriweatherSans);
+            }
+            .info-list{
+                @include font(12px,normal,#888,MerriweatherSans);
+                >li{
+                    margin:5px 0;
+                }
+            }
+        }
+        .extra-link{
+            @include font(12px,normal,#888,MerriweatherSans);
+        }
+        .earn-fee{
+            height: 84px;
+            border-radius: 5px;
+            background-color: #f0f9e7;
         }
       }
       

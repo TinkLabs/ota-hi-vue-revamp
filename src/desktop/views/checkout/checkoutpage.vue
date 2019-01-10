@@ -74,14 +74,24 @@
             <p class="book-time"><span class="book-date">Mon 27 Dec - Tue 28 Dec</span><span class="book-days">2 Nightd</span></p>
             <div v-for="(item,index) in suiteItems" :key="index" class="suiteItems">
               <div class="detail-list-group">
-                <div class="info-title">{{item.title}}</div>
+                <div class="info-title">
+                  <span>{{item.title}}</span>
+                  <a class="changeBtn">Charge</a>
+                </div>
                 <ul class="info-list">
                   <li>{{item.roomType}}</li>
                   <li>{{item.members}}</li>
                 </ul>
-              </div>
-              <a class="changeBtn">Charge</a>
+              </div>  
             </div>
+          <a class="extra-link">Cancellation Policy</a>
+          <div class="earn-fee">
+            <span class="fees-acount">
+              <b>+50</b>
+              <b>Pts</b>
+            </span>
+            <span>You will earn 50 Pts when completion of this booking.</span>
+          </div>
           </div>
         </div>
       </div>
@@ -137,11 +147,11 @@ export default {
       ],
       suiteItems:[{
         title:"One Bedroom Suite1",
-        roomtype:"Double bed",
+        roomType:"Double bed",
         members:"2 Adults,0 Children"
       },{
         title:"One Bedroom Suite2",
-        roomtype:"Double bed",
+        roomType:"Double bed",
         members:"2 Adults,0 Children "
       }]
     }
