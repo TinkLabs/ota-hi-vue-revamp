@@ -45,6 +45,7 @@
     "npm": "^6.5.0",
     "pug": "2.0.0-beta11",
     "redis": "^2.8.0",
+    "swiper": "^4.4.6",
     "underscore": "^1.9.1",
     "useragent": "^2.3.0",
     "validator": "^10.9.0",

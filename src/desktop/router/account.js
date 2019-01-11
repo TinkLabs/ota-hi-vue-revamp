@@ -13,11 +13,11 @@ export default [
       path: 'dashboard',
       component: DashBoard,
       name: 'dashboard',
-    },{
+    }, {
       path: 'bookings',
       component: Bookings,
       name: 'bookings',
-    },{
+    }, {
       path: 'preferences',
       component: Preferences,
       name: 'preferences',
