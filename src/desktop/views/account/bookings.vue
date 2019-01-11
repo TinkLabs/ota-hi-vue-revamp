@@ -38,7 +38,7 @@
           <img :src="item.hotel.image">
           <div class="book-info">
             <div class="hotel">
-              <span class="name">{{item.hotel.name}}</span>
+              <span class="name"><router-link :to="`/account/booking/${item.referenceNo}`">{{item.hotel.name}}</router-link></span>
               <el-rate
                   v-model="item.hotel.starRating"
                   disabled
