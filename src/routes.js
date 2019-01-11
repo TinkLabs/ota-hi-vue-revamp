@@ -7,7 +7,6 @@ import desktopCheckoutPage from './desktop/router/checkoutpage'
 
 Vue.use(Router)
 
-
 export default function createRouter(isMobile) {
   let routes = []
   if (!isMobile) {
