@@ -146,9 +146,67 @@
               ' may be subject to a foreign exchange fee.')}}</p>
           </el-col>
         </el-row>
+        <el-row class="hi-booking-row">
+          <el-col :span="24">
+            <el-collapse v-model="activeNames" @change="handleChange" class="emailCollapse">
+              <el-collapse-item name="1">
+                <template slot="title">
+                  <i class="el-icon-message"></i> {{$t('Email to another address')}}
+                </template>
+                <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+              </el-collapse-item>
+            </el-collapse>
+          </el-col>
+        </el-row>
       </el-col>
       <el-col :span="12" class="right">
-        2
+        <el-row class="hi-booking-row"
+                v-for="(item, index) in bookingsDetails.roomList" :key="index">
+          <el-col :span="10" class="label">
+            <span>{{$t('Your room')}} {{index+1}}</span>
+            <el-tooltip class="item"
+                        effect="dark" placement="bottom"
+                        popper-class="hi-tips">
+              <div slot="content" class="tips-content">
+                <p v-html="$t('FREE cancellation', item.cancelObj)"></p>
+                <p>{{$t('You can easily cancel or change your booking for free! ' +
+                  'Just follow the link from your confirmation email.')}}</p>
+              </div>
+              <i class="el-icon-warning"></i>
+            </el-tooltip>
+          </el-col>
+          <el-col :span="14" class="info roomInfo">
+            <p>{{item.userName}}</p>
+            <p>
+              <span v-if="item.adults">
+                {{item.adults}} {{$t('adults')}}{{item.children ? ', ' : ''}}
+              </span>
+              <span v-if="item.children">{{item.children}} {{$t('children')}}</span>
+            </p>
+            <p v-for="(facility, i) in item.facilities" :key="i">{{facility}}</p>
+          </el-col>
+        </el-row>
+        <el-row class="hi-booking-row">
+          <el-col :span="10" class="label">{{$t('Inclusions')}}</el-col>
+          <el-col :span="14" class="info roomInfo">
+            <p v-for="(inclusion, i) in bookingsDetails.inclusions" :key="i">
+              <i :class="[inclusion.icon, 'inclusion']"></i>&nbsp;{{inclusion.name}}
+            </p>
+          </el-col>
+        </el-row>
+        <el-row class="hi-booking-row cancellation" v-if="bookingsDetails.cancellation">
+          <el-col :span="10" class="label">{{$t('Cancellation policy')}}</el-col>
+          <el-col :span="14" class="info">
+            <p class="strong">
+              {{$t('Free cancellation GMT', bookingsDetails.cancellation.transferObj)}}
+            </p>
+            <p>{{$t('Free cancellation GMT with fee',bookingsDetails.cancellation.transferObj)}}</p>
+            <p class="light">
+              {{$t('We’re unable to refund any payment for no-shows or early check out. ')}}
+            </p>
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
   </div>
@@ -192,7 +250,7 @@ export default {
               total: 125.99,
               period: 'daily rate',
             },
-            cancel: '2019-01-06 11:59:00',
+            cancel: '2018-01-06 23:59:00',
           },
           {
             userName: 'John Smith',
@@ -207,7 +265,7 @@ export default {
               total: 255.99,
               period: 'daily rate',
             },
-            cancel: '2019-01-06 23:59:00',
+            cancel: '2019-01-16 12:59:00',
           },
         ],
         promo: {
@@ -237,42 +295,64 @@ export default {
           percent: 20,
         },
       },
+      activeNames: [],
     }
   },
   computed: {
     bookingsDetails() {
-      const details = this.details
+      const tempDetails = this.details
+      tempDetails.checkIn = this.formatTime(tempDetails.from)
+      tempDetails.checkOut = this.formatTime(tempDetails.to)
+      let roomSubTotal = 0
+      tempDetails.roomList.forEach((room) => {
+        const tempRoom = room
+        roomSubTotal += room.price.total
+        if (room.cancel) {
+          tempRoom.cancelObj = this.formatTime(room.cancel)
+        }
+        return true
+      })
+      tempDetails.roomSubTotal = roomSubTotal
+      if (tempDetails.cancellation) {
+        tempDetails.cancellation.transferObj = this.formatTime(tempDetails.cancellation.date)
+        tempDetails.cancellation.transferObj.percent = tempDetails.cancellation.percent
+      }
+      return tempDetails
+    },
+  },
+  methods: {
+    formatTime(date) {
+      let time;
       const months = [this.$t('January'), this.$t('February'), this.$t('March'), this.$t('April'),
         this.$t('May'), this.$t('June'), this.$t('July'), this.$t('August'),
         this.$t('September'), this.$t('October'), this.$t('November'), this.$t('December')]
       const weeks = [this.$t('Sun'), this.$t('Mon'), this.$t('Tues'), this.$t('Wed'),
         this.$t('Thur'), this.$t('Fri'), this.$t('Sat')]
-      const checkIn = new Date(details.from)
-      const checkOut = new Date(details.to)
-      const checkInYear = checkIn.getFullYear()
-      const checkOutYear = checkOut.getFullYear()
-      const checkInMonth = months[checkIn.getMonth()]
-      const checkOutMonth = months[checkOut.getMonth()]
-      const checkInDay = weeks[checkIn.getDay()]
-      const checkOutDay = weeks[checkOut.getDay()]
-      const checkInDate = checkIn.getDate()
-      const checkOutDate = checkOut.getDate()
-      details.checkIn = {
-        day: checkInDay,
-        date: checkInDate,
-        month: checkInMonth,
-        year: checkInYear,
+      const tempTime = new Date(date);
+      const tempYear = tempTime.getFullYear()
+      const tempmonth = tempTime.getMonth() + 1
+      const tempMonth = months[tempTime.getMonth()]
+      const tempDate = tempTime.getDate()
+      const tempDay = weeks[tempTime.getDay()]
+      let tempHours = tempTime.getHours()
+      const tempMinutes = tempTime.getMinutes()
+      if (tempHours > 12) {
+        tempHours -= 12;
+        time = `${tempHours}:${tempMinutes} PM`
+      } else {
+        time = `${tempHours}:${tempMinutes} AM`
       }
-      details.checkOut = {
-        day: checkOutDay,
-        date: checkOutDate,
-        month: checkOutMonth,
-        year: checkOutYear,
+      return {
+        time,
+        year: tempYear,
+        month: tempmonth,
+        Month: tempMonth,
+        date: tempDate,
+        day: tempDay,
       }
-      let roomSubTotal = 0
-      details.roomList.forEach((room) => roomSubTotal += room.price.total)
-      details.roomSubTotal = roomSubTotal
-      return details
+    },
+    handleChange(val) {
+      console.log(val)
     },
   },
 }
@@ -378,6 +458,9 @@ export default {
         font-size: 14px;
         font-weight: bold;
         color: $black5;
+        .el-icon-warning{
+          margin-left: 14px;
+        }
       }
       .info{
         font-size: 14px;
@@ -392,6 +475,16 @@ export default {
           }
           .el-icon-printer{
             font-size: 16px;
+          }
+          .inclusion{
+            font-size: 16px;
+            color: $black5;
+            margin-left: 7px;
+          }
+        }
+        &.roomInfo{
+          p{
+            padding-bottom: 14px;
           }
         }
       }
@@ -428,6 +521,57 @@ export default {
         color: $black8;
         padding-bottom: 32.5px;
       }
+      &.cancellation{
+        .info{
+          p{
+            font-size: 14px;
+            margin-bottom: 28px;
+            &.strong{
+              font-weight: bold;
+              color: $black5;
+            }
+            &.light{
+              font-size: 12px;
+              color: $black4;
+              margin-bottom: 58px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .emailCollapse{
+    &.el-collapse{
+      border: none;
+    }
+    .el-collapse-item__header{
+      background: transparent;
+      border: none;
+      font-size: 14px;
+      font-weight: bold;
+      color: $blue4;
+      line-height: 16px;
+      i{
+        font-size: 16px;
+        margin-right: 14px;
+      }
+    }
+    .el-collapse-item__wrap{
+      background: transparent;
+      border: none;
+    }
+    .el-collapse-item__arrow{
+      font-size: 16px !important;
+      color: $black6;
+    }
+  }
+  .hi-tips{
+    .tips-content{
+      word-break: break-word;
+      width: 397px;
+      padding: 5px 22px;
+      font-size: 14px;
+      line-height: 28px;
     }
   }
 </style>
