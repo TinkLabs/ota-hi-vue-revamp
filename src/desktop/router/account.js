@@ -1,7 +1,7 @@
 const Layout = () => import('../views/account/Layout.vue')
 const DashBoard = () => import('../views/account/dashboard')
 const Bookings = () => import('../views/account/bookings')
-const upcomingBookings = () => import('../views/account/bookings_upcoming')
+const upcomingDetails = () => import('../views/account/bookings_details')
 const Preferences = () => import('../views/account/preferences')
 export default [
   {
@@ -14,11 +14,16 @@ export default [
       path: 'dashboard',
       component: DashBoard,
       name: 'dashboard',
-    },{
+    }, {
       path: 'bookings',
       component: Bookings,
       name: 'bookings',
-    },{
+    }, {
+      path: 'booking/:bookingId',
+      props: true,
+      component: upcomingDetails,
+      name: 'bookingDetail',
+    }, {
       path: 'preferences',
       component: Preferences,
       name: 'preferences',

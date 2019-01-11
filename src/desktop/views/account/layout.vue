@@ -2,12 +2,12 @@
   <HomeLayout is-slot="true">
     <div class="h-container account-header">
       <el-row class="account-header-title">
-        <span class="myAccount">My Account</span>
+        <span class="myAccount">{{$t('My Account')}}</span>
       </el-row>
       <el-row class="account-header-tab">
-        <span :class="{ active: activeTab===1 }" @click="changeTab(1)">My Dashboard</span>
-        <span :class="{ active: activeTab===2 }" @click="changeTab(2)">My Bookings</span>
-        <span :class="{ active: activeTab===3 }" @click="changeTab(3)">Preferences</span>
+        <span :class="{ active: activeTab===1 }" @click="changeTab(1)">{{$t('My Dashboard')}}</span>
+        <span :class="{ active: activeTab===2 }" @click="changeTab(2)">{{$t('My Bookings')}}</span>
+        <span :class="{ active: activeTab===3 }" @click="changeTab(3)">{{$t('Preferences')}}</span>
       </el-row>
     </div>
     <el-container class="h-container">
@@ -33,6 +33,7 @@ export default {
         case 'dashboard':
           defaultTab = 1
           break
+        case 'bookingDetail':
         case 'bookings':
           defaultTab = 2
           break
