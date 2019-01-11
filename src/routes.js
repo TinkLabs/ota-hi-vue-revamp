@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import desktopHomePage from './desktop/router/homepage'
+import desktopHomePage from './desktop/router/list'
 import mobileHomePage from './mobile/router/homepage'
 
 Vue.use(Router)
