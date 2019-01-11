@@ -2,6 +2,10 @@ import Vue from 'vue'
 import 'es6-promise/auto'
 import createApp from './app'
 
+const VueAwesomeSwiper = require('vue-awesome-swiper/dist/ssr')
+
+Vue.use(VueAwesomeSwiper)
+
 // a global mixin that calls `asyncData` when a route component's params change
 Vue.mixin({
   beforeRouteUpdate(to, from, next) {
