@@ -1,0 +1,76 @@
+const MENU = [
+  {
+    name: 'Home',
+    icon: 'fas fa-home',
+    link: '',
+    // selectable: false,
+    // info: '',
+  },
+  {
+    name: 'Hotels',
+    icon: 'fas fa-hotel',
+    link: '',
+    // selectable: false,
+    // info: '',
+  },
+  {
+    name: 'Experiences',
+    icon: 'fas fa-shopping-bag',
+    link: '',
+    // selectable: false,
+    // info: '',
+  },
+  {
+    name: 'Restaurants',
+    icon: 'fas fa-utensils',
+    link: '',
+    // selectable: false,
+    // info: '',
+  }, {
+    name: 'Languages',
+    icon: 'fas fa-language',
+    link: '',
+    // selectable: true,
+    // info: '',
+  },
+  {
+    name: 'Currencies',
+    icon: 'fas fa-coins',
+    link: '',
+    // selectable: true,
+    // info: '',
+  }, {
+    name: 'Deals',
+    icon: 'fas fa-money-bill',
+    link: '',
+    // selectable: false,
+    // info: '',
+  },
+  {
+    name: 'Gallery',
+    icon: 'fas fa-image',
+    link: '',
+    // selectable: false,
+    // info: '',
+  }, {
+    name: 'Manage Booking',
+    icon: 'fas fa-pen',
+    link: '',
+    // selectable: false,
+    // info: '',
+  },
+  {
+    name: 'Support',
+    icon: 'fas fa-headset',
+    link: '',
+    // selectable: false,
+    // info: '',
+  }, {
+    name: 'Contact Us',
+    icon: 'fas fa-envelope',
+    link: '',
+    // selectable: false,
+    // info: '',
+  },
+]
+export default MENU
