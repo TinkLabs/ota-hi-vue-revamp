@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import HomeLayout from '../layout/Layout'
+import HomeLayout from '../layout/Layout.vue'
 
 export default {
   name: 'AccountLayout',

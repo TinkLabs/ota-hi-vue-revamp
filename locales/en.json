@@ -69,5 +69,6 @@
   "Inclusions": "Inclusions",
   "Cancellation policy": "Cancellation policy",
   "Free cancellation GMT": "Free cancellation GMT until {time}, {date}-{month}-{year} (GMT)",
-  "Free cancellation GMT with fee": "If you change or cancel this booking after {time} {date}-{month}-{year} (GMT) you will be charged a cancellation fee of {percent}% the value of the stay."
+  "Free cancellation GMT with fee": "If you change or cancel this booking after {time} {date}-{month}-{year} (GMT) you will be charged a cancellation fee of {percent}% the value of the stay.",
+  "We’re unable to refund any payment for no-shows or early check out. ": "We’re unable to refund any payment for no-shows or early check out. "
 }
