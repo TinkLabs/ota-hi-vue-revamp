@@ -49,7 +49,7 @@
               </div>
             </div>
             <p class="cancellation">
-              <i class="fas fa-check-circle" />
+              <i :class="['fas', 'fa-check-circle',data.freeCancel?'active':'']" />
               Free cancellation
             </p>
             <div class="amenities">
@@ -233,7 +233,7 @@ export default {
             font-size: 12px;
             line-height: 20px;
             color: #888888;
-            i {
+            .fa-check-circle.active {
               display: inline-block;
               margin: 0 3px;
               font-size: 16px;

@@ -96,7 +96,7 @@ export default {
     this.appendMapCss()
   },
   mounted() {
-    this.appendMapCss()
+    // this.appendMapCss()
     //   this.createMap()
   },
   methods: {
@@ -180,10 +180,10 @@ export default {
         starHTML += '<i class=class="fas fa-star-half"></i>'
       }
       return `<div class='hotel-popup'>
-                <span class='hotel-price'>${n.currency} ${Math.ceil(
+                <div class='hotel-price'>${n.currency} ${Math.ceil(
   n.price / n.nights,
-)}</span>
-                <div class='hotel-brief clearfix'>
+)}
+<div class='hotel-brief clearfix'>
                   <div class='prev' style="background-image:url(${
   n.image
 });background-size:cover;"></div>
@@ -196,6 +196,7 @@ export default {
 )}</p>
                   </div>
                 </div>
+</div>
               </div>`
     },
     removePopup() {
@@ -241,7 +242,7 @@ export default {
       height: 600px;
       .mapboxgl-popup {
         //   width:50px;
-          height:30px;
+        height: 30px;
         &:hover {
           z-index: 1000;
           .mapboxgl-popup-tip {
@@ -251,64 +252,63 @@ export default {
         .mapboxgl-popup-content:hover {
           background-color: transparent;
           padding: 0;
-          position: relative;
           cursor: pointer;
           .hotel-popup {
             .hotel-price {
-              position: absolute;
-              bottom: 0;
-              left: 50%;
-              transform: translateX(-50%);
               color: #ffffff;
               background-color: #ff8600;
               padding: 5px 8px;
-              display: inline-block;
               box-sizing: border-box;
               border-radius: 3px;
-            }
-
-            .hotel-brief {
-              background-color: #fff;
-              display: block;
-              position: relative;
-              bottom: 40px;
-              box-sizing: border-box;
-              border-radius: 5px;
-              overflow: hidden;
-              //   width: 355px;
-              box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.15);
-              .prev {
+              position:relative;
+              .hotel-brief {
+                background-color: #fff;
+                display: block;
                 position: absolute;
-                top: 0;
-                left: 0;
-                width: 113px;
-                height: 113px;
-              }
-              .info {
-                margin-left: 113px;
+                left:50%;
+                transform: translateX(-50%);
+                bottom: 130%;
                 box-sizing: border-box;
-                padding: 12px 16px;
-                .h-name {
-                  font-family: MerriweatherSans;
-                  font-size: 14px;
-                  font-weight: bold;
-                  color: #333333;
+                border-radius: 5px;
+                // overflow: hidden;
+                white-space: nowrap; height: 113px;
+                box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.15);
+                .prev {
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 113px;
+                  height: 113px;
                 }
-                .h-location {
-                  font-family: SFUIText;
-                  font-size: 11px;
-                  color: #999;
-                  margin-bottom: 5px;
-                }
-                .h-stars {
-                  font-size: 11px;
-                  color: #fec800;
-                }
-                .h-price {
-                  font-family: Rubik;
-                  font-size: 16px;
-                  font-weight: 500;
-                  color: #333333;
+                .info {
+                  margin-left: 113px;
+                  box-sizing: border-box;
+                  padding: 12px 16px;
+                  .h-name {
+                    font-family: MerriweatherSans;
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #333333;
+                  }
+                  .h-location {
+                    font-family: SFUIText;
+                    font-size: 11px;
+                    color: #999;
+                    margin-bottom: 5px;
+                  }
+                  .h-stars {
+                    font-size: 11px;
+                    color: #fec800;
+                  }
+                  .h-price {
+                    font-family: Rubik;
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #333333;
+                  }
                 }
               }
             }
@@ -320,9 +320,9 @@ export default {
           .hotel-popup {
             .hotel-price {
               //   box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.16);
-            }
-            .hotel-brief {
-              display: none;
+              .hotel-brief {
+                display: none;
+              }
             }
           }
         }
