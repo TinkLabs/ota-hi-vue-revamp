@@ -168,7 +168,8 @@ export default {
         // get result & stopPropagation();
         switch (sortId) {
           case 1:
-            tmp.sort((a, b) => a.price - b.price)
+            tmp.sort((a, b) => (a.price / a.nights) - (b.price / b.nights))
+            console.log(tmp.map(p => p.price))
             break
           case 2:
             tmp.sort((a, b) => a.rating - b.rating)
