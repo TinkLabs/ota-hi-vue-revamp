@@ -7,7 +7,7 @@
     />
     <el-input
       v-model="limitedNum"
-      placeholder="限制数据条数"
+      placeholder="可输出总条数"
       type="number"
     />
     <el-button
@@ -15,6 +15,17 @@
       @click="generate"
     >
       生成
+    </el-button>
+    <el-input
+      v-model="sendNum"
+      placeholder="服务器推送条数"
+      type="number"
+    />
+    <el-button
+      plain
+      @click="send"
+    >
+      推送
     </el-button>
   </div>
 </template>
@@ -32,39 +43,41 @@ const amenMap = {
   1: 'fas fa-wifi',
   2: 'fas fa-smoking-ban',
 }
-function Hotel() {
+function Hotel(i) {
   this.images = [
     {
       src:
-          'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
     },
     {
       src:
-          'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
-    }, {
-      src:
-          'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
     },
     {
       src:
-          'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
     },
     {
       src:
-          'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
+    },
+    {
+      src:
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547007108300&di=2eeb616e116bf254605ceae86abd61ba&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20181203%2F337c323b7a7240a7b16ab211672682ec.jpeg',
     },
   ]
+  this.id = i
   this.name = 'Sheraton Grand London Park Lane'
   this.star_rating = Math.ceil(Math.random() * 5)
   this.address = 'Westminster Borough'
   this.city = 'London'
   this.nights = Math.ceil(Math.random() * 3)
-  this.rating = 8.9
+  this.rating = (Math.random() * 10).toFixed(1)
   this.reviews = Math.ceil(Math.random() * 200)
-  this.freeCanel = Math.ceil(Math.random() * 2) > 1
+  this.freeCancel = Math.ceil(Math.random() * 2) > 1
   this.Amenities = gA()
   this.remain = Math.ceil(Math.random() * 100)
-  this.price = Math.ceil(Math.random() * 1000)
+  this.price = Math.ceil(Math.random() * 10000)
   this.originPrice = this.price + 100
   this.currency = 'HK$'
 }
@@ -77,7 +90,7 @@ function HG(n = 10) {
   return new Array(n)
     .join(',')
     .split(',')
-    .map(n => new Hotel())
+    .map((n, i) => new Hotel(i + 1))
 }
 function DG(n = 10) {
   return new Array(n)
@@ -95,6 +108,7 @@ export default {
       originNum: 1000,
       origin: [],
       limitedNum: 100,
+      sendNum: 2,
       // specData
     }
   },
@@ -102,17 +116,26 @@ export default {
     limited() {
       return this.origin.slice(0, Number(this.limitedNum))
     },
-
   },
   watch: {
     fetching(c) {
       if (c) {
         const {
-          stars, searchName, price, rating, amenId, isFreeCancel, pageCount, pageSize, sortId,
+          stars,
+          searchName,
+          price,
+          rating,
+          amenId,
+          isFreeCancel,
+          pageCount,
+          pageSize,
+          sortId,
         } = this.params
         let tmp = this.limited.slice(0)
         if (searchName !== '') {
-          tmp = tmp.filter(n => n.name.toLowerCase().indexOf(searchName.toLowerCase()) > -1)
+          tmp = tmp.filter(
+            n => n.name.toLowerCase().indexOf(searchName.toLowerCase()) > -1,
+          )
         }
         if (price && price.length) {
           tmp = tmp.filter(n => n.price >= price[0] && n.price <= price[1])
@@ -139,6 +162,7 @@ export default {
           })
         }
         if (isFreeCancel) {
+          console.log('now testing freecancel:', isFreeCancel)
           tmp = tmp.filter(n => n.freeCancel === isFreeCancel)
         }
         // get result & stopPropagation();
@@ -156,8 +180,24 @@ export default {
             break
         }
         // getPage
-        const test = tmp.slice((pageCount - 1) * pageSize, pageSize)
-        this.$emit('listResponse', test)
+        console.log('fetching list all:')
+        console.log(tmp)
+
+        const test = tmp.slice((pageCount - 1) * pageSize, (pageCount) * pageSize)
+        console.log('return list:')
+        console.log(test)
+        const res = {
+          success: true,
+          data: test,
+          pageCount,
+          total: tmp.length,
+        }
+        console.log('currentPageCount:', pageCount)
+        if (pageCount > 1) {
+          this.$emit('appendlistResponse', res)
+        } else {
+          this.$emit('listResponse', res)
+        }
       }
     },
   },
@@ -168,12 +208,24 @@ export default {
     generate() {
       this.origin = HG(Number(this.originNum))
     },
+    send() {
+      const res = {
+        success: true,
+        data: this.limited.slice(0, this.sendNum),
+        total: this.limited.length,
+      }
+      this.$emit('listResponse', res)
+    },
   },
 }
 </script>
 
 <style>
-.console{
+.console {
+  padding:10px;
+  border-radius:5px;
+  margin-bottom:10px;
+  border:2px solid #6f5c66;
   display: flex;
   justify-content: space-between;
   align-content: center;

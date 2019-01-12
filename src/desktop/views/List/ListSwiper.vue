@@ -57,7 +57,6 @@ export default {
         // slidesPerView: 'auto',
         // centeredSlides: true,
         autoplay: false,
-
         direction: 'horizontal',
         navigation: {
           nextEl: '.swiper-button-next',
@@ -69,10 +68,10 @@ export default {
         },
         on: {
           slideChange() {
-            console.log('onSlideChangeEnd', this)
+            // console.log('onSlideChangeEnd', this)
           },
           tap() {
-            console.log('onTap', this)
+            // console.log('onTap', this)
           },
         },
       },
@@ -84,11 +83,11 @@ export default {
     },
   },
   mounted() {
-    console.log(
-      'This is current swiper instance object',
-      this.mySwiper,
-      'I will slideTo banners 3',
-    )
+    // console.log(
+    //   'This is current swiper instance object',
+    //   this.mySwiper,
+    //   'I will slideTo banners 3',
+    // )
     // this.mySwiper.slideTo(3)
   },
 }

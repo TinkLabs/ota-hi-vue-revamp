@@ -36,8 +36,8 @@
                   v-model="filters.searchName"
                   placeholder="请输入内容"
                   clearable
-                  debounce="400"
                 />
+                <!--  -->
               </div>
               <div class="by-star">
                 <h4 class="filter-title">
@@ -102,13 +102,12 @@
               <handy-ad />
             </div>
             <!-- list -->
-            <div
-              class="result-list"
-            >
+            <div class="result-list">
               <console
                 :fetching="isFetching"
                 :params="fetchParams"
                 @listResponse="receive"
+                @appendlistResponse="appendRespense"
               />
               <!-- zero page -->
               <div
@@ -130,16 +129,23 @@
                 <handy-ad />
               </div>
               <!-- result - page -->
-              <div class="result-page">
+              <div
+                v-if="result.length>0"
+                class="result-page"
+              >
                 <sort-bar @sortList="sortHandler" />
-
                 <ul>
+                  <!-- <transition-group> -->
                   <list-item
                     v-for="(item,index) in rList"
-                    :key="index"
+                    :key="item.id"
                     :data="item"
+                    :is-last-page="page.count!==page.total"
                   />
+                  <!-- </transition-group> -->
+                  <!--  :ref="item.fadeOne?'fadeTarget':undefined" -->
                 </ul>
+                <nearby-destinations />
               </div>
             </div>
           </div>
@@ -162,34 +168,60 @@ import NearBy from './NearBy.vue'
 import HandyAd from './HandyAd.vue'
 import Console from './Console.vue'
 import ListItem from './ListItem.vue'
+import EventBus from '../../component/bus'
+import NearbyDestinations from './NearbyDestinations.vue'
 
 
 const ratingList = [
   {
-    name: 'rate9', text: 'Super: 9+', checked: false, id: 9,
+    name: 'rate9',
+    text: 'Super: 9+',
+    checked: false,
+    id: 9,
   },
   {
-    name: 'rate8', text: 'Very good: 8+', checked: false, id: 8,
+    name: 'rate8',
+    text: 'Very good: 8+',
+    checked: false,
+    id: 8,
   },
   {
-    name: 'rate7', text: 'Good: 7+', checked: false, id: 7,
+    name: 'rate7',
+    text: 'Good: 7+',
+    checked: false,
+    id: 7,
   },
   {
-    name: 'rate6', text: 'Pleasant: 6+', checked: false, id: 6,
+    name: 'rate6',
+    text: 'Pleasant: 6+',
+    checked: false,
+    id: 6,
   },
 ]
 const amenities = [
   {
-    name: 'WiFi', text: 'Free WiFi', checked: false, id: 1,
+    name: 'WiFi',
+    text: 'Free WiFi',
+    checked: false,
+    id: 1,
   },
   {
-    name: 'Pet', text: 'Pet Friendly', checked: false, id: 2,
+    name: 'Pet',
+    text: 'Pet Friendly',
+    checked: false,
+    id: 2,
   },
   {
-    name: 'Swimming', text: 'Swimming Pool', checked: false, id: 3,
+    name: 'Swimming',
+    text: 'Swimming Pool',
+    checked: false,
+    id: 3,
   },
   {
-    name: 'Fitness', text: 'Fitness Available', checked: false, id: 4,
+    name: 'Fitness',
+    text: 'Fitness Available',
+    checked: false,
+    id: 4,
   },
 ]
 const starsArr = [5.0, 4.0, 3.0, 2.0, 1.0]
@@ -206,6 +238,7 @@ export default {
     HandyAd,
     Console,
     ListItem,
+    NearbyDestinations,
   },
   data() {
     return {
@@ -221,7 +254,7 @@ export default {
       sortId: 0,
       page: {
         count: 1,
-        size: 10,
+        size: 15,
         total: 1,
       },
       isLoading: false,
@@ -251,51 +284,120 @@ export default {
     },
     // for render
     rList() {
-      return this.result
+      const cp = this.result.slice(0).map(n => ({ ...n, fadeOne: false }))
+      if (cp.length > 0 && cp.length % 15 === 0 && this.page.count !== this.page.total) {
+        console.log('hre is key ')
+        cp[cp.length - 1].fadeOne = true
+      }
+      const l = this.result.length
+      if (l > 0 && l < 3) {
+        cp.push({})
+        return cp
+      }
+      for (let i = 3; i < l; i += 11) {
+        cp.splice(i, 0, {})
+      }
+      return cp
     },
   },
   watch: {
     // fetching params
     filters: {
       handler(val, oldVal) {
-        //
+        this.page.count = 1
+        this.fetchData(1)
       },
       deep: true,
     },
+    sortId() {
+      this.page.count = 1
+
+      this.fetchData(1)
+    },
   },
   created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
     this.fetchData()
   },
   mounted() {
+    this.$parent.$refs.total_view.addEventListener('scroll', this.throttleAppScrollControl())
+    EventBus.$on(
+      'list-detact',
+      (function (v) {
+        let isFetching = false
+        return () => {
+          if (isFetching) {
+            return false
+          }
+          const target = document.querySelector('.list-fade-target')
+          if (target !== null) {
+            if (target.getBoundingClientRect().top < v.$parent.$refs.total_view.getBoundingClientRect().height) {
+              isFetching = true
+              v.fetchData(v.page.count + 1)
+              setTimeout(() => {
+                console.log('fetch is aplying~')
+                isFetching = false
+              }, 2000)
+            }
+          }
+        }
+      }(this)),
+    )
   },
   methods: {
+    // 只负责发起请求
     fetchData(c) {
       this.isLoading = true
       const params = {
-        ...JSON.parse(JSON.stringify(this.filters)), sortId: this.sortId, pageCount: c || this.page.count, pageSize: this.page.size,
+        ...JSON.parse(JSON.stringify(this.filters)),
+        sortId: this.sortId,
+        pageCount: c || this.page.count,
+        pageSize: this.page.size,
       }
       this.fetchParams = params
       this.isFetching = false
       const that = this
       setTimeout(() => {
         that.isFetching = true
-      }, 1000)
+      }, 500)
       setTimeout(() => {
         that.isFetching = false
-      }, 1000)
+      }, 500)
     },
+    // searchNameChange(v) {
+    //   console.log(v)
+    // },
     reCheck(n, v) {
       this.filters[n] = v
     },
     sortHandler(id) {
       this.sortId = id
     },
-    receive(list) {
-      console.log('receive:')
-      this.result = list
-      this.isLoading = false
+    receive(res) {
+      if (res.success) {
+        this.result = res.data
+        this.isLoading = false
+        this.page.total = Math.ceil(res.total / this.page.size)
+      }
+    },
+    appendRespense(res) {
+      if (res.success) {
+        this.result = this.result.concat(res.data)
+        this.isLoading = false
+        this.page.count = res.pageCount
+        this.page.total = Math.ceil(res.total / this.page.size)
+      }
+    },
+    scrollhandler() {
+      const target = document.querySelector('.list-fade-target')
+      if (target !== null) {
+        console.log('asd')
+      }
+    },
+    appScrollControl() {
+      EventBus.$emit('list-detact')
+    },
+    throttleAppScrollControl() {
+      return this.$thr(this.appScrollControl, 300)
     },
   },
 }

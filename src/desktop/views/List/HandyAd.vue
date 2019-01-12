@@ -1,5 +1,8 @@
 <template>
-  <div class="handy-ad">
+  <div
+    class="handy-ad"
+    @click="jump"
+  >
     <img
       src=""
       alt=""
@@ -9,7 +12,11 @@
 
 <script>
 export default {
-
+  methods: {
+    jump() {
+      window.open('http://www.baidu.com/', '_blank')
+    },
+  },
 }
 </script>
 
@@ -17,7 +24,7 @@ export default {
 .handy-ad{
     width:812px;
     height: 200px;
-    margin:0 auto;
+    margin:34 auto 56px;
     background: #ccc;
     text-align: center;
     vertical-align: center;

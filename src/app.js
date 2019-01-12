@@ -11,7 +11,9 @@ import createStore from './store'
 import createRouter from './routes'
 import App from './index.vue'
 import './filter'
+import pluginsUtil from './pluginUtils'
 
+Vue.use(pluginsUtil)
 Vue.use(VueI18n)
 Vue.prototype.axios = axios
 
