@@ -132,6 +132,7 @@ export default {
           sortId,
         } = this.params
         let tmp = this.limited.slice(0)
+        console.log('now start filtering')
         if (searchName !== '') {
           tmp = tmp.filter(
             n => n.name.toLowerCase().indexOf(searchName.toLowerCase()) > -1,
@@ -147,6 +148,8 @@ export default {
         if (stars && stars.length) {
           const starsSet = new Set(stars)
           tmp = tmp.filter(n => starsSet.has(Math.floor(n.star_rating)))
+          console.log('now staring')
+          console.log(tmp)
         }
         if (amenId && amenId.length) {
           tmp = tmp.filter((n) => {
@@ -162,7 +165,6 @@ export default {
           })
         }
         if (isFreeCancel) {
-          console.log('now testing freecancel:', isFreeCancel)
           tmp = tmp.filter(n => n.freeCancel === isFreeCancel)
         }
         // get result & stopPropagation();
@@ -181,19 +183,24 @@ export default {
             break
         }
         // getPage
-        console.log('fetching list all:')
-        console.log(tmp)
-
         const test = tmp.slice((pageCount - 1) * pageSize, (pageCount) * pageSize)
-        console.log('return list:')
+        console.log('now final list is:')
         console.log(test)
+
+        let nearby = []
+        if (test.length === 0) {
+          nearby = DG(8)
+        }
         const res = {
           success: true,
           data: test,
+          nearby,
           pageCount,
           total: tmp.length,
         }
-        console.log('currentPageCount:', pageCount)
+        console.log('final res:')
+        console.log(res)
+
         if (pageCount > 1) {
           this.$emit('appendlistResponse', res)
         } else {
@@ -210,9 +217,16 @@ export default {
       this.origin = HG(Number(this.originNum))
     },
     send() {
+      let resultList = []
+      let nearby = []
+      resultList = this.limited.slice(0, this.sendNum)
+      if (resultList.length === 0) {
+        nearby = DG(8)
+      }
       const res = {
         success: true,
-        data: this.limited.slice(0, this.sendNum),
+        data: resultList,
+        nearby,
         total: this.limited.length,
       }
       this.$emit('listResponse', res)

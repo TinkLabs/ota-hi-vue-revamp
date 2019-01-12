@@ -374,7 +374,12 @@ export default {
     },
     receive(res) {
       if (res.success) {
+        console.log('now receive data!!!!!!!!!')
+        console.log(res)
         this.result = res.data
+        if (res.data.length === 0 && res.nearby.length > 0) {
+          this.nearby = res.nearby
+        }
         this.isLoading = false
         this.page.total = Math.ceil(res.total / this.page.size)
       }
