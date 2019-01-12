@@ -1,129 +1,268 @@
 <template>
-  <div class="header">
-    <ul>
-      <li>Contact Us</li>
-      <li>Support</li>
-      <li>English</li>
-      <li>HKD</li>
-    </ul>
-    <header>
-      <div class="logo">
-        <img
-          src="../../images/homepage/hi_DotComLogo@3x.png"
-          alt="hi.com logo"
+  <div :class="['header-wrapper',searchBarFixed == true ?'isFixed' :'']">
+    <div :class="['header',searchBarFixed == true ?'isFixed' :'']">
+      <ul>
+        <li>
+          <span>Contact Us</span>
+        </li>
+        <li>
+          <span>Support</span>
+        </li>
+        <li
+          class="language"
+          @mouseenter="languageShow=true;"
+          @mouseleave="languageShow=false;"
         >
-        <span>Hotel</span>
-        <span>Experience</span>
-        <span>Restaurant</span>
-      </div>
-      <div class="account">
-        <a href="#">
-          Sign In
-        </a>
-        <span> | </span>
-        <a href="#">
-          Create an Account
-        </a>
-      </div>
-    </header>
-    <div
-      :class="['search',searchBarFixed == true ?
-        'isFixed' :'',message == 'isHomepage' ? '' :'notHomepage']"
-    >
-      <p :class="[searchBarFixed == true ? 'hide' :'']">
-        Say hi to your next destination!
-      </p>
-      <div :class="['search-bar']">
-        <div class="location">
-          <div class="title">
-            LOCATION OR HOTEL
-          </div>
-          <!-- 自定义输入建议的显示 -->
-          <el-autocomplete
-            v-model="state3"
-            popper-class="my-autocomplete"
-            :fetch-suggestions="querySearch"
-            placeholder="Anywhere"
-            @select="handleSelect"
+          <span ref="language">English</span>
+          <transition name="show-language">
+            <ul
+              v-show="languageShow"
+              class="language-list"
+            >
+              <li
+                v-for="(item,index) in language"
+                :class="[item.class]"
+                @click="selectLanguage($event,index)"
+              >
+                <img
+                  :src="item.img"
+                  alt=""
+                >
+                <span>{{ item.name }}</span>
+              </li>
+            </ul>
+          </transition>
+        </li>
+        <li
+          class="currency"
+          @mouseenter="currencyShow=true"
+          @mouseleave="currencyShow=false"
+        >
+          <span ref="currency">HKD</span>
+          <transition name="show-currency">
+            <ul
+              v-show="currencyShow"
+              class="currency-list"
+            >
+              <li
+                v-for="(item,index) in currency"
+                :class="[item.class]"
+                @click="selectCurrency($event,index)"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </transition>
+        </li>
+      </ul>
+      <header>
+        <div class="logo">
+          <img
+            src="../../images/homepage/hi_DotComLogo@3x.png"
+            alt="hi.com logo"
           >
-            <i
-              slot="suffix"
-              class="el-icon-search el-input__icon"
-              @click="handleIconClick"
-            />
-            <template slot-scope="{ item }">
-              <div class="name">
-                {{ item.value }}
+          <span>Hotel</span>
+          <span>Experience</span>
+          <span>Restaurant</span>
+        </div>
+        <div class="account">
+          <a href="#">
+            Sign In
+          </a>
+          <span> | </span>
+          <a href="#">
+            Create an Account
+          </a>
+        </div>
+      </header>
+      <div :class="['search',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']">
+        <p :class="['title',searchBarFixed == true ? 'hide' :'']">
+          Say hi to your next destination!
+        </p>
+        <div :class="['search-bar']">
+          <!-- Location input-->
+          <div class="location">
+            <div class="title">
+              LOCATION OR HOTEL
+            </div>
+            <!-- 自定义输入建议的显示  服务端搜索数据-->
+            <el-autocomplete
+              popper-class="my-autocomplete"
+              v-model="searhResult"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="Anywhere"
+              :select-when-unmatched="true"
+              @select="handleSelect"
+            >
+              <i
+                slot="prefix"
+                class="el-icon-search el-input__icon"
+              />
+              <template slot-scope="{ item }">
+                <div v-if=item.type class="search-result-list">
+                  <div class="result-name">
+                    <i class="el-icon-location-outline"></i>
+                    {{item.value}}
+                  </div>
+                  <div class="type">{{item.type}}</div>
+                </div>
+                <div v-else>
+                  <div class="title" v-if=item.title>{{item.title}}</div>
+                  <!-- history list -->
+                  <div v-else-if=item.checkin :class="['history-list',item.isLast == true?'isLast':'']">
+                    <div class="name">
+                      <span></span>
+                      <span>{{ item.value }}</span>
+                    </div>
+                    <div class="info">
+                      <div class="check-date">
+                        <span>{{item.checkin}} - {{item.checkout}}</span>
+                      </div>
+                      <div class="guest-info">
+                        <span>{{item.room}} room, {{item.adult}} adults, {{item.children}} children</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- cities -->
+                  <div v-else class="cities">
+                    <div class="keyword">
+                      <i class="el-icon-location"></i>
+                      <span>{{item.value}}</span>
+                    </div>
+                    <div class="number">
+                      <span>{{item.number}}</span>
+                      properties
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </el-autocomplete>
+          </div>
+
+          <!-- Date Picker -->
+          <div class="check">
+            <div class="title">
+              CHECK IN & OUT
+            </div>
+            <!-- datepicker -->
+            <div class="block">
+              <el-date-picker
+                v-model="defaultDate"
+                type="daterange"
+                range-separator="-"
+                start-placeholder="CHECK IN"
+                end-placeholder="CHECK OUT"
+                :picker-options="pickerOptions"
+                @change="getSelectedDate"
+                ref="datePicker"
+              />
+            </div>
+          </div>
+
+          <!-- Adults,Room,Children Picker -->
+          <div class="guests" @click="showRoompicker=true;" ref="roompicker">
+            <div class="title">
+              GUESTS
+            </div>
+            <div class="guest-num">
+              <i class="far fa-user" />
+              <span class="room-num">
+                {{roomList.length}}
+              </span> room,
+              <span class="adult-num">
+                {{adultTotalNumber}}
+              </span> adults,
+              <br>
+              <span class="children-num">
+                {{childTotalNumber}}
+              </span> children
+            </div>
+            <transition name="room-picker">
+              <div class="room-picker" v-show="showRoompicker">
+                <ul class="room-list">
+                  <li v-for="(item,index) in roomList">
+                    <h1 class="room-num">Room {{index+1}}</h1>
+                    <div class="adults">
+                      <h2>Adults</h2>
+                      <div class="count">
+                        <span class="minus" @click="reduceAdultNumber($event,index)">-</span>
+                        <span>{{item.adultNumber}}</span>
+                        <span class="plus" @click="addAdultNumber($event,index)">+</span>
+                      </div>
+                    </div>
+                    <div class="children">
+                      <h2>Children</h2>
+                      <div class="count">
+                        <span class="minus"  @click="reduceChildNumber($event,index)">-</span>
+                        <span>{{item.childNumber}}</span>
+                        <span class="plus"  @click="addChildNumber($event,index)">+</span>
+                      </div>
+                    </div>
+                    <div :class="['children-age',item.childNumber>0?'':'border-none']">
+                      <p v-show="item.childNumber>0">Children’s age at time of booking. </p>
+                      <ul class="child-list">
+                        <li v-for="(item,index) in item.childAgeList">
+                          <p>Child {{index+1}} age</p>
+                          <template>
+                            <el-select v-model="item.value" placeholder="1">
+                              <el-option
+                                v-for="item in item.age"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                              </el-option>
+                            </el-select>
+                          </template>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+                <div class="operate-room">
+                  <div class="add-room" @click="addRoom">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Add another room</span>
+                  </div>
+                  <div class="remove-room" @click="removeRoom" v-show="roomList.length>1">
+                    <i class="fas fa-minus-circle"></i>
+                    <span>Remove</span>
+                  </div>
+                </div>
               </div>
-              <span class="addr">
-                {{ item.address }}
-              </span>
-            </template>
-          </el-autocomplete>
+            </transition>
+
+          </div>
+          <button>Search</button>
         </div>
-        <div class="check">
+        <div :class="['popular-search',searchBarFixed == true ? 'hide' :'']">
           <div class="title">
-            CHECK IN & OUT
+            POPULAR SEARCHES
           </div>
-          <!-- <input type="text" placeholder="CHECK IN & OUT"> -->
-          <!-- datepicker -->
-          <div class="block">
-            <!-- <span class="demonstration">默认</span> -->
-            <!-- {{value6}} -->
-            <el-date-picker
-              v-model="value6"
-              type="daterange"
-              range-separator="-"
-              start-placeholder="CHECK IN"
-              end-placeholder="CHECK OUT"
-            />
-          </div>
+          <ul class="popular-city">
+            <li
+              v-for="item in popular"
+              :key="item"
+            >
+              {{ item }}
+            </li>
+          </ul>
         </div>
-        <div class="guests">
-          <div class="title">
-            GUESTS
-          </div>
-          <div class="guest-num">
-            <i class="far fa-user" />
-            <span class="room-num">
-              1
-            </span> room,
-            <span class="adult-num">
-              2
-            </span> adults,
-            <br>
-            <span class="children-num">
-              0
-            </span> children
-          </div>
-          <!-- <input type="text" placeholder="GUESTS"> -->
-        </div>
-        <button>Search</button>
-      </div>
-      <div :class="['popular-search',searchBarFixed == true ? 'hide' :'']">
-        <div class="title">
-          POPULAR SEARCHES
-        </div>
-        <ul class="popular-city">
-          <li
-            v-for="item in popular"
-            :key="item"
-          >
-            {{ item }}
-          </li>
-        </ul>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import languageImg1 from '../../images/homepage/Mask Group 18@3x.png'
+import languageImg2 from '../../images/homepage/Mask Group 19@3x.png'
+import languageImg3 from '../../images/homepage/Mask Group 20@3x.png'
+
 export default {
-  // name: "header",
+  name: 'Header',
   props: {
-    message: {
-      type: String,
-      default: '',
+    homepage: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -137,183 +276,318 @@ export default {
         'Korea',
         'Rome',
         'Barcelona',
-        'London',
-        'Singapore',
+        'London2',
+        'Singapore2',
+      ],
+      currency: [
+        {
+          name: 'GBP - Great British Sterling',
+        },
+        {
+          name: 'HKD - Hong Kong Dollars',
+          class: 'active',
+        },
+        {
+          name: 'EUR - Euros',
+        },
+        {
+          name: 'JPY - Japanese Yen Dollarsg',
+        },
+        {
+          name: 'BHD - Bahraini Dinar',
+        },
+        {
+          name: 'INR - Indian Rupees',
+        },
+        {
+          name: 'USD - United States Dollars',
+        },
+        {
+          name: 'CAD - Canadian Dollars',
+        },
+        {
+          name: 'SAR - Saudi Arabia Riyals',
+        },
+      ],
+      language: [
+        {
+          name: '繁體中文',
+          img: languageImg3,
+        },
+        {
+          name: '简体中文',
+          img: languageImg3,
+        },
+        {
+          name: '日本語',
+          img: languageImg2,
+        },
+        {
+          name: 'English',
+          class: 'active',
+          img: languageImg1,
+        },
+
+      ],
+      age:'',
+      languageShow: false,
+      currencyShow: false,
+      showRoompicker:false,
+      adultTotalNumber:2,
+      childTotalNumber:0,
+      roomList:[
+        {
+          adultNumber:2,
+          childNumber:0,
+          childAgeList:[],
+        }
       ],
       restaurants: [],
-      state3: '',
-      value6: ['2019-01-17T16:00:00.000Z', '2019-01-18T16:00:00.000Z'],
+      searhResult: '',
       // search bar fixed
       searchBarFixed: false,
+      // datepicker
+      defaultDate: [],
+      startDate:'',
+      endDate:'',
+      pickerOptions: {
+        onPick:({ maxDate, minDate })=>{
+          this.startDate=minDate;
+          this.endDate=maxDate;
+        },
+        disabledDate:(time) =>{
+          if(this.startDate){
+            let minDate = (this.startDate).getTime();
+            let one = 30 * 24 * 3600 * 1000;
+            let oneMonth = minDate + one;
+            return time.getTime() < Date.now() - 24*60*60*1000 || time.getTime() > oneMonth;
+          }else{
+            return time.getTime() < Date.now() - 24*60*60*1000;
+          }
+        },
+      },
     }
   },
   mounted() {
     this.restaurants = this.loadAll()
-    window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('scroll', this.handleScroll);
+    // el-autocomplete 没有input change 事件
+    document.querySelector('.el-input__inner').addEventListener('input',this.getSearchList);
+    // Date Picker default date
+    this.getDefaultTime();
+    var _this=this;
+    document.addEventListener('click',function(e){
+      if(!_this.$refs.roompicker.contains(e.target)){
+        _this.showRoompicker=false;
+        // get room adults children number
+      }
+    })
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
     // search location or hotel
-    querySearch(queryString, cb) {
-      const { restaurants } = this.restaurants
-      const results = queryString
-        ? restaurants.filter(this.createFilter(queryString))
-        : restaurants
-      // 调用 callback 返回建议列表的数据
-      cb(results)
-    },
-    createFilter(queryString) {
-      return restaurant => restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-    },
     loadAll() {
       return [
-        { value: '三全鲜食（北新泾店）', address: '长宁区新渔路144号' },
         {
-          value: 'Hot honey 首尔炸鸡（仙霞路）',
-          address: '上海市长宁区淞虹路661号',
+          title:'Search History',
+          value:'',
+        },
+        { value: 'Bangkok, Thailand',
+          checkin:'14 Feb 2018',
+          checkout:'16 Feb 2018',
+          room:1,
+          adult:2,
+          children:2
         },
         {
-          value: '新旺角茶餐厅',
-          address: '上海市普陀区真北路988号创邑金沙谷6号楼113',
-        },
-        { value: '泷千家(天山西路店)', address: '天山西路438号' },
-        {
-          value: '胖仙女纸杯蛋糕（上海凌空店）',
-          address: '上海市长宁区金钟路968号1幢18号楼一层商铺18-101',
-        },
-        { value: '贡茶', address: '上海市长宁区金钟路633号' },
-        {
-          value: '豪大大香鸡排超级奶爸',
-          address: '上海市嘉定区曹安公路曹安路1685号',
+          value: 'Hong Kong, Hong Kong',
+          checkin:'14 Feb 2018',
+          checkout:'16 Feb 2018',
+          room:1,
+          adult:2,
+          children:2
         },
         {
-          value: '茶芝兰（奶茶，手抓饼）',
-          address: '上海市普陀区同普路1435号',
-        },
-        { value: '十二泷町', address: '上海市北翟路1444弄81号B幢-107' },
-        { value: '星移浓缩咖啡', address: '上海市嘉定区新郁路817号' },
-        { value: '阿姨奶茶/豪大大', address: '嘉定区曹安路1611号' },
-        { value: '新麦甜四季甜品炸鸡', address: '嘉定区曹安公路2383弄55号' },
-        {
-          value: 'Monica摩托主题咖啡店',
-          address: '嘉定区江桥镇曹安公路2409号1F，2383弄62号1F',
+          value: 'Sheraton Grande Walkerhill Casino, Seoul',
+          checkin:'14 Feb 2018',
+          checkout:'16 Feb 2018',
+          room:1,
+          adult:2,
+          children:2,
+          isLast:true,
         },
         {
-          value: '浮生若茶（凌空soho店）',
-          address: '上海长宁区金钟路968号9号楼地下一层',
-        },
-        { value: 'NONO JUICE  鲜榨果汁', address: '上海市长宁区天山西路119号' },
-        { value: 'CoCo都可(北新泾店）', address: '上海市长宁区仙霞西路' },
-        {
-          value: '快乐柠檬（神州智慧店）',
-          address: '上海市长宁区天山西路567号1层R117号店铺',
+          value:'London, United Kingdom',
+          number:5254,
         },
         {
-          value: 'Merci Paul cafe',
-          address: '上海市普陀区光复西路丹巴路28弄6号楼819',
+          value:'London, Canada',
+          number:355,
         },
         {
-          value: '猫山王（西郊百联店）',
-          address: '上海市长宁区仙霞西路88号第一层G05-F01-1-306',
-        },
-        { value: '枪会山', address: '上海市普陀区棕榈路' },
-        { value: '纵食', address: '元丰天山花园(东门) 双流路267号' },
-        { value: '钱记', address: '上海市长宁区天山西路' },
-        { value: '壹杯加', address: '上海市长宁区通协路' },
-        {
-          value: '唦哇嘀咖',
-          address: '上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元',
-        },
-        { value: '爱茜茜里(西郊百联)', address: '长宁区仙霞西路88号1305室' },
-        {
-          value: '爱茜茜里(近铁广场)',
-          address:
-            '上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺',
-        },
-        {
-          value: '鲜果榨汁（金沙江路和美广店）',
-          address: '普陀区金沙江路2239号金沙和美广场B1-10-6',
-        },
-        {
-          value: '开心丽果（缤谷店）',
-          address: '上海市长宁区威宁路天山路341号',
-        },
-        { value: '超级鸡车（丰庄路店）', address: '上海市嘉定区丰庄路240号' },
-        { value: '妙生活果园（北新泾店）', address: '长宁区新渔路144号' },
-        { value: '香宜度麻辣香锅', address: '长宁区淞虹路148号' },
-        {
-          value: '凡仔汉堡（老真北路店）',
-          address: '上海市普陀区老真北路160号',
-        },
-        { value: '港式小铺', address: '上海市长宁区金钟路968号15楼15-105室' },
-        { value: '蜀香源麻辣香锅（剑河路店）', address: '剑河路443-1' },
-        { value: '北京饺子馆', address: '长宁区北新泾街道天山西路490-1号' },
-        {
-          value: '饭典*新简餐（凌空SOHO店）',
-          address: '上海市长宁区金钟路968号9号楼地下一层9-83室',
-        },
-        {
-          value: '焦耳·川式快餐（金钟路店）',
-          address: '上海市金钟路633号地下一层甲部',
-        },
-        { value: '动力鸡车', address: '长宁区仙霞西路299弄3号101B' },
-        { value: '浏阳蒸菜', address: '天山西路430号' },
-        { value: '四海游龙（天山西路店）', address: '上海市长宁区天山西路' },
-        {
-          value: '樱花食堂（凌空店）',
-          address: '上海市长宁区金钟路968号15楼15-105室',
-        },
-        { value: '壹分米客家传统调制米粉(天山店)', address: '天山西路428号' },
-        {
-          value: '福荣祥烧腊（平溪路店）',
-          address: '上海市长宁区协和路福泉路255弄57-73号',
-        },
-        {
-          value: '速记黄焖鸡米饭',
-          address: '上海市长宁区北新泾街道金钟路180号1层01号摊位',
-        },
-        { value: '红辣椒麻辣烫', address: '上海市长宁区天山西路492号' },
-        {
-          value: '(小杨生煎)西郊百联餐厅',
-          address: '长宁区仙霞西路88号百联2楼',
-        },
-        { value: '阳阳麻辣烫', address: '天山西路389号' },
-        {
-          value: '南拳妈妈龙虾盖浇饭',
-          address: '普陀区金沙江路1699号鑫乐惠美食广场A13',
+          value:'London, South Africa',
+          number:768,
         },
       ]
     },
-    handleSelect(item) {
-      console.log(item)
+    loadAllResult() {
+      return [
+        {
+          value:'London, Marriott Hotel Regents Park, England, UK',
+          type:'Hotel',
+          icon:''
+        },
+         {
+          value:'London, Fleming Mayfair, Small Luxury Hotels of the World',
+          type:'Hotel',
+          icon:''
+        },
+        {
+          value:'London Hotel, Glyfada, Greece',
+          type:'Hotel',
+          icon:''
+        },
+        {
+          value:'London, Ontario, Canada',
+          type:'City',
+          icon:''
+        },
+        {
+          value:'London City Centre',
+          type:'City',
+          icon:''
+        },
+        {
+          value:'London Heathrow Airport',
+          type:'Airport',
+          icon:''
+        },
+        {
+          value:'London Bridge, London UK',
+          type:'Landmarks',
+          icon:''
+        },
+      ]
     },
-    handleIconClick(ev) {
-      console.log(ev)
+    querySearchAsync(queryString, cb) {
+      const restaurants = this.restaurants
+      const results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants
+      cb(results)
+    },
+    createStateFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    handleSelect(item) {
+      // check in&out focus
+      this.$refs.datePicker.focus();
     },
     // searchbar fixed
     handleScroll() {
-      const scrollTop = window.pageYOffset
-        || document.documentElement.scrollTop
-        || document.body.scrollTop
-      const { offsetTop } = document.querySelector('.search-bar').offsetTop
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      const offsetTop = document.querySelector('.search-bar').offsetTop
       if (scrollTop > offsetTop) {
         this.searchBarFixed = true
       } else {
         this.searchBarFixed = false
       }
     },
+    // select currency
+    selectCurrency(event,index){
+      for(let i in this.currency){
+        this.currency[i].class=null;
+      }
+      this.currency[index].class='active';
+      this.$refs.currency.innerHTML=this.currency[index].name.split('-')[0]
+      this.currencyShow = false
+      // 切换货币
+    },
+    // select language
+    selectLanguage(event,index){
+      for(let i in this.language){
+        this.language[i].class=null;
+      }
+      this.language[index].class='active';
+      this.$refs.language.innerHTML=this.language[index].name
+      this.languageShow = false
+      // 切换语言
+    },
+    // search with typing
+    getSearchList(){
+      this.restaurants = this.loadAllResult()
+    },
+    getDefaultTime(){
+      // default date
+      let startDate = new Date().getTime()+14*24*60*60*1000
+      let endDate=new Date().getTime()+15*24*60*60*1000
+      this.defaultDate=[this.formatDate(new Date(startDate)),this.formatDate(new Date(endDate))]
+    },
+    formatDate(date){
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      let d = date.getDate()
+      let time = y + '-' + m + '-' + d
+      return time;
+    },
+    getSelectedDate(){
+    // Adults,Room,Children Picker focus
+      this.showRoompicker=true;
+    },
+    //  add room
+    addRoom(){
+      this.roomList.push({
+        adultNumber:2,
+        childNumber:0,
+        childAgeList:[],
+      })
+      this.adultTotalNumber+=2;
+    },
+    // remove room
+    removeRoom(){
+      this.roomList.pop();
+    },
+    addAdultNumber(event,index){
+      this.roomList[index].adultNumber++;
+      this.adultTotalNumber++;
+    },
+    reduceAdultNumber(event,index){
+      if(this.roomList[index].adultNumber>1){
+        this.roomList[index].adultNumber--;
+        this.adultTotalNumber--;
+      }
+    },
+    addChildNumber(event,index){
+      this.roomList[index].childNumber++;
+      this.childTotalNumber++;
+      this.roomList[index].childAgeList.push({
+        age:[0,1,2,3,4,5,6,7,8,9,10],
+        value:1
+      })
+    },
+    reduceChildNumber(event,index){
+      let target=this.roomList[index];
+      if(target.childNumber>0){
+        target.childNumber--;
+        target.childAgeList.pop();
+        this.childTotalNumber--;
+      }
+    },
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../../common/main.scss';
-
+.header-wrapper.isFixed{
+  height:460px;
+}
 .header {
   width: 100%;
   color: #333;
+  min-width:1024px;
   > ul {
     padding: 0 12%;
     // margin:0 auto;
@@ -321,19 +595,67 @@ export default {
     justify-content: flex-end;
     align-items: center;
     height: 30px;
-    font-family: Rubik;
-    color: #333;
-    font-size: 12px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-    li {
+    @include font(12px, bold, #333, Rubik);
+    >li {
       list-style: none;
-      margin-left: 44px;
+      margin-left: 20px;
+      position: relative;
+      cursor: pointer;
+      span{
+        display:inline-block;
+        padding:8px 14px;
+      }
+      .currency-list,.language-list{
+        position: absolute;
+        top:35px;
+        right:0;
+        background-color:#fff;
+        border-radius: 4px;
+        box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.16);
+        transition:all .4s;
+        padding:10px 0;
+        z-index:1;
+        li.active{
+          color:#cba052;
+        }
+        li{
+          padding:10px 20px;
+          color:#505050;
+          width:180px;
+          &:hover{
+            color:#fff;
+            background-color:#002b55;
+            transition:all .4s;
+          }
+        }
+      }
+      .language-list{
+        li{
+          // padding-left:50px;
+          padding:0;
+          padding-left:18px;
+          box-sizing: border-box;
+          width:130px;
+          img{
+            width:18px;
+            margin-right:6px;
+          }
+        }
+      }
+    }
+    .currency,.language{
+      &:hover{
+        color:#fff;
+        background-color:#002b55;
+        transition:all .4s;
+      }
     }
   }
   header {
     padding: 10px 12%;
     display: flex;
     justify-content: space-between;
+    border-bottom:2px solid #ebebeb;
     span {
       display: inline-clock;
     }
@@ -342,7 +664,7 @@ export default {
       // line-height:60px;
       display: flex;
       justify-content: flex-start;
-      align-items: center;
+      align-items: flex-end;
       img {
         width: 100px;
       }
@@ -360,23 +682,17 @@ export default {
         font-weight: bolder;
         font-size: 12px;
       }
+      a:first-child{
+        color:#cba052;
+      }
     }
-  }
-  .search.isFixed {
-    position: fixed;
-    background-color: #f1f1f1;
-    top: -26px;
-    z-index: 999;
-    padding-bottom: 16px;
-    transition: all 0.4s;
   }
   .search {
     width: 100%;
     padding: 0 12%;
     box-sizing: border-box;
-    background-color: #f5f5f5;
-    box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.11);
     padding-bottom: 60px;
+    transition: all 0.4s;
     p {
       font-family: Montserrat;
       font-size: 40px;
@@ -403,6 +719,11 @@ export default {
       }
       .location {
         min-width: 260px;
+        width:40%;
+        .el-autocomplete{
+          width:100%;
+
+        }
         .my-autocomplete {
           li {
             line-height: normal;
@@ -421,9 +742,8 @@ export default {
             }
           }
         }
-        .el-input__suffix {
-          left: 20px;
-          right: auto;
+        .el-input__prefix {
+          left: 12px;
           .el-input__icon {
             font-weight: bold;
             font-size: 18px;
@@ -441,7 +761,7 @@ export default {
       }
 
       input {
-        @include font(14px, bold, #333, MerriweatherSans);
+        @include font(14px, bolder, #333, MerriweatherSans);
         height: 28px;
       }
       .el-input__inner {
@@ -452,6 +772,8 @@ export default {
         padding-left: 52px;
         font-weight: bolder;
         border: none;
+        padding-right: 20px;
+        background-color:#ebebeb;
         .el-range-separator {
           line-height: 64px;
         }
@@ -475,17 +797,127 @@ export default {
         .el-date-editor--daterange.el-input__inner {
           width: 280px;
         }
+
       }
 
       // guest number
       .guests {
+        position: relative;
         .guest-num {
-          min-width: 114px;
+          min-width: 120px;
           height: 36px;
-          background-color: #fff;
+          background-color:#ebebeb;
           border-radius: 5px;
           padding: 18px 18px 18px 46px;
-          @include font(14px, bold, #333, MerriweatherSans);
+          @include font(14px, bolder, #333, MerriweatherSans);
+          position: relative;
+          svg{
+            position: absolute;
+            left:12px;
+            top:50%;
+            font-size:16px;
+            font-weight:bolder;
+            transform:translate(0,-50%);
+
+          }
+        }
+        .room-picker{
+          position: absolute;
+          right:0;
+          top:112px;
+          border-radius: 4px;
+          width:280px;
+          box-shadow: 0 12px 33px 0 rgba(0, 0, 0, 0.16);
+          background-color: #ffffff;
+          z-index:3;
+          padding: 0 0 20px 0;
+          max-height:640px;
+          overflow-y: auto;
+          h1,.room-list>li>div{
+            padding:0 20px;
+          }
+          .room-list{
+            .adults,.children{
+              display:flex;
+              justify-content: space-between;
+              align-items: center;
+              .count {
+                span{
+                  display:inline-block;
+                  margin:0 14px;
+                }
+                .minus,.plus{
+                  color:#888;
+                  font-weight:bolder;
+                  font-size:18px;
+                  cursor: pointer;
+                  user-select: none;
+                }
+              }
+            }
+            >li{
+              box-shadow: inset 0 -12px 33px 0 rgba(0, 0, 0, 0.05);
+              padding:10px 0 30px 0;
+              h1{
+                @include font(20px, bolder, #333, Montserrat);
+                opacity: 1;
+              }
+              h2,.count span{
+                @include font(14px, bolder, #333, MerriweatherSans);
+              }
+              .count{
+                span:nth-child(2){
+                  display:inline-block;
+                  width:20px;
+                  text-align: center;
+                }
+              }
+
+            }
+            .children-age{
+              border-top:1px solid rgba(112, 112, 112 , 0.28);
+              margin-top:10px;
+              p{
+                 @include font(12px, bolder, #888, MerriweatherSans);
+                 padding:10px 0 4px 0;
+              }
+              ul{
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                li{
+                  width:46%;
+                  .el-input__inner{
+                    height:36px;
+                    padding:10px;
+                    border-radius: 5px;
+                    border:2px solid #d4d4d4;
+                    background-color:#fff;
+                    font-size:12px;
+
+                  }
+                }
+              }
+              .el-input__suffix i{
+                color:#4574eb;
+              }
+            }
+            .children-age.border-none{
+              border:none;
+            }
+          }
+          .operate-room{
+            display: flex;
+            justify-content: space-between;
+            padding:16px 20px 0 20px;
+          }
+          .add-room,.remove-room{
+            @include font(12px, bolder, #4574eb, MerriweatherSans);
+            cursor: pointer;
+            svg{
+              margin-right:10px;
+            }
+          }
         }
       }
       // search button
@@ -495,6 +927,7 @@ export default {
         max-width: 160px;
         background-color: #cba052;
         @include font(20px, bold, #fff, MerriweatherSans);
+        cursor: pointer;
       }
     }
 
@@ -513,10 +946,9 @@ export default {
       }
     }
   }
-
-  .notHomepage {
+  .notHomepage,.isFixed {
     padding: 10px 12%;
-    > p,
+     p.title,
     .title,
     .popular-search {
       display: none;
@@ -525,5 +957,210 @@ export default {
   .notHomepage.isFixed {
     top: 0;
   }
+}
+.header.isFixed {
+  position: fixed;
+  background-color: #ffff;
+  z-index: 999;
+  // transition: all 0.4s;
+  top:0;
+  .search .search-bar .guests .room-picker{
+    top:76px;
+  }
+}
+// search suggestion list
+.el-popper[x-placement^=bottom]{
+  border:none;
+  margin-top:6px;
+}
+.el-autocomplete-suggestion.el-popper[x-placement^=bottom]{
+  width:auto !important;
+  min-width:500px;
+  overflow: unset;
+  border-radius: 4px;
+  .el-scrollbar{
+    border-radius:4px;
+    .el-autocomplete-suggestion__wrap{
+      max-height:300px;
+    }
+  }
+  .el-scrollbar__view{
+    list-style-type: disc !important;
+    li{
+      padding:0;
+      &:hover{
+        background-color:#fff;
+      }
+      .title{
+        @include font(12px,bold, #8dc8e8,MerriweatherSans);
+        padding:0 20px;
+        cursor: auto;
+      }
+      .history-list,.cities,.search-result-list{
+        list-style-type: disc;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height:44px;
+        padding:0 20px;
+        &:hover{
+          background-color:#002b55;
+          transition: all .4s;
+          .name,.info,.keyword,.number,.number span,.result-name,.type{
+            color:#fff;
+            transition: all .4s;
+          }
+          .name span:first-child{
+            background-color:#fff;
+            transition: all .4s;
+          }
+        }
+      }
+      // search with typing
+      .search-result-list{
+        border-bottom:2px solid rgba(150, 150, 150, 0.12);
+        height:50px;
+
+      }
+
+      .history-list.isLast{
+        border-bottom:2px solid rgba(69, 116, 235,0.1);
+        margin-bottom:10px;
+      }
+      color:#505050;
+
+      .name,.keyword,.result-name{
+        @include font(14px,bold, #505050,MerriweatherSans);
+        margin-right:50px;
+        span:first-child{
+          display:inline-block;
+          width:6px ;
+          height:6px;
+          background-color:#000;
+          border-radius:50%;
+          margin:2px 20px 2px 10px;
+        }
+        i{
+          margin:0 12px 0 10px;
+        }
+
+      }
+      .type{
+        @include font(14px,normal, #888,MerriweatherSans);
+      }
+      .number{
+        @include font(14px,bold, #505050,MerriweatherSans);
+        span{
+          color:#cba052;
+        }
+      }
+      .info{
+        @include font(10px,normal, #888,Rubik);
+        >div{
+          line-height:16px;
+        }
+      }
+    }
+  }
+}
+
+// datepicker
+.el-date-range-picker{
+  // year arrow
+  .el-picker-panel__icon-btn.el-icon-d-arrow-left,.el-icon-d-arrow-right{
+    display:none;
+  }
+  // month arrow
+  .el-picker-panel__icon-btn.el-icon-arrow-left,.el-icon-arrow-right{
+    font-size:14px;
+    color:#c9c9c9;
+    font-weight:bolder;
+  }
+  // datepicker header
+  .el-date-range-picker__header{
+    div{
+      @include font(13px,500, #8dc8e8,Rubik);
+    }
+  }
+
+  .el-date-table{
+    td span{
+      color:#000;
+      font-weight:600;
+    }
+    td.disabled div{
+      background-color:#fff;
+    }
+    .disabled span{
+      color:#a5a5a5;
+    }
+    .today span{
+      border: 2px solid #cba052;
+      border-radius: 2px;
+      box-sizing: border-box;
+      line-height:22px;
+      font-weight:900;
+
+    }
+    td.in-range.start-date,td.in-range.end-date{
+      div{
+        background-color:#002b55;
+        border-radius:2px;
+        position: relative;
+      }
+      span{
+        background-color:#002b55;
+        border-radius:2px;
+        color:#fff;
+        border:none;
+        line-height:24px;
+      }
+    }
+    // .start-date div:after{
+    //   content:"";
+    //   position: absolute;  /*日常绝对定位*/
+    //   top:0;
+    //   left:30px;
+    //   width: 0;
+    //   height: 0;
+    //   border:15px solid transparent;
+    //   border-left-color: #002b55;
+    // }
+  }
+  .el-date-table td.in-range div, .el-date-table td.in-range div:hover, .el-date-table.is-week-mode .el-date-table__row.current div, .el-date-table.is-week-mode .el-date-table__row:hover div{
+    background-color:#e8e8e8;
+
+  }
+  .el-date-table td.in-range div:hover{
+    span{
+      color:#fff;
+    }
+  }
+  .el-date-table td.in-range div:hover{
+    background-color:#002b55;
+  }
+}
+.el-range-input{
+  background-color:#ebebeb;
+}
+
+// transition
+.show-language-enter-active, .show-language-leave-active {
+  transition: opacity .5s;
+}
+.show-language-enter, .show-language-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+.show-currency-enter-active, .show-currency-leave-active {
+  transition: opacity .5s;
+}
+.show-currency-enter, .show-currency-leave-to {
+  opacity: 0;
+}
+.room-picker-enter-active, .room-picker-leave-active {
+  transition: all .5s;
+}
+.room-picker-enter, .room-picker-leave-to {
+  opacity: 0;
 }
 </style>
