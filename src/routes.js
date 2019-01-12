@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import desktopHomePage from './desktop/router/homepage'
 
-import desktopList from './desktop/router/list'、
+import desktopList from './desktop/router/list'
 import desktopAccountPage from './desktop/router/account'
 import mobileHomePage from './mobile/router/homepage'
 
