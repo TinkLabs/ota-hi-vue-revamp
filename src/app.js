@@ -5,6 +5,11 @@ import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+import fontawesome from '@fortawesome/fontawesome'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import solid from '@fortawesome/fontawesome-free-solid'
+import regular from '@fortawesome/fontawesome-free-regular'
+import brands from '@fortawesome/fontawesome-free-brands'
 import en from '../locales/en'
 import zh from '../locales/zh'
 import createStore from './store'
@@ -12,6 +17,13 @@ import createRouter from './routes'
 import App from './index.vue'
 import './filter'
 import pluginsUtil from './pluginUtils'
+
+fontawesome.library.add(solid)
+fontawesome.library.add(regular)
+fontawesome.library.add(brands)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 
 Vue.use(pluginsUtil)
 Vue.use(VueI18n)

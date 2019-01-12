@@ -1,11 +1,9 @@
 <template>
   <div class="home-view">
-    <!--header  -->
-    <Header message="isHomepage" />
-
     <!-- content -->
     <div class="h-container">
       <div class="items">
+        <!-- featured -->
         <div class="featured">
           <h2 class="title">
             Featured
@@ -15,6 +13,7 @@
             View hotels now
           </div>
         </div>
+        <!-- eat like locals -->
         <div class="eat-like-locals">
           <h2 class="title">
             Eat Like Locals
@@ -23,6 +22,7 @@
             Lorem ipsum dolor
           </div>
         </div>
+        <!-- find gems -->
         <div class="find-gems">
           <h2 class="title">
             Find Hidden Gems
@@ -31,6 +31,7 @@
             Lorem ipsum dolor
           </div>
         </div>
+        <!-- hot deals -->
         <div class="hot-deals">
           <h2 class="title">
             Hot Deals
@@ -39,6 +40,7 @@
             Lorem ipsum dolor
           </div>
         </div>
+        <!-- handy -->
         <div class="handy">
           <h2 class="title">
             handy
@@ -59,7 +61,6 @@
             v-for="item in destinationData"
             :key="item.location"
           >
-            <!-- <img src="../images/homepage/Location Image@3x.png" alt=""> -->
             <img :src="item.img">
             <div class="content">
               <h2 class="title">
@@ -116,131 +117,18 @@
           </li>
         </ul>
       </div>
-      <!--  Featured Hotels ???-->
+
+      <!--  Featured Hotels-->
       <div class="featured-hotels">
         <h1 class="title">
           Featured Hotels
         </h1>
-        <ul>
-          <li>
-            <img
-              src="../images/homepage/Hotel Image2@3x.png"
-              alt=""
-            >
-            <div class="hotel-location">
-              Westminster Borough, London
-            </div>
-            <div class="hotel-name">
-              London Marriott Hotel
-            </div>
-            <div class="hotel-price">
-              <span>$199</span>/night
-            </div>
-            <div class="stars">
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-off" />
-            </div>
-          </li>
-          <li>
-            <img
-              src="../images/homepage/Hotel Image@3x.png"
-              alt=""
-            >
-            <div class="hotel-location">
-              Kensington and Chelsea, London
-            </div>
-            <div class="hotel-name">
-              The Kensingotn Hotel
-            </div>
-            <div class="hotel-price">
-              <span>$298</span>/night
-            </div>
-            <div class="stars">
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-            </div>
-          </li>
-          <li>
-            <img
-              src="../images/homepage/Hotel Image2@3x.png"
-              alt=""
-            >
-            <div class="hotel-location">
-              Lambeth, London
-            </div>
-            <div class="hotel-name">
-              Plaza on the River
-            </div>
-            <div class="hotel-price">
-              <span>$100</span>/night
-            </div>
-            <div class="stars">
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-off" />
-            </div>
-          </li>
-          <li>
-            <img
-              src="../images/homepage/Hotel Image@3x.png"
-              alt=""
-            >
-            <div class="hotel-location">
-              Lambeth, London
-            </div>
-            <div class="hotel-name">
-              London Marriott Hotel
-            </div>
-            <div class="hotel-price">
-              <span>$90</span>/night
-            </div>
-            <div class="stars">
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-              <i class="el-icon-star-on" />
-            </div>
-          </li>
-        </ul>
-        <span class="arrow-right">
-          <i class="el-icon-arrow-right" />
-        </span>
-        <span class="arrow-left">
-          <i class="el-icon-arrow-left" />
-        </span>
-      </div>
-
-      <div class="test">
-        <el-carousel
-          type="card"
-          height="200px"
-          arrow="always"
-          indicator-position="none"
-          :autoplay="false"
-        >
-          <el-carousel-item
-            v-for="item in 6"
-            :key="item"
-          >
-            <h3>{{ item }}</h3>
-          </el-carousel-item>
-        </el-carousel>
+        <HotelSwiper/>
       </div>
     </div>
 
     <!-- subscribe -->
     <Subscribe />
-    <!-- footer -->
-    <Footer />
   </div>
 </template>
 
@@ -248,6 +136,7 @@
 import Bus from '../component/bus'
 import Header from './includes/header.vue'
 import Footer from './includes/footer.vue'
+import HotelSwiper from './hotelSwiper.vue'
 import Subscribe from './includes/subscribe.vue'
 import locationImg from '../images/homepage/Location Image2@3x.png'
 import locationImg1 from '../images/homepage/Location Image4@3x.png'
@@ -259,6 +148,7 @@ export default {
     Header,
     Footer,
     Subscribe,
+    HotelSwiper
   },
   data() {
     return {
@@ -293,44 +183,20 @@ export default {
     }
   },
   mounted() {
-    const that = this
-    Bus.$on('scroll', (h) => {
-      console.log(that)
-      that.isTop = !(h > 10)
-    })
+
   },
   methods: {
-    toggleModal() {
-      console.log(this.display)
-      this.display = this.display === 'none' ? 'flex' : 'none'
-    },
+
   },
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 @import '../common/main.scss';
-
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
 
 .h-container {
   h1.title {
     @include font(26px, 600, #002b55, Montserrat);
-    padding-bottom: 20px;
   }
   .content {
     @include font(16px, normal, #333333, MerriweatherSans);
@@ -353,10 +219,9 @@ export default {
 
   .items {
     overflow: hidden;
-    margin-top: -2.6%;
-    // display:flex;
-    // justify-content: space-between;
-    // flex-wrap: wrap;
+    position: relative;
+    top:-40px;
+    padding-bottom:10px;
     > div {
       float: left;
       margin-left: 1%;
@@ -372,8 +237,6 @@ export default {
     }
     .featured {
       width: 46%;
-      // height:30%;
-      // padding:2%;
       background-image: linear-gradient(
         to bottom,
         rgba(22, 46, 172, 0.8),
@@ -494,55 +357,12 @@ export default {
     .city-life {
       .title {
         font-size: 80px;
-        // @include font(80px,200,#fff,HelveticaNeue);
       }
     }
   }
   // Featured Hotels
   .featured-hotels {
     position: relative;
-    .arrow-right,
-    .arrow-left {
-      display: inline-block;
-      width: 44px;
-      height: 44px;
-      line-height: 48px;
-      text-align: center;
-      position: absolute;
-      right: -22px;
-      top: 34%;
-      background-color: #fff;
-      border-radius: 50%;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-      cursor: pointer;
-      i {
-        font-size: 18px;
-        font-weight: 900;
-      }
-    }
-    .arrow-left {
-      left: -22px;
-    }
-    ul {
-      li {
-        width: 24%;
-        .hotel-location {
-          @include font(12px, normal, #888, MerriweatherSans);
-          margin-top: 4px;
-        }
-        .hotel-name {
-          @include font(20px, bold, #333, MerriweatherSans);
-          margin: 6px 0;
-        }
-        .hotel-price {
-          @include font(16px, normal, #888, MerriweatherSans);
-        }
-        .stars {
-          margin-top: 10px;
-          color: #fec800;
-        }
-      }
-    }
   }
 }
 </style>

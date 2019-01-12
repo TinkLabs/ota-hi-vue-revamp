@@ -33,12 +33,15 @@ export default {
   @import '../../common/main.scss';
 
   // subscribe
+  .h-container{
+    padding-bottom:30px;
+  }
   .subscribe{
     width:100%;
     padding:44px 80px;
     box-sizing: border-box;
     background-color: #d8d8d8;
-    margin-bottom:60px;
+    // margin-bottom:60px;
     p{
       @include font(21px,300,#002b55,Roboto);
     }
