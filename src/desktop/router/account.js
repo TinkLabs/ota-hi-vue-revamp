@@ -1,6 +1,7 @@
 const Layout = () => import('../views/account/Layout.vue')
 const DashBoard = () => import('../views/account/dashboard')
 const Bookings = () => import('../views/account/bookings')
+const BookingDetails = () => import('../views/account/bookings_details')
 const Preferences = () => import('../views/account/preferences')
 export default [
   {
@@ -17,6 +18,11 @@ export default [
       path: 'bookings',
       component: Bookings,
       name: 'bookings',
+    }, {
+      path: 'booking/:bookingId',
+      props: true,
+      component: BookingDetails,
+      name: 'bookingDetail',
     }, {
       path: 'preferences',
       component: Preferences,
