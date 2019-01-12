@@ -173,7 +173,7 @@
                 <p>{{$t('You can easily cancel or change your booking for free! ' +
                   'Just follow the link from your confirmation email.')}}</p>
               </div>
-              <i class="el-icon-warning"></i>
+              <i class="el-icon-third-warning"></i>
             </el-tooltip>
           </el-col>
           <el-col :span="14" class="info roomInfo">
@@ -433,6 +433,14 @@ export default {
           color: $black5;
         }
       }
+      .map{
+        color: $blue5;
+        font-size: 11px;
+        line-height: 16px;
+        i{
+          font-size: 16px;
+        }
+      }
     }
   }
   .booking-detail-content{
@@ -458,8 +466,9 @@ export default {
         font-size: 14px;
         font-weight: bold;
         color: $black5;
-        .el-icon-warning{
+        .el-icon-third-warning{
           margin-left: 14px;
+          color: $blue5;
         }
       }
       .info{
