@@ -25,9 +25,9 @@
         <!-- list page -->
         <div class="list-page clearfix">
           <div class="control">
-            <div class="view-on-map" />
             <!-- filter -->
             <div class="filters">
+              <list-map :list="result" />
               <div class="by-name">
                 <h4 class="filter-title">
                   Hotel name
@@ -170,6 +170,7 @@ import Console from './Console.vue'
 import ListItem from './ListItem.vue'
 import EventBus from '../../component/bus'
 import NearbyDestinations from './NearbyDestinations.vue'
+import ListMap from './ListMap.vue'
 
 
 const ratingList = [
@@ -239,6 +240,7 @@ export default {
     Console,
     ListItem,
     NearbyDestinations,
+    ListMap,
   },
   data() {
     return {
@@ -286,7 +288,6 @@ export default {
     rList() {
       const cp = this.result.slice(0).map(n => ({ ...n, fadeOne: false }))
       if (cp.length > 0 && cp.length % 15 === 0 && this.page.count !== this.page.total) {
-        console.log('hre is key ')
         cp[cp.length - 1].fadeOne = true
       }
       const l = this.result.length
@@ -334,7 +335,6 @@ export default {
               isFetching = true
               v.fetchData(v.page.count + 1)
               setTimeout(() => {
-                console.log('fetch is aplying~')
                 isFetching = false
               }, 2000)
             }
@@ -363,9 +363,7 @@ export default {
         that.isFetching = false
       }, 500)
     },
-    // searchNameChange(v) {
-    //   console.log(v)
-    // },
+
     reCheck(n, v) {
       this.filters[n] = v
     },
@@ -374,8 +372,6 @@ export default {
     },
     receive(res) {
       if (res.success) {
-        console.log('now receive data!!!!!!!!!')
-        console.log(res)
         this.result = res.data
         if (res.data.length === 0 && res.nearby.length > 0) {
           this.nearby = res.nearby
@@ -390,12 +386,6 @@ export default {
         this.isLoading = false
         this.page.count = res.pageCount
         this.page.total = Math.ceil(res.total / this.page.size)
-      }
-    },
-    scrollhandler() {
-      const target = document.querySelector('.list-fade-target')
-      if (target !== null) {
-        console.log('asd')
       }
     },
     appScrollControl() {
@@ -449,12 +439,7 @@ export default {
       .control {
         float: left;
         width: 190px;
-        .view-on-map {
-          width: 100%;
-          height: 115px;
-          background: #bbb;
-          margin-bottom: 38px;
-        }
+
         .filters {
           margin-bottom: 110px;
           color: #333333;

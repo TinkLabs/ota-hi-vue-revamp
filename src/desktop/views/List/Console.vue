@@ -80,6 +80,8 @@ function Hotel(i) {
   this.price = Math.ceil(Math.random() * 10000)
   this.originPrice = this.price + 100
   this.currency = 'HK$'
+  this.lnglat = [-73.9749 + (Math.random() / 2), 40.7736 + (Math.random() / 2)]
+  this.image = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547296776710&di=8ebf41c17e0102ae2cbaabe44b2ea7ff&imgtype=0&src=http%3A%2F%2Fpic21.photophoto.cn%2F20111125%2F0040039405948416_b.jpg'
 }
 function Dest() {
   this.address = 'East London'
@@ -132,7 +134,6 @@ export default {
           sortId,
         } = this.params
         let tmp = this.limited.slice(0)
-        console.log('now start filtering')
         if (searchName !== '') {
           tmp = tmp.filter(
             n => n.name.toLowerCase().indexOf(searchName.toLowerCase()) > -1,
@@ -148,8 +149,6 @@ export default {
         if (stars && stars.length) {
           const starsSet = new Set(stars)
           tmp = tmp.filter(n => starsSet.has(Math.floor(n.star_rating)))
-          console.log('now staring')
-          console.log(tmp)
         }
         if (amenId && amenId.length) {
           tmp = tmp.filter((n) => {
@@ -171,7 +170,6 @@ export default {
         switch (sortId) {
           case 1:
             tmp.sort((a, b) => (a.price / a.nights) - (b.price / b.nights))
-            console.log(tmp.map(p => p.price))
             break
           case 2:
             tmp.sort((a, b) => a.rating - b.rating)
@@ -184,8 +182,6 @@ export default {
         }
         // getPage
         const test = tmp.slice((pageCount - 1) * pageSize, (pageCount) * pageSize)
-        console.log('now final list is:')
-        console.log(test)
 
         let nearby = []
         if (test.length === 0) {
@@ -198,8 +194,6 @@ export default {
           pageCount,
           total: tmp.length,
         }
-        console.log('final res:')
-        console.log(res)
 
         if (pageCount > 1) {
           this.$emit('appendlistResponse', res)

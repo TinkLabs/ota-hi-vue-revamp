@@ -1,5 +1,5 @@
 const Listpage = () => import('../views/List/index.vue')
 
 export default [
-  { path: '/list', component: Listpage },
+  { path: '/hotellist', component: Listpage },
 ]

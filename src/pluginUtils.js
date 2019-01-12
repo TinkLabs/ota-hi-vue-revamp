@@ -21,6 +21,18 @@ export default {
     //     el.focus()
     //   },
     // })
+    Vue.prototype.$fmtPrice = function (str) {
+      //
+      return str.replace(/[0-9.]+/, (o) => {
+        const comp = o.split('.')
+        const ending = comp[1] && comp[1].length > 0 ? `.${comp[1]}` : ''
+        return comp[0].split('').reverse().join('').replace(/\d{3}/g, n => ((`${n},`)))
+          .split('')
+          .reverse()
+          .join('')
+          .replace(/^,/, '') + ending
+      })
+    },
     Vue.prototype.$thr = function throttle(fn, delay = 300) {
       let can = true
       return function realHandler(...rest) {
