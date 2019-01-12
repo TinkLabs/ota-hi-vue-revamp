@@ -4,11 +4,11 @@
       <span class="title">{{titles[activeTab]}}</span>
       <div class="tabs">
         <span :class="{ active: activeTab==='upcoming' }"
-              @click="changeTab('upcoming')">{{$t("Upcoming")}}</span>
+              @click="changeTab('upcoming')">{{$t("account.Upcoming")}}</span>
         <span :class="{ active: activeTab==='completed' }"
-              @click="changeTab('completed')">{{$t("Completed")}}</span>
+              @click="changeTab('completed')">{{$t("account.Completed")}}</span>
         <span :class="{ active: activeTab==='cancelled' }"
-              @click="changeTab('cancelled')">{{$t("Cancelled")}}</span>
+              @click="changeTab('cancelled')">{{$t("account.Cancelled")}}</span>
         <el-select class="account-booking-sorter" v-model="value" :placeholder="$t('Sort by')">
           <el-option v-for="item in options"
                      :key="item.value"
@@ -30,7 +30,7 @@
           </span>
           </div>
           <div class="booking-info-header-right">
-            <span class="reference">{{$t('Reference No.')}}</span>
+            <span class="reference">{{$t('account.Reference No.')}}</span>
             <span class="num">{{item.referenceNo}}</span>
           </div>
         </el-header>
