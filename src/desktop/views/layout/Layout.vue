@@ -1,5 +1,5 @@
 <template>
-  <div class="g-container">
+  <div class="wrapper">
     <Header :homepage="isHomepage" />
     <div class="app-main">
       <slot v-if="isSlot" />
