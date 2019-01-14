@@ -15,12 +15,8 @@ export default {
 }
 </script>
 
-<<<<<<< HEAD
 <style >
-=======
-<style scoped>
   @import '../public/style/font/iconfont.css';
->>>>>>> staging
   body, html {
     padding: 0;
     margin: 0;

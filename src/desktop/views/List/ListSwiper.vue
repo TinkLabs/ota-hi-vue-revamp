@@ -110,16 +110,21 @@ export default {
       }
     }
   }
-  .swiper-button-prev ,  .swiper-button-next {
-      width:50px;height:50px;
-      vertical-align: middle;
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
   }
   .swiper-button-prev {
-            text-align: left;
-    i {
-        line-height: 50px;
+    text-align: left;
+    .fa-angle-left {
+      line-height: 50px;
       font-size: 31px;
       color: #ffffff;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
     }
     position: absolute;
     top: 50%;
@@ -127,12 +132,15 @@ export default {
     transform: translateY(-50%);
   }
   .swiper-button-next {
-            text-align: right;
-    i {
-        line-height: 50px;
-
+    text-align: right;
+    .fa-angle-right {
+      line-height: 50px;
       font-size: 31px;
       color: #ffffff;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
     }
     position: absolute;
     top: 50%;
