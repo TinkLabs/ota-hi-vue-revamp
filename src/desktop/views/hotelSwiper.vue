@@ -1,8 +1,12 @@
 <template>
-  <div v-swiper:mySwiper="swiperOption" class="swiper-container">
+  <div
+    v-swiper:mySwiper="swiperOption"
+    class="swiper-container"
+  >
     <div class="swiper-wrapper">
       <div
-        v-for="item in hotelList"
+        v-for="(item,index) in hotelList"
+        :key="index"
         class="swiper-slide"
       >
         <img
@@ -13,15 +17,23 @@
           {{ item.location }}
         </div>
         <div class="hotel-name">
-          {{item.name}}
+          {{ item.name }}
         </div>
         <div class="hotel-price">
-          <span>${{item.price}}</span>/night
-          {{item.star}}
+          <span>${{ item.price }}</span>/night
+          {{ item.star }}
         </div>
         <div class="stars">
-          <i class="el-icon-star-on" v-for="item in item.star"/>
-          <i class="el-icon-star-off" v-for="item in (5-item.star)"/>
+          <i
+            v-for="(star,i) in item.star"
+            :key="i"
+            class="el-icon-star-on"
+          />
+          <i
+            v-for="(star,i) in (5-item.star)"
+            :key="i+'-star'"
+            class="el-icon-star-off"
+          />
         </div>
       </div>
     </div>
@@ -50,60 +62,60 @@ export default {
   data() {
     return {
       swiperOption: {
-        slidesPerView: 4,//设置slider容器能够同时显示的slides数量
-        spaceBetween: 20,//slide之间的距离
-        slidesPerGroup: 1,//在carousel mode下定义slides的数量多少为一组
+        slidesPerView: 4, // 设置slider容器能够同时显示的slides数量
+        spaceBetween: 20, // slide之间的距离
+        slidesPerGroup: 1, // 在carousel mode下定义slides的数量多少为一组
         loop: true,
         // loopFillGroupWithBlank: true,
         pagination: {
           el: '.swiper-pagination',
-          clickable: true
+          clickable: true,
         },
         navigation: {
           nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
-        }
+          prevEl: '.swiper-button-prev',
+        },
       },
-      hotelList:[
+      hotelList: [
         {
-          src:hotelImg,
-          location:"Westminster Borough  London",
-          name:"London Marriott Hotel",
-          price:"99",
-          star:3,
-          id:1
-        },{
-          src:hotelImg2,
-          location:"Kensington and Chelsea  London",
-          name:"The Kensingotn Hotel",
-          price:"199",
-          star:5,
-          id:1
-        },{
-          src:hotelImg,
-          location:"Lambeth  London",
-          name:"Plaza on the River",
-          price:"299",
-          star:4,
-          id:1
+          src: hotelImg,
+          location: 'Westminster Borough  London',
+          name: 'London Marriott Hotel',
+          price: '99',
+          star: 3,
+          id: 1,
+        }, {
+          src: hotelImg2,
+          location: 'Kensington and Chelsea  London',
+          name: 'The Kensingotn Hotel',
+          price: '199',
+          star: 5,
+          id: 1,
+        }, {
+          src: hotelImg,
+          location: 'Lambeth  London',
+          name: 'Plaza on the River',
+          price: '299',
+          star: 4,
+          id: 1,
         },
         {
-          src:hotelImg2,
-          location:"Lambeth  London",
-          name:"London Marriott Hotel",
-          price:"399",
-          star:5,
-          id:1
-        }
-        ,{
-          src:hotelImg2,
-          location:"Lambeth  London",
-          name:"Plaza on the River",
-          price:"499",
-          star:5,
-          id:1
+          src: hotelImg2,
+          location: 'Lambeth  London',
+          name: 'London Marriott Hotel',
+          price: '399',
+          star: 5,
+          id: 1,
         },
-      ]
+        {
+          src: hotelImg2,
+          location: 'Lambeth  London',
+          name: 'Plaza on the River',
+          price: '499',
+          star: 5,
+          id: 1,
+        },
+      ],
     }
   },
   mounted() {

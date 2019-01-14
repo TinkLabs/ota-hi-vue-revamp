@@ -13,7 +13,9 @@
           @mouseenter="languageShow=true;"
           @mouseleave="languageShow=false;"
         >
-          <span ref="language">English</span>
+          <span ref="language">
+            English
+          </span>
           <transition name="show-language">
             <ul
               v-show="languageShow"
@@ -21,6 +23,7 @@
             >
               <li
                 v-for="(item,index) in language"
+                :key="index"
                 :class="[item.class]"
                 @click="selectLanguage($event,index)"
               >
@@ -38,7 +41,9 @@
           @mouseenter="currencyShow=true"
           @mouseleave="currencyShow=false"
         >
-          <span ref="currency">HKD</span>
+          <span ref="currency">
+            HKD
+          </span>
           <transition name="show-currency">
             <ul
               v-show="currencyShow"
@@ -46,6 +51,7 @@
             >
               <li
                 v-for="(item,index) in currency"
+                :key="index"
                 :class="[item.class]"
                 @click="selectCurrency($event,index)"
               >
@@ -87,8 +93,8 @@
             </div>
             <!-- 自定义输入建议的显示  服务端搜索数据-->
             <el-autocomplete
-              popper-class="my-autocomplete"
               v-model="searhResult"
+              popper-class="my-autocomplete"
               :fetch-suggestions="querySearchAsync"
               placeholder="Anywhere"
               :select-when-unmatched="true"
@@ -99,38 +105,58 @@
                 class="el-icon-search el-input__icon"
               />
               <template slot-scope="{ item }">
-                <div v-if=item.type class="search-result-list">
+                <div
+                  v-if="item.type"
+                  class="search-result-list"
+                >
                   <div class="result-name">
-                    <i class="el-icon-location-outline"></i>
-                    {{item.value}}
+                    <i class="el-icon-location-outline" />
+                    {{ item.value }}
                   </div>
-                  <div class="type">{{item.type}}</div>
+                  <div class="type">
+                    {{ item.type }}
+                  </div>
                 </div>
                 <div v-else>
-                  <div class="title" v-if=item.title>{{item.title}}</div>
+                  <div
+                    v-if="item.title"
+                    class="title"
+                  >
+                    {{ item.title }}
+                  </div>
                   <!-- history list -->
-                  <div v-else-if=item.checkin :class="['history-list',item.isLast == true?'isLast':'']">
+                  <div
+                    v-else-if="item.checkin"
+                    :class="['history-list',item.isLast == true?'isLast':'']"
+                  >
                     <div class="name">
-                      <span></span>
+                      <span />
                       <span>{{ item.value }}</span>
                     </div>
                     <div class="info">
                       <div class="check-date">
-                        <span>{{item.checkin}} - {{item.checkout}}</span>
+                        <span>{{ item.checkin }} - {{ item.checkout }}</span>
                       </div>
                       <div class="guest-info">
-                        <span>{{item.room}} room, {{item.adult}} adults, {{item.children}} children</span>
+                        <span>
+                          {{ item.room }} room,
+                          {{ item.adult }} adults,
+                          {{ item.children }} children
+                        </span>
                       </div>
                     </div>
                   </div>
                   <!-- cities -->
-                  <div v-else class="cities">
+                  <div
+                    v-else
+                    class="cities"
+                  >
                     <div class="keyword">
-                      <i class="el-icon-location"></i>
-                      <span>{{item.value}}</span>
+                      <i class="el-icon-location" />
+                      <span>{{ item.value }}</span>
                     </div>
                     <div class="number">
-                      <span>{{item.number}}</span>
+                      <span>{{ item.number }}</span>
                       properties
                     </div>
                   </div>
@@ -147,6 +173,7 @@
             <!-- datepicker -->
             <div class="block">
               <el-date-picker
+                ref="datePicker"
                 v-model="defaultDate"
                 type="daterange"
                 range-separator="-"
@@ -154,63 +181,102 @@
                 end-placeholder="CHECK OUT"
                 :picker-options="pickerOptions"
                 @change="getSelectedDate"
-                ref="datePicker"
               />
             </div>
           </div>
 
           <!-- Adults,Room,Children Picker -->
-          <div class="guests" @click="showRoompicker=true;" ref="roompicker">
+          <div
+            ref="roompicker"
+            class="guests"
+            @click="showRoompicker=true;"
+          >
             <div class="title">
               GUESTS
             </div>
             <div class="guest-num">
               <i class="far fa-user" />
               <span class="room-num">
-                {{roomList.length}}
+                {{ roomList.length }}
               </span> room,
               <span class="adult-num">
-                {{adultTotalNumber}}
+                {{ adultTotalNumber }}
               </span> adults,
               <br>
               <span class="children-num">
-                {{childTotalNumber}}
+                {{ childTotalNumber }}
               </span> children
             </div>
             <transition name="room-picker">
-              <div class="room-picker" v-show="showRoompicker">
+              <div
+                v-show="showRoompicker"
+                class="room-picker"
+              >
                 <ul class="room-list">
-                  <li v-for="(item,index) in roomList">
-                    <h1 class="room-num">Room {{index+1}}</h1>
+                  <li
+                    v-for="(item,index) in roomList"
+                    :key="index"
+                  >
+                    <h1 class="room-num">
+                      Room {{ index+1 }}
+                    </h1>
                     <div class="adults">
                       <h2>Adults</h2>
                       <div class="count">
-                        <span class="minus" @click="reduceAdultNumber($event,index)">-</span>
-                        <span>{{item.adultNumber}}</span>
-                        <span class="plus" @click="addAdultNumber($event,index)">+</span>
+                        <span
+                          class="minus"
+                          @click="reduceAdultNumber($event,index)"
+                        >
+                          -
+                        </span>
+                        <span>{{ item.adultNumber }}</span>
+                        <span
+                          class="plus"
+                          @click="addAdultNumber($event,index)"
+                        >
+                          +
+                        </span>
                       </div>
                     </div>
                     <div class="children">
                       <h2>Children</h2>
                       <div class="count">
-                        <span class="minus"  @click="reduceChildNumber($event,index)">-</span>
-                        <span>{{item.childNumber}}</span>
-                        <span class="plus"  @click="addChildNumber($event,index)">+</span>
+                        <span
+                          class="minus"
+                          @click="reduceChildNumber($event,index)"
+                        >
+                          -
+                        </span>
+                        <span>{{ item.childNumber }}</span>
+                        <span
+                          class="plus"
+                          @click="addChildNumber($event,index)"
+                        >
+                          +
+                        </span>
                       </div>
                     </div>
                     <div :class="['children-age',item.childNumber>0?'':'border-none']">
-                      <p v-show="item.childNumber>0">Children’s age at time of booking. </p>
+                      <p v-show="item.childNumber>0">
+                        Children’s age at time of booking.
+                      </p>
                       <ul class="child-list">
-                        <li v-for="(item,index) in item.childAgeList">
-                          <p>Child {{index+1}} age</p>
+                        <li
+                          v-for="(child,i) in item.childAgeList"
+                          :key="i"
+                        >
+                          <p>Child {{ i+1 }} age</p>
                           <template>
-                            <el-select v-model="item.value" placeholder="1">
+                            <el-select
+                              v-model="child.value"
+                              placeholder="1"
+                            >
                               <el-option
-                                v-for="item in item.age"
-                                :key="item"
-                                :label="item"
-                                :value="item">
-                              </el-option>
+                                v-for="childage in child.age"
+                                :key="childage"
+                                :label="childage"
+                                :value="childage"
+                              />
                             </el-select>
                           </template>
                         </li>
@@ -219,18 +285,24 @@
                   </li>
                 </ul>
                 <div class="operate-room">
-                  <div class="add-room" @click="addRoom">
-                    <i class="fas fa-plus-circle"></i>
+                  <div
+                    class="add-room"
+                    @click="addRoom"
+                  >
+                    <i class="fas fa-plus-circle" />
                     <span>Add another room</span>
                   </div>
-                  <div class="remove-room" @click="removeRoom" v-show="roomList.length>1">
-                    <i class="fas fa-minus-circle"></i>
+                  <div
+                    v-show="roomList.length>1"
+                    class="remove-room"
+                    @click="removeRoom"
+                  >
+                    <i class="fas fa-minus-circle" />
                     <span>Remove</span>
                   </div>
                 </div>
               </div>
             </transition>
-
           </div>
           <button>Search</button>
         </div>
@@ -240,8 +312,8 @@
           </div>
           <ul class="popular-city">
             <li
-              v-for="item in popular"
-              :key="item"
+              v-for="(item,index) in popular"
+              :key="index"
             >
               {{ item }}
             </li>
@@ -329,18 +401,18 @@ export default {
         },
 
       ],
-      age:'',
+      age: '',
       languageShow: false,
       currencyShow: false,
-      showRoompicker:false,
-      adultTotalNumber:2,
-      childTotalNumber:0,
-      roomList:[
+      showRoompicker: false,
+      adultTotalNumber: 2,
+      childTotalNumber: 0,
+      roomList: [
         {
-          adultNumber:2,
-          childNumber:0,
-          childAgeList:[],
-        }
+          adultNumber: 2,
+          childNumber: 0,
+          childAgeList: [],
+        },
       ],
       restaurants: [],
       searhResult: '',
@@ -348,37 +420,36 @@ export default {
       searchBarFixed: false,
       // datepicker
       defaultDate: [],
-      startDate:'',
-      endDate:'',
+      startDate: '',
+      endDate: '',
       pickerOptions: {
-        onPick:({ maxDate, minDate })=>{
-          this.startDate=minDate;
-          this.endDate=maxDate;
+        onPick: ({ maxDate, minDate }) => {
+          this.startDate = minDate
+          this.endDate = maxDate
         },
-        disabledDate:(time) =>{
-          if(this.startDate){
-            let minDate = (this.startDate).getTime();
-            let one = 30 * 24 * 3600 * 1000;
-            let oneMonth = minDate + one;
-            return time.getTime() < Date.now() - 24*60*60*1000 || time.getTime() > oneMonth;
-          }else{
-            return time.getTime() < Date.now() - 24*60*60*1000;
+        disabledDate: (time) => {
+          if (this.startDate) {
+            const minDate = (this.startDate).getTime()
+            const one = 30 * 24 * 3600 * 1000
+            const oneMonth = minDate + one
+            return time.getTime() < Date.now() - 24 * 60 * 60 * 1000 || time.getTime() > oneMonth
           }
+          return time.getTime() < Date.now() - 24 * 60 * 60 * 1000
         },
       },
     }
   },
   mounted() {
     this.restaurants = this.loadAll()
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll)
     // el-autocomplete 没有input change 事件
-    document.querySelector('.el-input__inner').addEventListener('input',this.getSearchList);
+    document.querySelector('.el-input__inner').addEventListener('input', this.getSearchList)
     // Date Picker default date
-    this.getDefaultTime();
-    var _this=this;
-    document.addEventListener('click',function(e){
-      if(!_this.$refs.roompicker.contains(e.target)){
-        _this.showRoompicker=false;
+    this.getDefaultTime()
+    const that = this
+    document.addEventListener('click', (e) => {
+      if (!that.$refs.roompicker.contains(e.target)) {
+        that.showRoompicker = false
         // get room adults children number
       }
     })
@@ -391,104 +462,105 @@ export default {
     loadAll() {
       return [
         {
-          title:'Search History',
-          value:'',
+          title: 'Search History',
+          value: '',
         },
-        { value: 'Bangkok, Thailand',
-          checkin:'14 Feb 2018',
-          checkout:'16 Feb 2018',
-          room:1,
-          adult:2,
-          children:2
+        {
+          value: 'Bangkok, Thailand',
+          checkin: '14 Feb 2018',
+          checkout: '16 Feb 2018',
+          room: 1,
+          adult: 2,
+          children: 2,
         },
         {
           value: 'Hong Kong, Hong Kong',
-          checkin:'14 Feb 2018',
-          checkout:'16 Feb 2018',
-          room:1,
-          adult:2,
-          children:2
+          checkin: '14 Feb 2018',
+          checkout: '16 Feb 2018',
+          room: 1,
+          adult: 2,
+          children: 2,
         },
         {
           value: 'Sheraton Grande Walkerhill Casino, Seoul',
-          checkin:'14 Feb 2018',
-          checkout:'16 Feb 2018',
-          room:1,
-          adult:2,
-          children:2,
-          isLast:true,
+          checkin: '14 Feb 2018',
+          checkout: '16 Feb 2018',
+          room: 1,
+          adult: 2,
+          children: 2,
+          isLast: true,
         },
         {
-          value:'London, United Kingdom',
-          number:5254,
+          value: 'London, United Kingdom',
+          number: 5254,
         },
         {
-          value:'London, Canada',
-          number:355,
+          value: 'London, Canada',
+          number: 355,
         },
         {
-          value:'London, South Africa',
-          number:768,
+          value: 'London, South Africa',
+          number: 768,
         },
       ]
     },
     loadAllResult() {
       return [
         {
-          value:'London, Marriott Hotel Regents Park, England, UK',
-          type:'Hotel',
-          icon:''
-        },
-         {
-          value:'London, Fleming Mayfair, Small Luxury Hotels of the World',
-          type:'Hotel',
-          icon:''
+          value: 'London, Marriott Hotel Regents Park, England, UK',
+          type: 'Hotel',
+          icon: '',
         },
         {
-          value:'London Hotel, Glyfada, Greece',
-          type:'Hotel',
-          icon:''
+          value: 'London, Fleming Mayfair, Small Luxury Hotels of the World',
+          type: 'Hotel',
+          icon: '',
         },
         {
-          value:'London, Ontario, Canada',
-          type:'City',
-          icon:''
+          value: 'London Hotel, Glyfada, Greece',
+          type: 'Hotel',
+          icon: '',
         },
         {
-          value:'London City Centre',
-          type:'City',
-          icon:''
+          value: 'London, Ontario, Canada',
+          type: 'City',
+          icon: '',
         },
         {
-          value:'London Heathrow Airport',
-          type:'Airport',
-          icon:''
+          value: 'London City Centre',
+          type: 'City',
+          icon: '',
         },
         {
-          value:'London Bridge, London UK',
-          type:'Landmarks',
-          icon:''
+          value: 'London Heathrow Airport',
+          type: 'Airport',
+          icon: '',
+        },
+        {
+          value: 'London Bridge, London UK',
+          type: 'Landmarks',
+          icon: '',
         },
       ]
     },
     querySearchAsync(queryString, cb) {
-      const restaurants = this.restaurants
-      const results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants
+      const [restaurants] = [this.restaurants]
+      const querystring = restaurants.filter(this.createStateFilter(queryString))
+      const results = queryString ? querystring : restaurants
       cb(results)
     },
     createStateFilter(queryString) {
-      return (restaurant) => {
-        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-      };
+      return restaurant => (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
     },
-    handleSelect(item) {
+    handleSelect() {
       // check in&out focus
-      this.$refs.datePicker.focus();
+      this.$refs.datePicker.focus()
     },
     // searchbar fixed
     handleScroll() {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      const offsetTop = document.querySelector('.search-bar').offsetTop
+      const eleScrollTop = document.documentElement.scrollTop
+      const scrollTop = window.pageYOffset || eleScrollTop || document.body.scrollTop
+      const [offsetTop] = [document.querySelector('.search-bar').offsetTop]
       if (scrollTop > offsetTop) {
         this.searchBarFixed = true
       } else {
@@ -496,83 +568,83 @@ export default {
       }
     },
     // select currency
-    selectCurrency(event,index){
-      for(let i in this.currency){
-        this.currency[i].class=null;
+    selectCurrency(event, index) {
+      for (let i = 0; i < this.currency.length; i += 1) {
+        this.currency[i].class = null
       }
-      this.currency[index].class='active';
-      this.$refs.currency.innerHTML=this.currency[index].name.split('-')[0]
+      this.currency[index].class = 'active'
+      this.$refs.currency.innerHTML = [this.currency[index].name.split('-')[0]]
       this.currencyShow = false
       // 切换货币
     },
     // select language
-    selectLanguage(event,index){
-      for(let i in this.language){
-        this.language[i].class=null;
+    selectLanguage(event, index) {
+      for (let i = 0; i < this.language.length; i += 1) {
+        this.language[i].class = null
       }
-      this.language[index].class='active';
-      this.$refs.language.innerHTML=this.language[index].name
+      this.language[index].class = 'active'
+      this.$refs.language.innerHTML = this.language[index].name
       this.languageShow = false
       // 切换语言
     },
     // search with typing
-    getSearchList(){
+    getSearchList() {
       this.restaurants = this.loadAllResult()
     },
-    getDefaultTime(){
+    getDefaultTime() {
       // default date
-      let startDate = new Date().getTime()+14*24*60*60*1000
-      let endDate=new Date().getTime()+15*24*60*60*1000
-      this.defaultDate=[this.formatDate(new Date(startDate)),this.formatDate(new Date(endDate))]
+      const startDate = new Date().getTime() + 14 * 24 * 60 * 60 * 1000
+      const endDate = new Date().getTime() + 15 * 24 * 60 * 60 * 1000
+      this.defaultDate = [this.formatDate(new Date(startDate)), this.formatDate(new Date(endDate))]
     },
-    formatDate(date){
-      let y = date.getFullYear()
-      let m = date.getMonth() + 1
-      let d = date.getDate()
-      let time = y + '-' + m + '-' + d
-      return time;
+    formatDate(date) {
+      const y = date.getFullYear()
+      const m = date.getMonth() + 1
+      const d = date.getDate()
+      const time = `${y}-${m}-${d}`
+      return time
     },
-    getSelectedDate(){
+    getSelectedDate() {
     // Adults,Room,Children Picker focus
-      this.showRoompicker=true;
+      this.showRoompicker = true
     },
     //  add room
-    addRoom(){
+    addRoom() {
       this.roomList.push({
-        adultNumber:2,
-        childNumber:0,
-        childAgeList:[],
+        adultNumber: 2,
+        childNumber: 0,
+        childAgeList: [],
       })
-      this.adultTotalNumber+=2;
+      this.adultTotalNumber += 2
     },
     // remove room
-    removeRoom(){
-      this.roomList.pop();
+    removeRoom() {
+      this.roomList.pop()
     },
-    addAdultNumber(event,index){
-      this.roomList[index].adultNumber++;
-      this.adultTotalNumber++;
+    addAdultNumber(event, index) {
+      this.roomList[index].adultNumber += 1
+      this.adultTotalNumber += 1
     },
-    reduceAdultNumber(event,index){
-      if(this.roomList[index].adultNumber>1){
-        this.roomList[index].adultNumber--;
-        this.adultTotalNumber--;
+    reduceAdultNumber(event, index) {
+      if (this.roomList[index].adultNumber > 1) {
+        this.roomList[index].adultNumber -= 1
+        this.adultTotalNumber -= 1
       }
     },
-    addChildNumber(event,index){
-      this.roomList[index].childNumber++;
-      this.childTotalNumber++;
+    addChildNumber(event, index) {
+      this.roomList[index].childNumber += 1
+      this.childTotalNumber += 1
       this.roomList[index].childAgeList.push({
-        age:[0,1,2,3,4,5,6,7,8,9,10],
-        value:1
+        age: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        value: 1,
       })
     },
-    reduceChildNumber(event,index){
-      let target=this.roomList[index];
-      if(target.childNumber>0){
-        target.childNumber--;
-        target.childAgeList.pop();
-        this.childTotalNumber--;
+    reduceChildNumber(event, index) {
+      const target = this.roomList[index]
+      if (target.childNumber > 0) {
+        target.childNumber -= 1
+        target.childAgeList.pop()
+        this.childTotalNumber -= 1
       }
     },
   },
@@ -1127,7 +1199,12 @@ export default {
     //   border-left-color: #002b55;
     // }
   }
-  .el-date-table td.in-range div, .el-date-table td.in-range div:hover, .el-date-table.is-week-mode .el-date-table__row.current div, .el-date-table.is-week-mode .el-date-table__row:hover div{
+  .el-date-table td.in-range div,
+  .el-date-table td.in-range div:hover,
+  .el-date-table.is-week-mode
+  .el-date-table__row.current div,
+  .el-date-table.is-week-mode
+  .el-date-table__row:hover div{
     background-color:#e8e8e8;
 
   }
