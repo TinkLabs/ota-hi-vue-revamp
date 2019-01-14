@@ -6,32 +6,32 @@
           src="../../images/homepage/Shape Copy@3x.png"
           alt=""
         >
-        <h1>More than 300,000 hotels</h1>
-        <p>in 57,000 destinations in 200 countries</p>
+        <h1>{{ $t("More than 300,000 hotels") }}</h1>
+        <p>{{ $t("in 57,000 destinations in 200 countries") }}</p>
       </li>
       <li class="money">
         <img
           src="../../images/homepage/money@3x.png"
           alt=""
         >
-        <h1>Save Money</h1>
-        <p>95% of our customers save up to 80%</p>
+        <h1>{{ $t("Save Money") }}</h1>
+        <p>{{ $t("95% of our customers save up to 80%") }}</p>
       </li>
       <li>
         <img
           src="../../images/homepage/Combined Shape Copy@3x.png"
           alt=""
         >
-        <h1>Our customers are satisfied</h1>
-        <p>We are always thinking about your satisfaction!</p>
+        <h1>{{ $t("Our customers are satisfied") }}</h1>
+        <p>{{ $t("We are always thinking about your satisfaction!") }}</p>
       </li>
       <li>
         <img
           src="../../images/homepage/team@3x.png"
           alt=""
         >
-        <h1>Meet our team</h1>
-        <p>Experienced professionals help you all the way</p>
+        <h1>{{ $t("Meet our team") }}</h1>
+        <p>{{ $t("Experienced professionals help you all the way") }}</p>
       </li>
     </ul>
     <div class="main-links">
@@ -50,118 +50,118 @@
           <span>@hi Inc. 2018  </span>
           <span> | </span>
           <a href="#">
-            Privacy Policy
+            {{ $t("Privacy Policy") }}
           </a>
           <span> | </span>
           <a href="#">
-            Terms & Conditions
+            {{ $t("Terms & Conditions") }}
           </a>
         </div>
       </div>
       <div class="about">
         <div class="title">
-          About
+          {{ $t("About") }}
         </div>
         <ul>
           <li>
             <a href="#">
-              About Us
+              {{ $t("About Us") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Sign Up
+              {{ $t("Sign Up") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Careers
+              {{ $t("Careers") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Investor Relations
+              {{ $t("Investor Relations") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Partners
+              {{ $t("Partners") }}
             </a>
           </li>
         </ul>
       </div>
       <div class="explore">
         <div class="title">
-          Explore
+          {{ $t("Explore") }}
         </div>
         <ul>
           <li>
             <a href="#">
-              Hotels & Resorts
+              {{ $t("Hotels & Resorts") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Deals
+              {{ $t("Deals") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Experiences
+              {{ $t("Experiences") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Gallery
+              {{ $t("Gallery") }}
             </a>
           </li>
         </ul>
       </div>
       <div class="contact">
         <div class="title">
-          Contact
+          {{ $t("Contact") }}
         </div>
         <ul>
           <li>
             <a href="#">
-              Call Us
+              {{ $t("Call Us") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Email Us
+              {{ $t("Email Us") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Manage Booking
+              {{ $t("Manage Booking") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Global Offices
+              {{ $t("Global Offices") }}
             </a>
           </li>
         </ul>
       </div>
       <div class="press">
         <div class="title">
-          Press
+          {{ $t("Press") }}
         </div>
         <ul>
           <li>
             <a href="#">
-              Newsroom
+              {{ $t("Newsroom") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Press Releases
+              {{ $t("Press Releases") }}
             </a>
           </li>
           <li>
             <a href="#">
-              Press Kity
+              {{ $t("Press Kit") }}
             </a>
           </li>
         </ul>
