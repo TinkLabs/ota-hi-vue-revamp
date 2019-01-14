@@ -58,8 +58,8 @@
         </h1>
         <ul>
           <li
-            v-for="item in destinationData"
-            :key="item.location"
+            v-for="(item,index) in destinationData"
+            :key="index"
           >
             <img :src="item.img">
             <div class="content">
@@ -123,7 +123,7 @@
         <h1 class="title">
           Featured Hotels
         </h1>
-        <HotelSwiper/>
+        <HotelSwiper />
       </div>
     </div>
 
@@ -133,9 +133,6 @@
 </template>
 
 <script>
-import Bus from '../component/bus'
-import Header from './includes/header.vue'
-import Footer from './includes/footer.vue'
 import HotelSwiper from './hotelSwiper.vue'
 import Subscribe from './includes/subscribe.vue'
 import locationImg from '../images/homepage/Location Image2@3x.png'
@@ -145,10 +142,8 @@ import locationImg2 from '../images/homepage/Location Image3@3x.png'
 export default {
   name: 'Home',
   components: {
-    Header,
-    Footer,
     Subscribe,
-    HotelSwiper
+    HotelSwiper,
   },
   data() {
     return {
