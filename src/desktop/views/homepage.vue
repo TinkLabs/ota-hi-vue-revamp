@@ -80,45 +80,17 @@
           {{ $t("Where to Stay") }}
         </h1>
         <div class="content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit
+          <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+          <span
+            class="show-all"
+            @click="toDestination"
+          >
+            {{ $t("Show all") }}
+          </span>
         </div>
-        <ul>
-          <li>
-            <img
-              src="../images/homepage/stay@3x.png"
-              alt=""
-            >
-            <div class="title">
-              Tropical
-            </div>
-            <h2>Tropical</h2>
-            <div class="hotel-num">
-              62 Hotels
-            </div>
-            <div class="content">
-              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut</span>
-              <span>condimentum ligula felis, tempor volutpat orci fermentum sagittis.</span>
-            </div>
-          </li>
-          <li class="city-life">
-            <img
-              src="../images/homepage/stay2@3x.png"
-              alt=""
-            >
-            <div class="title">
-              City LIFE
-            </div>
-            <h2>City Life</h2>
-            <div class="hotel-num">
-              45 Hotels
-            </div>
-            <div class="content">
-              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut</span>
-              <span>condimentum ligula felis, tempor volutpat orci fermentum sagittis.</span>
-            </div>
-          </li>
-        </ul>
+        <TopHotel />
       </div>
+
 
       <!--  Featured Hotels-->
       <div class="featured-hotels">
@@ -135,6 +107,7 @@
 </template>
 
 <script>
+import TopHotel from './includes/topHotel.vue'
 import HotelSwiper from './hotelSwiper.vue'
 import Subscribe from './includes/subscribe.vue'
 import locationImg from '../images/homepage/Location Image2@3x.png'
@@ -146,6 +119,7 @@ export default {
   components: {
     Subscribe,
     HotelSwiper,
+    TopHotel,
   },
   data() {
     return {
@@ -183,6 +157,9 @@ export default {
 
   },
   methods: {
+    toDestination() {
+      this.$router.push({ path: '/destination' })
+    },
 
   },
 }
@@ -334,39 +311,12 @@ export default {
   // where to stay
   .to-stay {
     margin-top: 50px;
-    ul {
-      li {
-        width: 49%;
-        position: relative;
-        .title {
-          position: absolute;
-          width: 100%;
-          left: 0;
-          top: 24%;
-          // transform:translate(0,-50%);
-          text-align: center;
-          font-size: 90px;
-          color: #fff;
-          font-weight: lighter;
-          font-family: Bonita;
-          // @include font(90px,200,#fff,Bonita);
-        }
-        h2 {
-          margin-top: 10px;
-          @include font(20px, bolder, #333, MerriweatherSans);
-        }
-        .hotel-num {
-          @include font(14px, bold, #333, MerriweatherSans);
-          margin: 10px 0;
-        }
-        .content {
-          @include font(14px, normal, #333, MerriweatherSans);
-        }
-      }
-    }
-    .city-life {
-      .title {
-        font-size: 80px;
+    >.content{
+      display:flex;
+      justify-content: space-between;
+      .show-all{
+        @include font(14px, bold, #cba052, MerriweatherSans);
+        cursor: pointer;
       }
     }
   }
