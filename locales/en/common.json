@@ -27,6 +27,9 @@
   "Sat": "Sat",
   "nights": "nights",
   "Room": "Room",
+  "Adults": "Adults",
+  "Children": "Children",
   "code": "code",
-  "Subtotal": "Subtotal"
+  "Subtotal": "Subtotal",
+  "Contact Us" : "Contact Us"
 }
