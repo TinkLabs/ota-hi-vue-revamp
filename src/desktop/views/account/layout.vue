@@ -62,7 +62,7 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss'>
   @import '../../common/common';
   @import '../../common/main';
   .account-header{
@@ -93,6 +93,112 @@ export default {
           color: $blue4;
           font-weight: bold;
           border-bottom: 5px solid $blue4;
+        }
+      }
+    }
+  }
+
+  .booking-info-header{
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    .booking-info-header-left{
+      flex-grow: 1;
+      .checkInOut{
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .nights{
+        color:$black4;
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 44px;
+      }
+    }
+    .booking-info-header-right{
+      padding: 0 33.5px;
+      .reference{
+        font-size: 12px;
+        color:$black4;
+      }
+      .num{
+        font-size: 14px;
+        color:$black6;
+        margin-left: 7px;
+      }
+    }
+  }
+  .booking-item{
+    box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.09);
+    background-color: $white1;
+    margin-bottom: 20px;
+    .el-header{
+      background: $black7;
+    }
+    .el-main{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      &>img{
+        width: 165px;
+        height: 165px;
+        border-radius: 5px;
+        flex-shrink: 0;
+      }
+      .book-info{
+        display: flex;
+        flex-direction: column;
+        flex-grow: 2;
+        padding-left: 25px;
+        .hotel{
+          .name{
+            font-size: 20px;
+            font-weight: bold;
+            color: $black5;
+          }
+          .el-rate__icon{
+            font-size: 11px;
+            margin-right: 0;
+          }
+          .address{
+            font-size: 11px;
+            color: $black5;
+          }
+        }
+        .info{
+          padding: 15px 0;
+          font-size: 14px;
+          color: $black6;
+        }
+        .cancel{
+          padding: 5px 0;
+          .el-icon-success{
+            margin-right: 7px;
+            &.check{
+              color: $green4;
+            }
+          }
+        }
+      }
+      .act-menu{
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 25px;
+        .el-button{
+          flex-shrink: 0;
+          border-radius: 5px;
+          background-color: $blue4;
+          font-size: 14px;
+          font-weight: bold;
+          color: $white1;
+        }
+        .cancelled{
+          padding: 15px 0;
+          text-align: center;
+          font-size: 14px;
+          color: $red1;
         }
       }
     }
