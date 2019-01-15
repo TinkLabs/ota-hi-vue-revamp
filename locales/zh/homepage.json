@@ -56,11 +56,17 @@
   "Best deals directly to your inbox":"最佳资讯直接发送到您的邮箱",
   "Enter your email address":"请输入电子邮件地址",
   "Join Today":"现在加入",
+  "Subscribed":"已订阅",
+  "Please enter a valid email address.":"请输入有效的电子邮件地址。",
+  "Wonderful! Exciting emails are making it’s way to you.":"好极了！已向您发送精彩邮件。",
   "Featured":"Featured",
   "4000 best hotels around the world":"全球4000家最好的酒店",
   "View hotels now":"查看酒店",
   "Top Destinations":"Top Destinations",
   "Where to Stay":"住哪里",
-  "Featured Hotels":"特色酒店"
+  "Show all":"显示全部",
+  "Featured Hotels":"特色酒店",
+  "Top Hotel Destinations":"Top Hotel Destinations",
+  "Find your perfect stay":"寻找完美居住地"
 
 }

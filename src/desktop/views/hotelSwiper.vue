@@ -3,40 +3,7 @@
     v-swiper:mySwiper="swiperOption"
     class="swiper-container"
   >
-    <div class="swiper-wrapper">
-      <div
-        v-for="(item,index) in hotelList"
-        :key="index"
-        class="swiper-slide"
-      >
-        <img
-          :src="item.src"
-          alt=""
-        >
-        <div class="hotel-location">
-          {{ item.location }}
-        </div>
-        <div class="hotel-name">
-          {{ item.name }}
-        </div>
-        <div class="hotel-price">
-          <span>${{ item.price }}</span>/night
-          {{ item.star }}
-        </div>
-        <div class="stars">
-          <i
-            v-for="(star,i) in item.star"
-            :key="i"
-            class="el-icon-star-on"
-          />
-          <i
-            v-for="(star,i) in (5-item.star)"
-            :key="i+'-star'"
-            class="el-icon-star-off"
-          />
-        </div>
-      </div>
-    </div>
+    <FeaturedHotel />
     <div
       slot="button-prev"
       class="swiper-button-prev"
@@ -54,11 +21,14 @@
 </template>
 
 <script>
+import FeaturedHotel from './includes/featuredHotel.vue'
 import 'swiper/dist/css/swiper.css'
-import hotelImg from '../images/homepage/Hotel Image@3x.png'
-import hotelImg2 from '../images/homepage/Hotel Image2@3x.png'
+
 
 export default {
+  components: {
+    FeaturedHotel,
+  },
   data() {
     return {
       swiperOption: {
@@ -76,46 +46,7 @@ export default {
           prevEl: '.swiper-button-prev',
         },
       },
-      hotelList: [
-        {
-          src: hotelImg,
-          location: 'Westminster Borough  London',
-          name: 'London Marriott Hotel',
-          price: '99',
-          star: 3,
-          id: 1,
-        }, {
-          src: hotelImg2,
-          location: 'Kensington and Chelsea  London',
-          name: 'The Kensingotn Hotel',
-          price: '199',
-          star: 5,
-          id: 1,
-        }, {
-          src: hotelImg,
-          location: 'Lambeth  London',
-          name: 'Plaza on the River',
-          price: '299',
-          star: 4,
-          id: 1,
-        },
-        {
-          src: hotelImg2,
-          location: 'Lambeth  London',
-          name: 'London Marriott Hotel',
-          price: '399',
-          star: 5,
-          id: 1,
-        },
-        {
-          src: hotelImg2,
-          location: 'Lambeth  London',
-          name: 'Plaza on the River',
-          price: '499',
-          star: 5,
-          id: 1,
-        },
-      ],
+
     }
   },
   mounted() {
