@@ -1,5 +1,7 @@
 <template>
-  <div :class="['header-wrapper',searchBarFixed == true ?'isFixed' :'']">
+  <div
+    :class="['header-wrapper',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']"
+  >
     <div :class="['header',searchBarFixed == true ?'isFixed' :'']">
       <ul>
         <li>
@@ -589,7 +591,6 @@ export default {
       this.language[index].class = 'active'
       this.$refs.language.innerHTML = this.language[index].name
       this.languageShow = false
-      console.log(index)
       switch (index) {
         case 1:
           this.$i18n.locale = 'zh'
@@ -600,9 +601,6 @@ export default {
         default:
           this.$i18n.locale = 'en'
       }
-
-      console.log(this.$i18n.locale)
-      // 切换语言
     },
     // search with typing
     getSearchList() {
@@ -672,6 +670,9 @@ export default {
 @import '../../common/main.scss';
 .header-wrapper.isFixed{
   height:460px;
+}
+.header-wrapper.isFixed.notHomepage{
+  height:300px;
 }
 .header {
   width: 100%;

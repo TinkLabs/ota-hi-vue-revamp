@@ -2,14 +2,14 @@
   <!-- subscribe -->
   <div class="h-container">
     <div class="subscribe">
-      <p>Subscribe to our newsletter</p>
-      <h1>Best deals directly to your inbox</h1>
+      <p>{{ $t("Subscribe to our newsletter") }}</p>
+      <h1>{{ $t("Best deals directly to your inbox") }}</h1>
       <div class="subscribe-input">
         <input
           type="text"
-          placeholder="Enter your email address"
+          :placeholder="$t('Enter your email address')"
         >
-        <button>Join Today</button>
+        <button>{{ $t("Join Today") }}</button>
       </div>
     </div>
   </div>
