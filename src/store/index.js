@@ -7,9 +7,9 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-  example: null,
   global: {
     lang: 'English',
+    langCode: 'en',
     currency: 'GBP',
   },
   user: {
