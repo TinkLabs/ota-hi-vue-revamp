@@ -1,12 +1,14 @@
 <template>
-  <div :class="['header-wrapper',searchBarFixed == true ?'isFixed' :'']">
+  <div
+    :class="['header-wrapper',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']"
+  >
     <div :class="['header',searchBarFixed == true ?'isFixed' :'']">
       <ul>
         <li>
-          <span>Contact Us</span>
+          <span>{{ $t("Contact Us") }}</span>
         </li>
         <li>
-          <span>Support</span>
+          <span>{{ $t("Support") }}</span>
         </li>
         <li
           class="language"
@@ -67,36 +69,36 @@
             src="../../images/homepage/hi_DotComLogo@3x.png"
             alt="hi.com logo"
           >
-          <span>Hotel</span>
-          <span>Experience</span>
-          <span>Restaurant</span>
+          <span>{{ $t("Hotel") }}</span>
+          <span>{{ $t("Experience") }}</span>
+          <span>{{ $t("Restaurant") }}</span>
         </div>
         <div class="account">
           <a href="#">
-            Sign In
+            {{ $t("Sign In") }}
           </a>
           <span> | </span>
           <a href="#">
-            Create an Account
+            {{ $t("Create an Account") }}
           </a>
         </div>
       </header>
       <div :class="['search',searchBarFixed == true ?'isFixed' :'',homepage ? '' :'notHomepage']">
         <p :class="['title',searchBarFixed == true ? 'hide' :'']">
-          Say hi to your next destination!
+          {{ $t("Say hi to your next destination!") }}
         </p>
         <div :class="['search-bar']">
           <!-- Location input-->
           <div class="location">
             <div class="title">
-              LOCATION OR HOTEL
+              {{ $t("LOCATION OR HOTEL") }}
             </div>
             <!-- 自定义输入建议的显示  服务端搜索数据-->
             <el-autocomplete
               v-model="searhResult"
               popper-class="my-autocomplete"
               :fetch-suggestions="querySearchAsync"
-              placeholder="Anywhere"
+              :placeholder="$t('Anywhere')"
               :select-when-unmatched="true"
               @select="handleSelect"
             >
@@ -139,9 +141,9 @@
                       </div>
                       <div class="guest-info">
                         <span>
-                          {{ item.room }} room,
-                          {{ item.adult }} adults,
-                          {{ item.children }} children
+                          {{ item.room }} {{ $t("room") }},
+                          {{ item.adult }} {{ $t("adults") }},
+                          {{ item.children }} {{ $t("children") }}
                         </span>
                       </div>
                     </div>
@@ -168,7 +170,7 @@
           <!-- Date Picker -->
           <div class="check">
             <div class="title">
-              CHECK IN & OUT
+              {{ $t("CHECK IN & OUT") }}
             </div>
             <!-- datepicker -->
             <div class="block">
@@ -177,8 +179,8 @@
                 v-model="defaultDate"
                 type="daterange"
                 range-separator="-"
-                start-placeholder="CHECK IN"
-                end-placeholder="CHECK OUT"
+                :start-placeholder="$t(&quot;CHECK IN&quot;)"
+                :end-placeholder="$t(&quot;CHECK OUT&quot;)"
                 :picker-options="pickerOptions"
                 @change="getSelectedDate"
               />
@@ -192,20 +194,20 @@
             @click="showRoompicker=true;"
           >
             <div class="title">
-              GUESTS
+              {{ $t("GUESTS") }}
             </div>
             <div class="guest-num">
               <i class="far fa-user" />
               <span class="room-num">
                 {{ roomList.length }}
-              </span> room,
+              </span> {{ $t("room") }},
               <span class="adult-num">
                 {{ adultTotalNumber }}
-              </span> adults,
+              </span> {{ $t("adults") }},
               <br>
               <span class="children-num">
                 {{ childTotalNumber }}
-              </span> children
+              </span> {{ $t("children") }}
             </div>
             <transition name="room-picker">
               <div
@@ -218,10 +220,10 @@
                     :key="index"
                   >
                     <h1 class="room-num">
-                      Room {{ index+1 }}
+                      {{ $t("Room") }} {{ index+1 }}
                     </h1>
                     <div class="adults">
-                      <h2>Adults</h2>
+                      <h2>{{ $t("Adults") }}</h2>
                       <div class="count">
                         <span
                           class="minus"
@@ -239,7 +241,7 @@
                       </div>
                     </div>
                     <div class="children">
-                      <h2>Children</h2>
+                      <h2>{{ $t("Children") }}</h2>
                       <div class="count">
                         <span
                           class="minus"
@@ -258,14 +260,14 @@
                     </div>
                     <div :class="['children-age',item.childNumber>0?'':'border-none']">
                       <p v-show="item.childNumber>0">
-                        Children’s age at time of booking.
+                        {{ $t("Children’s age at time of booking.") }}
                       </p>
                       <ul class="child-list">
                         <li
                           v-for="(child,i) in item.childAgeList"
                           :key="i"
                         >
-                          <p>Child {{ i+1 }} age</p>
+                          <p>{{ $t("Child") }} {{ i+1 }} {{ $t("age") }}</p>
                           <template>
                             <el-select
                               v-model="child.value"
@@ -290,7 +292,7 @@
                     @click="addRoom"
                   >
                     <i class="fas fa-plus-circle" />
-                    <span>Add another room</span>
+                    <span>{{ $t("Add another room") }}</span>
                   </div>
                   <div
                     v-show="roomList.length>1"
@@ -298,17 +300,17 @@
                     @click="removeRoom"
                   >
                     <i class="fas fa-minus-circle" />
-                    <span>Remove</span>
+                    <span>{{ $t("Remove") }}</span>
                   </div>
                 </div>
               </div>
             </transition>
           </div>
-          <button>Search</button>
+          <button>{{ $t("Search") }}</button>
         </div>
         <div :class="['popular-search',searchBarFixed == true ? 'hide' :'']">
           <div class="title">
-            POPULAR SEARCHES
+            {{ $t("POPULAR SEARCHES") }}
           </div>
           <ul class="popular-city">
             <li
@@ -385,19 +387,23 @@ export default {
         {
           name: '繁體中文',
           img: languageImg3,
+          id: 1,
         },
         {
           name: '简体中文',
           img: languageImg3,
+          id: 2,
         },
         {
           name: '日本語',
           img: languageImg2,
+          id: 3,
         },
         {
           name: 'English',
           class: 'active',
           img: languageImg1,
+          id: 4,
         },
 
       ],
@@ -585,7 +591,16 @@ export default {
       this.language[index].class = 'active'
       this.$refs.language.innerHTML = this.language[index].name
       this.languageShow = false
-      // 切换语言
+      switch (index) {
+        case 1:
+          this.$i18n.locale = 'zh'
+          break
+        case 3:
+          this.$i18n.locale = 'en'
+          break
+        default:
+          this.$i18n.locale = 'en'
+      }
     },
     // search with typing
     getSearchList() {
@@ -655,6 +670,9 @@ export default {
 @import '../../common/main.scss';
 .header-wrapper.isFixed{
   height:460px;
+}
+.header-wrapper.isFixed.notHomepage{
+  height:300px;
 }
 .header {
   width: 100%;
@@ -766,7 +784,7 @@ export default {
     padding-bottom: 60px;
     transition: all 0.4s;
     p {
-      font-family: Montserrat;
+      font-family: Merriweather;
       font-size: 40px;
       font-weight: bold;
       padding: 40px 0;

@@ -11,7 +11,7 @@ import solid from '@fortawesome/fontawesome-free-solid'
 import regular from '@fortawesome/fontawesome-free-regular'
 import brands from '@fortawesome/fontawesome-free-brands'
 import en from '../locales/en'
-import zh from '../locales/zh'
+import zhCn from '../locales/zh'
 import createStore from './store'
 import createRouter from './routes'
 import App from './index.vue'
@@ -34,25 +34,25 @@ const messages = {
     ...en,
     ...enLocale, // 或者用 Object.assign({ message: 'hello' }, enLocale)
   },
-  zh: {
-    ...zh,
+  'zh-cn': {
+    ...zhCn,
     ...zhLocale, // 或者用 Object.assign({ message: '你好' }, zhLocale)
   },
 }
-
-const i18n = new VueI18n({
-  locale: 'zh', // set locale
-  messages, // set locale messages
-})
-
-Vue.use(ElementUI, {
-  i18n: (key, value) => i18n.t(key, value),
-})
 
 export default function createApp(context = null) {
   // create store and router instances
   const store = createStore(context)
   const router = createRouter(store.getters.getIsMobile)
+
+  const i18n = new VueI18n({
+    locale: store.getters.global.langCode, // set locale
+    messages, // set locale messages
+  })
+
+  Vue.use(ElementUI, {
+    i18n: (key, value) => i18n.t(key, value),
+  })
   // create the app instance.
   // here we inject the router, store and ssr context to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.

@@ -2,15 +2,39 @@
   <!-- subscribe -->
   <div class="h-container">
     <div class="subscribe">
-      <p>Subscribe to our newsletter</p>
-      <h1>Best deals directly to your inbox</h1>
+      <p>{{ $t("Subscribe to our newsletter") }}</p>
+      <h1>{{ $t("Best deals directly to your inbox") }}</h1>
       <div class="subscribe-input">
         <input
           type="text"
-          placeholder="Enter your email address"
+          :placeholder="$t('Enter your email address')"
+          :class="[showError==true?'error' :'']"
         >
-        <button>Join Today</button>
+        <button
+          v-show="!showSuccess"
+          :class="[showError==true?'error' :'']"
+        >
+          {{ $t("Join Today") }}
+        </button>
+        <button
+          v-show="showSuccess"
+          class="success"
+        >
+          {{ $t("Subscribed") }}
+        </button>
       </div>
+      <p
+        v-show="showError"
+        class="error tips"
+      >
+        {{ $t("Please enter a valid email address.") }}
+      </p>
+      <p
+        v-show="showSuccess"
+        class="success tips"
+      >
+        {{ $t("Wonderful! Exciting emails are making it’s way to you.") }}
+      </p>
     </div>
   </div>
 </template>
@@ -19,7 +43,8 @@
 export default {
   data() {
     return {
-
+      showError: false,
+      showSuccess: false,
     }
   },
   mounted() {
@@ -57,17 +82,32 @@ export default {
       padding:0 18px;
       font-size:14px;
       appearance: none;
-      border:none;
-
+      border:1px solid #fff;
+    }
+    input.error{
+      border:1px solid #ff4141;
     }
     button{
       width:150px;
-      height:50px;
+      height:52px;
       border-radius:0 4px  4px 0;
       background-color: #cba052;
       border:none;
       color:#fff;
       font-size: 14px;
+    }
+    button.error{
+      background-color:#ff4141;
+    }
+    button.success{
+      background-color:#71c118;
+    }
+    p.tips{
+      @include font(14px, normal, #fff, MerriweatherSans);
+      margin-top:10px;
+    }
+    p.error{
+      color:#ff4141;
     }
   }
 
