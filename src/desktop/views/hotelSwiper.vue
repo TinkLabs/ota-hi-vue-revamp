@@ -155,6 +155,8 @@ export default {
       left: 0;
     }
     .swiper-wrapper{
+      display: flex;
+      justify-content: space-between;
       .swiper-slide{
         width: 24%;
       }
