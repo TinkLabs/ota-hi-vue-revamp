@@ -42,7 +42,6 @@ export default function createApp(context = null) {
   const store = createStore(context)
   const router = createRouter(store.getters.getIsMobile)
 
-  console.log(store.getters.global.langCode)
   const i18n = new VueI18n({
     locale: store.getters.global.langCode, // set locale
     messages, // set locale messages
