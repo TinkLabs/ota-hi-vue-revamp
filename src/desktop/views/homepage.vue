@@ -6,47 +6,49 @@
         <!-- featured -->
         <div class="featured">
           <h2 class="title">
-            Featured
+            {{ $t("Featured") }}
           </h2>
-          <h1>4000 best hotels around the world</h1>
+          <h1>{{ $t("4000 best hotels around the world") }}</h1>
           <div class="view-hotel">
-            View hotels now
+            {{ $t("View hotels now") }}
           </div>
         </div>
-        <!-- eat like locals -->
-        <div class="eat-like-locals">
-          <h2 class="title">
-            Eat Like Locals
-          </h2>
-          <div class="content">
-            Lorem ipsum dolor
+        <div class="featured-right">
+          <!-- eat like locals -->
+          <div class="eat-like-locals">
+            <h2 class="title">
+              Eat Like Locals
+            </h2>
+            <div class="content">
+              Lorem ipsum dolor
+            </div>
           </div>
-        </div>
-        <!-- find gems -->
-        <div class="find-gems">
-          <h2 class="title">
-            Find Hidden Gems
-          </h2>
-          <div class="content">
-            Lorem ipsum dolor
+          <!-- find gems -->
+          <div class="find-gems">
+            <h2 class="title">
+              Find Hidden Gems
+            </h2>
+            <div class="content">
+              Lorem ipsum dolor
+            </div>
           </div>
-        </div>
-        <!-- hot deals -->
-        <div class="hot-deals">
-          <h2 class="title">
-            Hot Deals
-          </h2>
-          <div class="content">
-            Lorem ipsum dolor
+          <!-- hot deals -->
+          <div class="hot-deals">
+            <h2 class="title">
+              Hot Deals
+            </h2>
+            <div class="content">
+              Lorem ipsum dolor
+            </div>
           </div>
-        </div>
-        <!-- handy -->
-        <div class="handy">
-          <h2 class="title">
-            handy
-          </h2>
-          <div class="content">
-            Your travelling companion
+          <!-- handy -->
+          <div class="handy">
+            <h2 class="title">
+              handy
+            </h2>
+            <div class="content">
+              Your travelling companion
+            </div>
           </div>
         </div>
       </div>
@@ -54,7 +56,7 @@
       <!-- Top Destinations -->
       <div class="top-destination">
         <h1 class="title">
-          Top Destinations
+          {{ $t("Top Destinations") }}
         </h1>
         <ul>
           <li
@@ -75,7 +77,7 @@
       <!-- where to stay -->
       <div class="to-stay">
         <h1 class="title">
-          Where to Stay
+          {{ $t("Where to Stay") }}
         </h1>
         <div class="content">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -121,7 +123,7 @@
       <!--  Featured Hotels-->
       <div class="featured-hotels">
         <h1 class="title">
-          Featured Hotels
+          {{ $t("Featured Hotels") }}
         </h1>
         <HotelSwiper />
       </div>
@@ -217,12 +219,11 @@ export default {
     position: relative;
     top:-40px;
     padding-bottom:10px;
+    height:100%;
+    position: relative;
     > div {
-      float: left;
-      margin-left: 1%;
-      margin-bottom: 1%;
+      width:50%;
       border-radius: 5px;
-      padding: 2%;
       h2 {
         @include font(26px, 400, #fff, Montserrat);
       }
@@ -232,6 +233,7 @@ export default {
     }
     .featured {
       width: 46%;
+      padding: 2%;
       background-image: linear-gradient(
         to bottom,
         rgba(22, 46, 172, 0.8),
@@ -254,9 +256,22 @@ export default {
         border-radius: 5px;
       }
     }
-    .featured ~ div {
-      width: 20%;
-      height: 200px;
+    .featured-right{
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display:flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      >div{
+        width:48%;
+        padding: 3%;
+        height:48%;
+        border-radius:5px;
+        box-sizing: border-box;
+        margin-left:2%;
+      }
     }
     .eat-like-locals {
       background-image: linear-gradient(
