@@ -60,7 +60,7 @@
               </div>
               <div class="point-container">
                 <div class="confirm-points" v-if="confirmPoints.length > 0">
-                  <div class="points-header">Confirme<strong>d</strong></div>
+                  <div class="points-header">{{$t('Confirmed')}}</div>
                   <div class="points-content" v-for="item in confirmPoints.list"
                        :key="item.referenceNo">
                     <pts :pt="item" state="confirm"/>
@@ -69,8 +69,8 @@
                 <div class="points-show-more"
                      v-if="confirmPoints.length > 3">
                   <div @click="toogelConfirmShowMore">
-                    <span v-if="!confirmPtsShowMore">Show more</span>
-                    <span v-if="confirmPtsShowMore">Hide</span>
+                    <span v-if="!confirmPtsShowMore">{{$t('Show more')}}</span>
+                    <span v-if="confirmPtsShowMore">{{$t('Hide')}}</span>
                     <i :class="{
                   'el-icon-arrow-down': !confirmPtsShowMore,
                   'el-icon-arrow-up': confirmPtsShowMore}">
@@ -78,7 +78,7 @@
                   </div>
                 </div>
                 <div class="pending-points" v-if="pendingPoints.length > 0">
-                  <div class="points-header">Pending</div>
+                  <div class="points-header">{{$t('Pending')}}</div>
                   <div class="points-content" v-for="item in pendingPoints.list"
                        :key="item.referenceNo">
                     <pts :pt="item" state="pending"/>
@@ -87,8 +87,8 @@
                 <div class="points-show-more"
                      v-if="pendingPoints.length > 3">
                   <div @click="toogelpendingShowMore">
-                    <span v-if="!pendingPtsSHowMore">Show more</span>
-                    <span v-if="pendingPtsSHowMore">Hide</span>
+                    <span v-if="!pendingPtsSHowMore">{{$t('Show more')}}</span>
+                    <span v-if="pendingPtsSHowMore">{{$t('Hide')}}</span>
                     <i :class="{
                   'el-icon-arrow-down': !pendingPtsSHowMore,
                   'el-icon-arrow-up': pendingPtsSHowMore}">
