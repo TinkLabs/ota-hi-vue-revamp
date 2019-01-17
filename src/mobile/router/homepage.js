@@ -4,5 +4,5 @@ const Homepage = () => import('../views/homepage.vue')
 
 
 export default [
-  { path: '', component: Homepage },
+  { path: '', component: Homepage, name: 'homepage' },
 ]

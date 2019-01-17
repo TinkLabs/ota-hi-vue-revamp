@@ -593,7 +593,7 @@ export default {
       this.languageShow = false
       switch (index) {
         case 1:
-          this.$i18n.locale = 'zh'
+          this.$i18n.locale = 'zh-cn'
           break
         case 3:
           this.$i18n.locale = 'en'
