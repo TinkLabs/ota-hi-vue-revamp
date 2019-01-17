@@ -66,7 +66,7 @@ export default {
   @import '../../common/common';
   @import '../../common/main';
   .account-header{
-    background: $white1;
+    background: $white1 !important;
     border-bottom: 1px solid $gray1;
     .el-header{
       padding: 0!important;
