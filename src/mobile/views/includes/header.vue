@@ -1,14 +1,14 @@
 <template>
   <div class="mobile-container">
     <div class="header">
-      <i class="fas fa-bars" />
+      <i class="el-icon-third-menu" />
       <div class="logo">
         <img
           src="../../../desktop/images/homepage/hi_DotComLogo@3x.png"
           alt="hi.com logo"
         >
       </div>
-      <i class="fas fa-user" />
+      <i class="el-icon-third-user" />
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@
 <script>
 
 export default {
-  name: 'Home',
+  name: 'Header',
   data() {
     return {
     }
@@ -36,11 +36,14 @@ export default {
     display:flex;
     justify-content: space-between;
     align-items: center;
-    color:$darkblue;
-    font-size:30px;
-    svg{
-      display:inline-block;
+    i{
+      color:$darkblue;
+      font-size:40px;
     }
+    i.el-icon-third-user{
+      font-size: 46px;
+    }
+
     .logo{
       width:100px;
       height:100px;

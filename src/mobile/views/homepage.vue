@@ -92,13 +92,39 @@
           </li>
         </ul>
       </div>
+
+      <!-- where to stay -->
+      <div class="to-stay">
+        <h1 class="title">
+          <span>{{ $t("Where to Stay") }}</span>
+          <span
+            class="show-all"
+          >
+            {{ $t("SHOW ALL") }}
+          </span>
+        </h1>
+        <WhereToStay />
+      </div>
+
+      <!--  Featured Hotels-->
+      <div class="featured-hotels">
+        <h1 class="title">
+          {{ $t("Featured Hotels") }}
+        </h1>
+        <FeaturedHotel />
+      </div>
     </div>
+
+    <Footer />
   </div>
 </template>
 
 <script>
 import Header from './includes/header.vue'
+import Footer from './includes/footer.vue'
 import SearchBar from './includes/searchBar.vue'
+import WhereToStay from './includes/whereToStay.vue'
+import FeaturedHotel from './includes/featuredHotel.vue'
 import locationImg from '../../desktop/images/homepage/Location Image2@3x.png'
 import locationImg1 from '../../desktop/images/homepage/Location Image4@3x.png'
 import locationImg2 from '../../desktop/images/homepage/Location Image3@3x.png'
@@ -107,7 +133,10 @@ export default {
   name: 'Homepage',
   components: {
     Header,
+    Footer,
     SearchBar,
+    WhereToStay,
+    FeaturedHotel,
   },
   data() {
     return {
@@ -161,15 +190,14 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 @import '../common/main.scss';
-body,html{
-  margin:0;
-}
+
 .home-container{
   h1.title{
     @include font(40px, bold, #333, Montserrat);
     letter-spacing: -0.2px;
+    margin:40px 0;
   }
   .popular-search {
     margin-top:60px;
@@ -197,7 +225,7 @@ body,html{
     }
   }
   >.content{
-    padding:0 45px;
+    padding:0 45px 100px 45px;
     background-color:#fafafa;
     .items {
       overflow: hidden;
@@ -304,8 +332,8 @@ body,html{
 
     // Top Destinations
     .top-destination {
-      padding-bottom: 50px;
-      border-bottom: 2px solid rgba(0, 43, 85, 0.1);
+      padding-bottom: 66px;
+      border-bottom: 1px solid #e7e7e7;
       ul {
         width:100%;
         overflow-x: scroll;
@@ -353,6 +381,29 @@ body,html{
         }
       }
     }
+
+     // where to stay
+    .to-stay {
+      margin-top: 50px;
+      h1.title{
+        display:flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom:40px;
+        .show-all{
+          @include font(24px, bold, #cba052, MerriweatherSans);
+          cursor: pointer;
+        }
+      }
+    }
+
+     // Featured Hotels
+  .featured-hotels {
+    position: relative;
+    h1.title{
+      margin:50px 0 40px 0;
+    }
+  }
   }
 }
 
