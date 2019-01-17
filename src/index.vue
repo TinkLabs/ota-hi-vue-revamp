@@ -15,7 +15,8 @@ export default {
 }
 </script>
 
-<style scoped>
+
+<style >
   @import '../public/style/font/iconfont.css';
   body, html {
     padding: 0;

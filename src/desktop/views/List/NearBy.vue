@@ -38,6 +38,7 @@
 </template>
 
 <script>
+// for init state loading page
 export default {
   props: {
     list: Array,

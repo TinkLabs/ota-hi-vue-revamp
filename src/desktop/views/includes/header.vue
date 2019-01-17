@@ -306,7 +306,7 @@
               </div>
             </transition>
           </div>
-          <button>{{ $t("Search") }}</button>
+          <button>{{ $t("SEARCH") }}</button>
         </div>
         <div :class="['popular-search',searchBarFixed == true ? 'hide' :'']">
           <div class="title">

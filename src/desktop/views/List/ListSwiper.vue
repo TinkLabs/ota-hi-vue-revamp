@@ -57,7 +57,6 @@ export default {
         // slidesPerView: 'auto',
         // centeredSlides: true,
         autoplay: false,
-
         direction: 'horizontal',
         navigation: {
           nextEl: '.swiper-button-next',
@@ -69,10 +68,10 @@ export default {
         },
         on: {
           slideChange() {
-            console.log('onSlideChangeEnd', this)
+            // console.log('onSlideChangeEnd', this)
           },
           tap() {
-            console.log('onTap', this)
+            // console.log('onTap', this)
           },
         },
       },
@@ -84,11 +83,11 @@ export default {
     },
   },
   mounted() {
-    console.log(
-      'This is current swiper instance object',
-      this.mySwiper,
-      'I will slideTo banners 3',
-    )
+    // console.log(
+    //   'This is current swiper instance object',
+    //   this.mySwiper,
+    //   'I will slideTo banners 3',
+    // )
     // this.mySwiper.slideTo(3)
   },
 }
@@ -111,16 +110,21 @@ export default {
       }
     }
   }
-  .swiper-button-prev ,  .swiper-button-next {
-      width:50px;height:50px;
-      vertical-align: middle;
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
   }
   .swiper-button-prev {
-            text-align: left;
-    i {
-        line-height: 50px;
+    text-align: left;
+    .fa-angle-left {
+      line-height: 50px;
       font-size: 31px;
       color: #ffffff;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
     }
     position: absolute;
     top: 50%;
@@ -128,12 +132,15 @@ export default {
     transform: translateY(-50%);
   }
   .swiper-button-next {
-            text-align: right;
-    i {
-        line-height: 50px;
-
+    text-align: right;
+    .fa-angle-right {
+      line-height: 50px;
       font-size: 31px;
       color: #ffffff;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
     }
     position: absolute;
     top: 50%;
