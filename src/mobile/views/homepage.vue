@@ -2,10 +2,38 @@
   <div class="home-container">
     <Header />
     <div class="mobile-container">
-      <h1 class="title">
-        Say hi to your next destination!
-      </h1>
-      <SearchBar />
+      <!-- search bar -->
+      <div class="search-container">
+        <div class="search-bar">
+          <div class="location-input">
+            <input
+              ref="location"
+              type="text"
+              placeholder="Anywhere"
+              :value="location"
+              @focus="startInput"
+            >
+            <i class="el-icon-third-search" />
+          </div>
+          <div class="date-input">
+            <input
+              type="text"
+              value="26 Nov 2018 - 27 Nov 2018"
+            >
+            <i class="el-icon-third-calendar" />
+          </div>
+          <div class="guest-input">
+            <input
+              type="text"
+              value="2 adults, 0 children"
+            >
+            <i class="el-icon-third-user1" />
+          </div>
+          <div class="search">
+            SEARCH
+          </div>
+        </div>
+      </div>
       <div class="popular-search">
         <div class="title">
           {{ $t("POPULAR SEARCHES") }}
@@ -116,13 +144,18 @@
     </div>
 
     <Footer />
+    <SearchBox
+      v-show="showSearchBox"
+      ref="searchbox"
+      @hideSearchBox="hideSearchBox"
+    />
   </div>
 </template>
 
 <script>
 import Header from './includes/header.vue'
 import Footer from './includes/footer.vue'
-import SearchBar from './includes/searchBar.vue'
+import SearchBox from './includes/searchBox.vue'
 import WhereToStay from './includes/whereToStay.vue'
 import FeaturedHotel from './includes/featuredHotel.vue'
 import locationImg from '../../desktop/images/homepage/Location Image2@3x.png'
@@ -134,12 +167,14 @@ export default {
   components: {
     Header,
     Footer,
-    SearchBar,
+    SearchBox,
     WhereToStay,
     FeaturedHotel,
   },
   data() {
     return {
+      showSearchBox: false,
+      location: '',
       popular: [
         'Hong Kong',
         'London',
@@ -182,10 +217,16 @@ export default {
     }
   },
   mounted() {
-
   },
   methods: {
-
+    startInput() {
+      this.showSearchBox = true
+      this.$nextTick(() => { this.$refs.searchbox.$refs.keyword.focus() })
+    },
+    hideSearchBox(location) {
+      this.showSearchBox = false
+      this.location = location
+    },
   },
 }
 </script>
@@ -199,6 +240,41 @@ export default {
     letter-spacing: -0.2px;
     margin:40px 0;
   }
+  // search bar
+  .search-bar{
+    >div{
+      position: relative;
+      margin-top:25px;
+      i{
+        position: absolute;
+        left:40px;
+        top:50%;
+        transform:translate(0,-50%);
+        color:#888888;
+        font-size:36px;
+      }
+    }
+    input,div.search{
+      width:100%;
+      height:110px;
+      background-color:#fafafa;
+      border-radius:10px;
+      @include font(30px, bold, #333, Montserrat);
+      padding:0 30px 0 100px;
+      outline: none;
+    }
+    div.search{
+      text-align: center;
+      line-height:110px;
+      background-color: #cba052;
+      letter-spacing: 2px;
+      color:#fff;
+      margin-top:25px;
+      padding:0;
+
+    }
+  }
+  // popular search
   .popular-search {
     margin-top:60px;
     padding-bottom:100px;
