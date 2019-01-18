@@ -1,7 +1,10 @@
 <template>
   <div class="mobile-container">
     <div class="header">
-      <i class="el-icon-third-menu" />
+      <i
+        :class="[isback==true ?'el-icon-third-back':'el-icon-third-menu']"
+        @click="backToHomepage"
+      />
       <div class="logo">
         <img
           src="../../../desktop/images/homepage/hi_DotComLogo@3x.png"
@@ -10,13 +13,21 @@
       </div>
       <i class="el-icon-third-user" />
     </div>
+    <h1 class="title">
+      <slot>Say hi to your next destination!</slot>
+    </h1>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'Header',
+  props: {
+    isback: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
     }
@@ -25,6 +36,9 @@ export default {
 
   },
   methods: {
+    backToHomepage() {
+      this.$emit('hideSearchBox', true)
+    },
 
   },
 }

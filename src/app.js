@@ -37,6 +37,15 @@ const messages = {
   },
 }
 
+// directive-focus
+Vue.directive('focus', {
+  // 当绑定元素插入到 DOM 中。
+  inserted(el) {
+    // 聚焦元素
+    el.focus()
+  },
+})
+
 export default function createApp(context = null) {
   // create store and router instances
   const store = createStore(context)
