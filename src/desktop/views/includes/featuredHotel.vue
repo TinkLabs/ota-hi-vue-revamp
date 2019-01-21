@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import hotelImg from '../../../common/images/homepage/Hotel Image@3x.png'
-import hotelImg2 from '../../../common/images/homepage/Hotel Image2@3x.png'
+const hotelImg = '/images/homepage/Hotel Image@3x.png'
+const hotelImg2 = '/images/homepage/Hotel Image2@3x.png'
 
 export default {
   data() {

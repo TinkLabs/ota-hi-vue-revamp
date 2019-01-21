@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import loading from '../../../common/images/homepage/hi_DotComLogo.png'
+
+const loading = '/images/homepage/hi_DotComLogo.png'
 
 export default {
   computed: {
