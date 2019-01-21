@@ -29,6 +29,7 @@ const { app, router, store } = createApp()
 if (window.__INITIAL_STATE__) {
   // eslint-disable-next-line no-underscore-dangle
   store.replaceState(window.__INITIAL_STATE__)
+  window.hiApp = app
 }
 
 // wait until router has resolved all async before hooks
