@@ -3,7 +3,7 @@
     <ul class="hi-items">
       <li>
         <img
-          src="../../images/homepage/Shape Copy@3x.png"
+          src="../../../common/images/homepage/Shape Copy@3x.png"
           alt=""
         >
         <h1>{{ $t("More than 300,000 hotels") }}</h1>
@@ -11,7 +11,7 @@
       </li>
       <li class="money">
         <img
-          src="../../images/homepage/money@3x.png"
+          src="../../../common/images/homepage/money@3x.png"
           alt=""
         >
         <h1>{{ $t("Save Money") }}</h1>
@@ -19,7 +19,7 @@
       </li>
       <li>
         <img
-          src="../../images/homepage/Combined Shape Copy@3x.png"
+          src="../../../common/images/homepage/Combined Shape Copy@3x.png"
           alt=""
         >
         <h1>{{ $t("Our customers are satisfied") }}</h1>
@@ -27,7 +27,7 @@
       </li>
       <li>
         <img
-          src="../../images/homepage/team@3x.png"
+          src="../../../common/images/homepage/team@3x.png"
           alt=""
         >
         <h1>{{ $t("Meet our team") }}</h1>
@@ -37,7 +37,7 @@
     <div class="main-links">
       <div class="logo">
         <img
-          src="../../images/homepage/hi_DotComLogo@3x.png"
+          src="../../../common/images/homepage/hi_DotComLogo@3x.png"
           alt="hi.com logo"
         >
         <ul>
@@ -185,7 +185,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../common/main.scss';
+  @import '../../../common/style/main';
 
   .footer{
     .hi-items{

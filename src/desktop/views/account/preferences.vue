@@ -19,49 +19,45 @@
                 <span class="avatar-btn">{{$t('Change picture')}}</span>
               </el-col>
               <el-col :lg="18" class="account-form-right">
-                <el-form label-position="top" label-width="80px" :model="formLabelAlign">
+                <el-form label-position="top" label-width="80px"
+                         :model="userInfo"
+                         :rules="rulesUserForm"
+                         ref="userInfoForm">
                   <el-row>
                     <el-col :lg="12">
-                      <el-form-item>
+                      <el-form-item prop="firstName">
                         <div slot="label" class="account-form-label">{{$t('First Name')}}</div>
-                        <el-input v-model="formLabelAlign.name"></el-input>
+                        <el-input v-model="userInfo.firstName"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :lg="12">
-                      <el-form-item>
+                      <el-form-item prop="lastName">
                         <div slot="label" class="account-form-label">{{$t('Last Name')}}</div>
-                        <el-input v-model="formLabelAlign.region"></el-input>
+                        <el-input v-model="userInfo.lastName"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row>
                     <el-col :lg="24">
-                      <el-form-item>
-                        <div slot="label" class="account-form-label">{{$t('Display Name')}}</div>
-                        <el-input v-model="formLabelAlign.type"></el-input>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :lg="24">
-                      <el-form-item>
+                      <el-form-item prop="birthday">
                         <div slot="label" class="account-form-label">{{$t('Birthday')}}</div>
                         <el-date-picker
-                            v-model="value"
+                            v-model="userInfo.birthday"
                             type="date"
                             prefix-icon=" "
-                            placeholder="选择日期">
+                            :placeholder="$t('Choose Your Birthday')">
                         </el-date-picker>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row>
                     <el-col :lg="24">
-                      <el-form-item>
+                      <el-form-item prop="country">
                         <div slot="label" class="account-form-label">{{$t('Country')}}</div>
-                        <el-select v-model="value" filterable placeholder="请选择">
+                        <el-select v-model="userInfo.country" filterable
+                                   :placeholder="$t('Please Select an Country')">
                           <el-option
-                              v-for="item in options"
+                              v-for="item in countryList"
                               :key="item.value"
                               :label="item.label"
                               :value="item.value">
@@ -72,7 +68,7 @@
                   </el-row>
                   <el-row>
                     <el-col :lg="24" class="submit-button">
-                      <el-button>{{$t('Update Changes')}}</el-button>
+                      <el-button @click="changePersonalDetail">{{$t('Update Changes')}}</el-button>
                     </el-col>
                   </el-row>
                 </el-form>
@@ -231,15 +227,43 @@
 </template>
 
 <script>
+import countries from 'i18n-iso-countries'
+
+countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
+
 export default {
   name: 'preferences',
   data() {
+    const rulesUserForm = {
+      firstName: [
+        {
+          required: true,
+          message: this.$t('Please Input Your First Name'),
+          trigger: 'blur',
+        },
+      ],
+      lastName: [
+        {
+          required: true,
+          message: this.$t('Please Input Your Last Name'),
+          trigger: 'blur',
+        },
+      ],
+    }
+    const CountryLang = countries.getNames('en')
+    const countryList = []
+    Object.keys(CountryLang).forEach((key) => {
+      countryList.push({
+        value: key,
+        label: CountryLang[key],
+      })
+    })
     return {
       userInfo: {
         firstName: 'John',
         lastName: 'Smith',
-        points: 0,
-        memberType: 1,
+        birthday: null,
+        country: null,
         avatar: 'https://source.unsplash.com/120x120/?book,library',
       },
       formLabelAlign: {
@@ -247,6 +271,8 @@ export default {
         region: '',
         type: '',
       },
+      countryList,
+      rulesUserForm,
       options: [{
         value: '选项1',
         label: '黄金糕',
@@ -266,11 +292,23 @@ export default {
       value: '',
     }
   },
+  methods: {
+    changePersonalDetail() {
+      this.$refs.userInfoForm.validate((valid) => {
+        if (valid) {
+          console.log(this.userInfo)
+        } else {
+          console.log('error submit!!')
+        }
+        return false
+      })
+    },
+  },
 }
 </script>
 
 <style lang='scss'>
-  @import '../../common/common';
+  @import '../../../common/style/common';
   .preferences-layout{
     margin-top: 50px;
   }
@@ -345,6 +383,7 @@ export default {
           font-size: 14px;
           line-height: 20px;
           color: $black5;
+          display: inline-block;
         }
         .el-input{
           display: flex;

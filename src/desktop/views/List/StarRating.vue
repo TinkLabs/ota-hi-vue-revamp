@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import '../../common/common.scss'
+import '../../../common/style/common.scss'
 
 export default {
   props: {

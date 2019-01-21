@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import hotelImg from '../../images/homepage/Hotel Image@3x.png'
-import hotelImg2 from '../../images/homepage/Hotel Image2@3x.png'
+import hotelImg from '../../../common/images/homepage/Hotel Image@3x.png'
+import hotelImg2 from '../../../common/images/homepage/Hotel Image2@3x.png'
 
 export default {
   data() {
@@ -117,7 +117,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../common/main.scss';
+  @import '../../../common/style/main';
   .swiper-wrapper{
     display: flex;
     justify-content: space-between;

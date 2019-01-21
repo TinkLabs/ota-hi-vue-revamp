@@ -302,7 +302,7 @@ export default {
 </script>
 
 <style lang='scss'>
-@import '../../common/main.scss';
+@import '../../../common/style/main';
 .list-page-inner-wrapper {
   width: 100%;
   background-color: #fafafa;

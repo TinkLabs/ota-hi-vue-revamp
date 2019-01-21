@@ -63,8 +63,8 @@ export default {
 </script>
 
 <style lang='scss'>
-  @import '../../common/common';
-  @import '../../common/main';
+  @import '../../../common/style/common';
+  @import '../../../common/style/main';
   .account-header{
     background: $white1 !important;
     border-bottom: 1px solid $gray1;

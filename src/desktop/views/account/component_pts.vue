@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style  scoped lang='scss'>
-  @import '../../common/common';
+  @import '../../../common/style/common';
   .line1{
     display: flex;
     flex-direction: row;

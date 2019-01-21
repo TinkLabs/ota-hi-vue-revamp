@@ -359,8 +359,8 @@ export default {
 </script>
 
 <style lang='scss'>
-  @import '../../common/common';
-  @import '../../common/main';
+  @import '../../../common/style/common';
+  @import '../../../common/style/main';
   .hi-breadcrumb{
     padding: 13px 0;
     .el-icon-arrow-left{

@@ -325,8 +325,8 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-  @import '../../common/common';
-  @import '../../common/main.scss';
+  @import '../../../common/style/common';
+  @import '../../../common/style/main';
   .user-info{
     display: flex;
     flex-direction: row;
