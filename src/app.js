@@ -18,6 +18,7 @@ import App from './index.vue'
 import './filter'
 import pluginsUtil from './pluginUtils'
 import Validate from './common/component/formValidate'
+import Countries from './common/component/Countries'
 
 fontawesome.library.add(solid)
 fontawesome.library.add(regular)
@@ -28,6 +29,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(pluginsUtil)
 Vue.use(VueI18n)
+Vue.use(Countries)
 Vue.prototype.axios = axios
 
 const messages = {

@@ -216,26 +216,29 @@
 </template>
 
 <script>
-import countries from 'i18n-iso-countries'
-
-countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'preferences',
+  computed: {
+    ...mapGetters({
+      global: 'global',
+    }),
+    countryList() {
+      const countryList = []
+      if (this.global) {
+        Object.keys(this.$Countries[this.global.langCode]).forEach((key) => {
+          countryList.push({
+            value: key,
+            label: this.$Countries[this.global.langCode][key],
+          })
+        })
+      }
+      return countryList
+    },
+  },
   data() {
-    const { firstName, lastName } = this.$v;
-    const CountryLang = countries.getNames('en')
-    // only one china
-    CountryLang.HK += ` (${CountryLang.CN})`
-    CountryLang.TW += ` (${CountryLang.CN})`
-    CountryLang.MO += ` (${CountryLang.CN})`
-    const countryList = []
-    Object.keys(CountryLang).forEach((key) => {
-      countryList.push({
-        value: key,
-        label: CountryLang[key],
-      })
-    })
+    const { firstName, lastName } = this.$v
     return {
       userInfo: {
         firstName: 'John',
@@ -249,7 +252,6 @@ export default {
         region: '',
         type: '',
       },
-      countryList,
       rulesUserForm: {
         firstName,
         lastName,
