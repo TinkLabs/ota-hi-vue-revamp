@@ -3,7 +3,7 @@
     <ul class="hi-items">
       <li>
         <img
-          src="../../../desktop/images/homepage/Shape Copy@3x.png"
+          src="/images/homepage/Shape Copy@3x.png"
           alt=""
         >
         <h1>{{ $t("Over 300,000 hotels") }}</h1>
@@ -11,7 +11,7 @@
       </li>
       <li class="money">
         <img
-          src="../../../desktop/images/homepage/money@3x.png"
+          src="/images/homepage/money@3x.png"
           alt=""
         >
         <h1>{{ $t("Save Money") }}</h1>
@@ -19,7 +19,7 @@
       </li>
       <li>
         <img
-          src="../../../desktop/images/homepage/Combined Shape Copy@3x.png"
+          src="/images/homepage/Combined Shape Copy@3x.png"
           alt=""
         >
         <h1>{{ $t("Customer satisfaction") }}</h1>
@@ -27,7 +27,7 @@
       </li>
       <li>
         <img
-          src="../../../desktop/images/homepage/team@3x.png"
+          src="/images/homepage/team@3x.png"
           alt=""
         >
         <h1>{{ $t("Meet our team") }}</h1>

@@ -158,9 +158,10 @@ import Footer from './includes/footer.vue'
 import SearchBox from './includes/searchBox.vue'
 import WhereToStay from './includes/whereToStay.vue'
 import FeaturedHotel from './includes/featuredHotel.vue'
-import locationImg from '../../desktop/images/homepage/Location Image2@3x.png'
-import locationImg1 from '../../desktop/images/homepage/Location Image4@3x.png'
-import locationImg2 from '../../desktop/images/homepage/Location Image3@3x.png'
+
+const locationImg = '/images/homepage/Location Image2@3x.png'
+const locationImg1 = '/images/homepage/Location Image4@3x.png'
+const locationImg2 = '/images/homepage/Location Image3@3x.png'
 
 export default {
   name: 'Homepage',
