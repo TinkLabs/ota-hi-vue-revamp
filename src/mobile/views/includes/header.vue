@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  @import '../../common/main.scss';
+  @import '../../../common/style/mobile_main.scss';
   .header{
     display:flex;
     justify-content: space-between;
