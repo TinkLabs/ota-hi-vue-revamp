@@ -4,15 +4,19 @@
       :src="load"
       alt="loading"
     >
-    <div class="loading" />
+    <loading-icon />
   </div>
 </template>
 
 <script>
+import LoadingIcon from './LoadingIcon.vue'
 
 const loading = '/images/homepage/hi_DotComLogo.png'
 
 export default {
+  components: {
+    LoadingIcon,
+  },
   computed: {
     load() {
       return loading
@@ -34,22 +38,6 @@ export default {
     display: inline-block;
     margin-bottom: 19px;
   }
-  .loading {
-    width: 30px;
-    margin:0 auto;
-    height: 30px;
-    border: 4px solid #efefef;
-    border-right: 4px solid #bfbfbf;
-    border-radius: 100%;
-    animation: mymove 1s infinite linear;
-  }
-  @keyframes mymove {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+
 }
 </style>

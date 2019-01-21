@@ -16,6 +16,7 @@ import createStore from './store'
 import createRouter from './routes'
 import App from './index.vue'
 import './filter'
+import pluginsUtil from './pluginUtils'
 
 fontawesome.library.add(solid)
 fontawesome.library.add(regular)
@@ -23,6 +24,8 @@ fontawesome.library.add(brands)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+
+Vue.use(pluginsUtil)
 Vue.use(VueI18n)
 Vue.prototype.axios = axios
 
@@ -36,6 +39,15 @@ const messages = {
     ...zhLocale, // 或者用 Object.assign({ message: '你好' }, zhLocale)
   },
 }
+
+// directive-focus
+Vue.directive('focus', {
+  // 当绑定元素插入到 DOM 中。
+  inserted(el) {
+    // 聚焦元素
+    el.focus()
+  },
+})
 
 export default function createApp(context = null) {
   // create store and router instances
