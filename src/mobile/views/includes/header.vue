@@ -7,7 +7,7 @@
       />
       <div class="logo">
         <img
-          src="../../../desktop/images/homepage/hi_DotComLogo@3x.png"
+          src="/images/homepage/hi_DotComLogo@3x.png"
           alt="hi.com logo"
         >
       </div>

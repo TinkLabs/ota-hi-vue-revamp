@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import hotelImg from '../../../desktop/images/homepage/stay@3x.png'
-import hotelImg2 from '../../../desktop/images/homepage/stay2@3x.png'
+const hotelImg = '/images/homepage/stay@3x.png'
+const hotelImg2 = '/images/homepage/stay2@3x.png'
 
 const homeHotelList = [{
   src: hotelImg,
