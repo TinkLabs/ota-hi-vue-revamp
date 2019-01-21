@@ -711,7 +711,7 @@ export default {
         li{
           padding:10px 20px;
           color:#505050;
-          width:180px;
+          width:200px;
           &:hover{
             color:#fff;
             background-color:#002b55;
@@ -894,8 +894,8 @@ export default {
       .guests {
         position: relative;
         .guest-num {
-          min-width: 120px;
-          height: 36px;
+          min-width: 140px;
+          height: 72px;
           background-color:#ebebeb;
           border-radius: 5px;
           padding: 18px 18px 18px 46px;

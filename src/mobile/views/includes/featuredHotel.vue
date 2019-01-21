@@ -117,7 +117,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../common/style/main.scss';
+  @import '../../../common/style/mobile_main.scss';
   .swiper-wrapper{
     width:100%;
     display:flex;

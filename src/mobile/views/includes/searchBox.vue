@@ -158,7 +158,7 @@ export default {
 </script>
 
 <style lang='scss'>
-  @import '../../common/main.scss';
+  @import '../../../common/style/mobile_main.scss';
   .searchbox-container{
     width:100%;
     height:1600px;
