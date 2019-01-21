@@ -17,6 +17,7 @@ import createRouter from './routes'
 import App from './index.vue'
 import './filter'
 import pluginsUtil from './pluginUtils'
+import Validate from './common/component/formValidate'
 
 fontawesome.library.add(solid)
 fontawesome.library.add(regular)
@@ -60,6 +61,9 @@ export default function createApp(context = null) {
   })
 
   Vue.use(ElementUI, {
+    i18n: (key, value) => i18n.t(key, value),
+  })
+  Vue.use(Validate, {
     i18n: (key, value) => i18n.t(key, value),
   })
 

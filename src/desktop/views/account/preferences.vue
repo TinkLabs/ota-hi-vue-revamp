@@ -241,6 +241,10 @@ export default {
           message: this.$t('Please Input Your First Name'),
           trigger: 'blur',
         },
+        {
+          validator: this.$v.onlyLetterSpace,
+          trigger: 'blur',
+        },
       ],
       lastName: [
         {
