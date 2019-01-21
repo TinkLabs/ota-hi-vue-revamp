@@ -36,6 +36,7 @@
     "http-errors": "~1.6.2",
     "i": "^0.3.6",
     "i18n": "^0.8.3",
+    "i18n-iso-countries": "^3.7.8",
     "jsonwebtoken": "^8.4.0",
     "jstransformer-babel": "^2.1.0",
     "localscrollfix": "^2.2.0",

@@ -110,9 +110,10 @@
 import TopHotel from './includes/topHotel.vue'
 import HotelSwiper from './hotelSwiper.vue'
 import Subscribe from './includes/subscribe.vue'
-import locationImg from '../images/homepage/Location Image2@3x.png'
-import locationImg1 from '../images/homepage/Location Image4@3x.png'
-import locationImg2 from '../images/homepage/Location Image3@3x.png'
+
+const locationImg = '/images/homepage/Location Image2@3x.png'
+const locationImg1 = '/images/homepage/Location Image4@3x.png'
+const locationImg2 = '/images/homepage/Location Image3@3x.png'
 
 export default {
   name: 'Home',
@@ -166,7 +167,7 @@ export default {
 </script>
 
 <style lang='scss'>
-@import '../common/main.scss';
+@import '../../common/style/main';
 
 .h-container {
   h1.title {

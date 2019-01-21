@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import hotelImg from '../../images/homepage/stay@3x.png'
-import hotelImg2 from '../../images/homepage/stay2@3x.png'
+const hotelImg = '/images/homepage/stay@3x.png'
+const hotelImg2 = '/images/homepage/stay2@3x.png'
 
 const homeHotelList = [{
   src: hotelImg,
@@ -118,7 +118,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../common/main.scss';
+  @import '../../../common/style/main';
 // where to stay
   ul {
     display:flex;

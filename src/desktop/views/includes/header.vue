@@ -66,7 +66,7 @@
       <header>
         <div class="logo">
           <img
-            src="../../images/homepage/hi_DotComLogo@3x.png"
+            src="../../../../public/images/homepage/hi_DotComLogo@3x.png"
             alt="hi.com logo"
           >
           <span>{{ $t("Hotel") }}</span>
@@ -327,9 +327,9 @@
 </template>
 
 <script>
-import languageImg1 from '../../images/homepage/Mask Group 18@3x.png'
-import languageImg2 from '../../images/homepage/Mask Group 19@3x.png'
-import languageImg3 from '../../images/homepage/Mask Group 20@3x.png'
+const languageImg1 = '/images/homepage/Mask Group 18@3x.png'
+const languageImg2 = '/images/homepage/Mask Group 19@3x.png'
+const languageImg3 = '/images/homepage/Mask Group 20@3x.png'
 
 export default {
   name: 'Header',
@@ -667,7 +667,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../common/main.scss';
+@import '../../../common/style/main';
 .header-wrapper.isFixed{
   height:460px;
 }

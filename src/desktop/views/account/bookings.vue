@@ -143,8 +143,8 @@ export default {
 </script>
 
 <style lang='scss'>
-  @import '../../common/common';
-  @import '../../common/main';
+  @import '../../../common/style/common';
+  @import '../../../common/style/main';
 .bookings-header{
   padding: 57.5px 0;
   display: flex;

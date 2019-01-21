@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import loading from '../../images/homepage/hi_DotComLogo.png'
 import LoadingIcon from './LoadingIcon.vue'
+
+const loading = '/images/homepage/hi_DotComLogo.png'
 
 export default {
   components: {

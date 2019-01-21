@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '../common/main.scss';
+@import '../../common/style/main';
 // Featured Hotels swiper
   .swiper-container{
     position: relative;

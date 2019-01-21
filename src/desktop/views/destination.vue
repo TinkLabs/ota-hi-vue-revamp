@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang='scss'>
-@import '../common/main.scss';
+@import '../../common/style/main';
 .h-container{
   h1.title {
     @include font(26px, 600, #333333, Montserrat);

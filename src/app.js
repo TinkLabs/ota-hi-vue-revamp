@@ -62,6 +62,7 @@ export default function createApp(context = null) {
   Vue.use(ElementUI, {
     i18n: (key, value) => i18n.t(key, value),
   })
+
   // create the app instance.
   // here we inject the router, store and ssr context to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
