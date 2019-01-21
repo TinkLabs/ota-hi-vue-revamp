@@ -233,7 +233,7 @@ export default {
 </script>
 
 <style lang='scss'>
-@import '../common/main.scss';
+@import '../../common/style/mobile_main.scss';
 
 .home-container{
   h1.title{

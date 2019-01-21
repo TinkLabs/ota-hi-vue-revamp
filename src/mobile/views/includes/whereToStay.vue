@@ -124,7 +124,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../common/main.scss';
+  @import '../../../common/style/mobile_main.scss';
 // where to stay
   ul {
     width:100%;
