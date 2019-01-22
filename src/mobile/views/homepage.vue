@@ -162,7 +162,6 @@ import Header from './includes/header.vue'
 import Footer from './includes/footer.vue'
 import SearchBox from './includes/searchBox.vue'
 import RoomPicker from './includes/roomPicker.vue'
-
 import WhereToStay from './includes/whereToStay.vue'
 import FeaturedHotel from './includes/featuredHotel.vue'
 
@@ -243,7 +242,6 @@ export default {
       this.showRoomPicker = false
       switch (type) {
         case 1:
-          console.log(1)
           this.location = target
           break
         case 2:
@@ -251,7 +249,6 @@ export default {
           break
         case 3:
           this.guestNum = target
-          console.log(3)
           break
         default:
           break
