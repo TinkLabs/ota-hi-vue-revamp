@@ -35,5 +35,11 @@
   "Show more": "Show more",
   "Hide": "Hide",
   "First Name": "First Name",
-  "Last Name": "Last Name"
+  "Last Name": "Last Name",
+  "Mr": "Mr",
+  "Mrs": "Mrs",
+  "Star": "Star",
+  "Stars": "Stars",
+  "options": "options",
+  "Please use character (A-Z, a-z) values only": "Please use character (A-Z, a-z) values only"
 }

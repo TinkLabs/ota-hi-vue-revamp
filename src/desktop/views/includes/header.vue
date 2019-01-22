@@ -327,6 +327,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 const languageImg1 = '/images/homepage/Mask Group 18@3x.png'
 const languageImg2 = '/images/homepage/Mask Group 19@3x.png'
 const languageImg3 = '/images/homepage/Mask Group 20@3x.png'
@@ -464,6 +466,9 @@ export default {
     window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
+    ...mapActions([
+      'setLanguages',
+    ]),
     // search location or hotel
     loadAll() {
       return [
@@ -593,13 +598,13 @@ export default {
       this.languageShow = false
       switch (index) {
         case 1:
-          this.$i18n.locale = 'zh-cn'
+          this.setLanguages('zh-cn')
           break
         case 3:
-          this.$i18n.locale = 'en'
+          this.setLanguages('en')
           break
         default:
-          this.$i18n.locale = 'en'
+          this.setLanguages('en')
       }
     },
     // search with typing

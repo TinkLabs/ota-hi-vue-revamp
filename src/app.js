@@ -2,14 +2,8 @@ import Vue from 'vue'
 import ElementUI from 'element-ui'
 import VueI18n from 'vue-i18n'
 import axios from 'axios'
-import 'element-ui/lib/theme-chalk/index.css'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
-import fontawesome from '@fortawesome/fontawesome'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import solid from '@fortawesome/fontawesome-free-solid'
-import regular from '@fortawesome/fontawesome-free-regular'
-import brands from '@fortawesome/fontawesome-free-brands'
 import en from '../locales/en'
 import zhCn from '../locales/zh'
 import createStore from './store'
@@ -17,16 +11,12 @@ import createRouter from './routes'
 import App from './index.vue'
 import './filter'
 import pluginsUtil from './pluginUtils'
-
-fontawesome.library.add(solid)
-fontawesome.library.add(regular)
-fontawesome.library.add(brands)
-
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-
+import Validate from './common/component/formValidate'
+import Countries from './common/component/Countries'
 
 Vue.use(pluginsUtil)
 Vue.use(VueI18n)
+Vue.use(Countries)
 Vue.prototype.axios = axios
 
 const messages = {
@@ -58,11 +48,13 @@ export default function createApp(context = null) {
     locale: store.getters.global.langCode, // set locale
     messages, // set locale messages
   })
-
+  console.log(Vue.prototype.$isServer)
   Vue.use(ElementUI, {
     i18n: (key, value) => i18n.t(key, value),
   })
-
+  Vue.use(Validate, {
+    i18n: (key, value) => i18n.t(key, value),
+  })
   // create the app instance.
   // here we inject the router, store and ssr context to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.

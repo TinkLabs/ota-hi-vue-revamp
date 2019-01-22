@@ -93,12 +93,12 @@
               <el-col :lg="24" class="account-form-right">
                 <el-form label-position="top" label-width="80px" :model="formLabelAlign">
                   <el-row>
-                    <el-col :lg="4">
+                    <el-col :lg="6">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Title')}}</div>
-                        <el-select v-model="value" filterable placeholder="请选择">
+                        <el-select v-model="value" filterable :placeholder="$t('Title')">
                           <el-option
-                              v-for="item in options"
+                              v-for="item in titles"
                               :key="item.value"
                               :label="item.label"
                               :value="item.value">
@@ -106,16 +106,18 @@
                         </el-select>
                       </el-form-item>
                     </el-col>
-                    <el-col :lg="10">
+                    <el-col :lg="9">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('First Name')}}</div>
-                        <el-input v-model="formLabelAlign.name"></el-input>
+                        <el-input v-model="formLabelAlign.name"
+                                  :placeholder="$t('First Name')"></el-input>
                       </el-form-item>
                     </el-col>
-                    <el-col :lg="10">
+                    <el-col :lg="9">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Last Name')}}</div>
-                        <el-input v-model="formLabelAlign.region"></el-input>
+                        <el-input v-model="formLabelAlign.region"
+                                  :placeholder="$t('Last Name')"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -123,7 +125,8 @@
                     <el-col :lg="24">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Phone number')}}</div>
-                        <el-input v-model="formLabelAlign.type"></el-input>
+                        <el-input v-model="formLabelAlign.type"
+                                  :placeholder="$t('Phone number')"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -131,7 +134,8 @@
                     <el-col :lg="24">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Email address')}}</div>
-                        <el-input v-model="formLabelAlign.type"></el-input>
+                        <el-input v-model="formLabelAlign.type"
+                                  :placeholder="$t('Email address')"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -139,7 +143,8 @@
                     <el-col :lg="24">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Address')}}</div>
-                        <el-input v-model="formLabelAlign.type"></el-input>
+                        <el-input v-model="formLabelAlign.type"
+                                  :placeholder="$t('Address')"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -171,9 +176,9 @@
                     <el-col :lg="8">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Star rating')}}</div>
-                        <el-select v-model="value" filterable placeholder="请选择">
+                        <el-select v-model="value" filterable :placeholder="$t('Star rating')">
                           <el-option
-                              v-for="item in options"
+                              v-for="item in starRating"
                               :key="item.value"
                               :label="item.label"
                               :value="item.value">
@@ -200,23 +205,7 @@
           <div class="account-form">
             <el-row>
               <el-col :lg="24" class="account-form-right">
-                <el-form label-position="top" label-width="80px" :model="formLabelAlign">
-                  <el-row>
-                    <el-col :lg="8">
-                      <el-form-item>
-                        <div slot="label" class="account-form-label">{{$t('Star rating')}}</div>
-                        <el-select v-model="value" filterable placeholder="请选择">
-                          <el-option
-                              v-for="item in options"
-                              :key="item.value"
-                              :label="item.label"
-                              :value="item.value">
-                          </el-option>
-                        </el-select>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                </el-form>
+                123
               </el-col>
             </el-row>
           </div>
@@ -227,37 +216,29 @@
 </template>
 
 <script>
-import countries from 'i18n-iso-countries'
-
-countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'preferences',
+  computed: {
+    ...mapGetters({
+      global: 'global',
+    }),
+    countryList() {
+      const countryList = []
+      if (this.global) {
+        Object.keys(this.$Countries[this.global.langCode]).forEach((key) => {
+          countryList.push({
+            value: key,
+            label: this.$Countries[this.global.langCode][key],
+          })
+        })
+      }
+      return countryList
+    },
+  },
   data() {
-    const rulesUserForm = {
-      firstName: [
-        {
-          required: true,
-          message: this.$t('Please Input Your First Name'),
-          trigger: 'blur',
-        },
-      ],
-      lastName: [
-        {
-          required: true,
-          message: this.$t('Please Input Your Last Name'),
-          trigger: 'blur',
-        },
-      ],
-    }
-    const CountryLang = countries.getNames('en')
-    const countryList = []
-    Object.keys(CountryLang).forEach((key) => {
-      countryList.push({
-        value: key,
-        label: CountryLang[key],
-      })
-    })
+    const { firstName, lastName } = this.$v
     return {
       userInfo: {
         firstName: 'John',
@@ -271,23 +252,32 @@ export default {
         region: '',
         type: '',
       },
-      countryList,
-      rulesUserForm,
-      options: [{
-        value: '选项1',
-        label: '黄金糕',
+      rulesUserForm: {
+        firstName,
+        lastName,
+      },
+      titles: [{
+        value: 0,
+        label: this.$t('Mr'),
       }, {
-        value: '选项2',
-        label: '双皮奶',
+        value: 1,
+        label: this.$t('Mrs'),
+      }],
+      starRating: [{
+        value: 1,
+        label: `1 ${this.$t('Star')}`,
       }, {
-        value: '选项3',
-        label: '蚵仔煎',
+        value: 2,
+        label: `2 ${this.$t('Stars')}`,
       }, {
-        value: '选项4',
-        label: '龙须面',
+        value: 3,
+        label: `3 ${this.$t('Stars')}`,
       }, {
-        value: '选项5',
-        label: '北京烤鸭',
+        value: 4,
+        label: `4 ${this.$t('Stars')}`,
+      }, {
+        value: 5,
+        label: `5+ ${this.$t('Stars')}`,
       }],
       value: '',
     }
