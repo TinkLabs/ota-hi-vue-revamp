@@ -14,9 +14,11 @@ module.exports = {
     : '#cheap-module-source-map',
   externals: {
     vue: 'Vue',
+    vuex: 'Vuex',
     'element-ui': 'ELEMENT',
     'vue-i18n': 'VueI18n',
     axios: 'axios',
+    moment: 'moment',
   },
   output: {
     path: path.resolve(__dirname, '../public/dist'),
