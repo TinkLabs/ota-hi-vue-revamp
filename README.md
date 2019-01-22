@@ -113,7 +113,7 @@ And add sentence, phase which is in the page into the json file that you was cre
   "hi":"Hi"
 }
 ```  
-&emsp;&emsp;/locales/zh/example.json
+&emsp;&emsp;&emsp;&emsp;/locales/zh/example.json
 ```$xslt
 {
   "hi":"你好"
