@@ -25,7 +25,8 @@
           <div class="guest-input">
             <input
               type="text"
-              value="2 adults, 0 children"
+              :value="guestNum"
+              @focus="selectGuestNum"
             >
             <i class="el-icon-third-user1" />
           </div>
@@ -149,6 +150,10 @@
       ref="searchbox"
       @hideSearchBox="hideSearchBox"
     />
+    <RoomPicker
+      v-show="showRoomPicker"
+      @hideSearchBox="hideSearchBox"
+    />
   </div>
 </template>
 
@@ -156,6 +161,8 @@
 import Header from './includes/header.vue'
 import Footer from './includes/footer.vue'
 import SearchBox from './includes/searchBox.vue'
+import RoomPicker from './includes/roomPicker.vue'
+
 import WhereToStay from './includes/whereToStay.vue'
 import FeaturedHotel from './includes/featuredHotel.vue'
 
@@ -169,13 +176,17 @@ export default {
     Header,
     Footer,
     SearchBox,
+    RoomPicker,
     WhereToStay,
     FeaturedHotel,
   },
   data() {
     return {
       showSearchBox: false,
+      showRoomPicker: true,
       location: '',
+      date: '',
+      guestNum: '2 adults , 0 children',
       popular: [
         'Hong Kong',
         'London',
@@ -224,9 +235,27 @@ export default {
       this.showSearchBox = true
       this.$nextTick(() => { this.$refs.searchbox.$refs.keyword.focus() })
     },
-    hideSearchBox(location) {
+    selectGuestNum() {
+      this.showRoomPicker = true
+    },
+    hideSearchBox(target, type) {
       this.showSearchBox = false
-      this.location = location
+      this.showRoomPicker = false
+      switch (type) {
+        case 1:
+          console.log(1)
+          this.location = target
+          break
+        case 2:
+          this.date = target
+          break
+        case 3:
+          this.guestNum = target
+          console.log(3)
+          break
+        default:
+          break
+      }
     },
   },
 }
