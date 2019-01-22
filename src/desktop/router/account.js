@@ -1,31 +1,27 @@
-const Layout = () => import('../views/account/Layout.vue')
-const DashBoard = () => import('../views/account/dashboard')
-const Bookings = () => import('../views/account/bookings')
-const BookingDetails = () => import('../views/account/bookings_details')
-const Preferences = () => import('../views/account/preferences')
+/* eslint-disable global-require */
 export default [
   {
     path: '/account',
-    component: Layout,
+    component: resolve => require(['../views/account/Layout.vue'], resolve),
     redirect: '/account/dashboard',
     name: 'account',
     props: true,
     children: [{
       path: 'dashboard',
-      component: DashBoard,
+      component: resolve => require(['../views/account/dashboard.vue'], resolve),
       name: 'dashboard',
     }, {
       path: 'bookings',
-      component: Bookings,
+      component: resolve => require(['../views/account/bookings.vue'], resolve),
       name: 'bookings',
     }, {
       path: 'booking/:bookingId',
       props: true,
-      component: BookingDetails,
+      component: resolve => require(['../views/account/bookings_details.vue'], resolve),
       name: 'bookingDetail',
     }, {
       path: 'preferences',
-      component: Preferences,
+      component: resolve => require(['../views/account/preferences.vue'], resolve),
       name: 'preferences',
     }],
   },
