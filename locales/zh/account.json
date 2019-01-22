@@ -73,5 +73,9 @@
   "Phone number": "手机号码",
   "Email address": "邮箱地址",
   "Address": "联系住址",
-  "Star rating": "酒店星级"
+  "Star rating": "酒店星级",
+  "Please Select an Country": "选择您的国家",
+  "Choose Your Birthday": "选择你的生日",
+  "Please Input Your First Name": "输入你的名字",
+  "Please Input Your Last Name": "输入你的姓氏"
 }

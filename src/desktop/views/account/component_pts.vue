@@ -9,8 +9,8 @@
       </div>
     </div>
     <div class="line2">
-      {{pt.from | moment(global.langCode, 'ddd DD MMMM YYYY')}}
-      - {{pt.to | moment(global.langCode, 'ddd DD MMMM YYYY')}}
+      {{pt.from | moment(langCode, 'ddd DD MMMM YYYY')}}
+      - {{pt.to | moment(langCode, 'ddd DD MMMM YYYY')}}
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   props: ['pt', 'state'],
   computed: {
     ...mapGetters({
-      global: 'global',
+      langCode: 'langCode',
     }),
   },
 }

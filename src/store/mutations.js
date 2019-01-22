@@ -6,6 +6,6 @@ export default {
      */
     hiApp.$i18n.locale = language
     const tmpState = state
-    tmpState.global.langCode = language
+    tmpState.langCode = language
   },
 }

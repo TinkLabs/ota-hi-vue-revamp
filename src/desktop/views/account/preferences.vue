@@ -222,15 +222,15 @@ export default {
   name: 'preferences',
   computed: {
     ...mapGetters({
-      global: 'global',
+      langCode: 'langCode',
     }),
     countryList() {
       const countryList = []
-      if (this.global) {
-        Object.keys(this.$Countries[this.global.langCode]).forEach((key) => {
+      if (this.langCode) {
+        Object.keys(this.$Countries[this.langCode]).forEach((key) => {
           countryList.push({
             value: key,
-            label: this.$Countries[this.global.langCode][key],
+            label: this.$Countries[this.langCode][key],
           })
         })
       }

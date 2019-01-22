@@ -9,9 +9,9 @@ Vue.use(Vuex)
 const state = {
   global: {
     lang: 'English',
-    langCode: 'en',
     currency: 'GBP',
   },
+  langCode: 'en',
   user: {
     isLogIn: false,
   },
