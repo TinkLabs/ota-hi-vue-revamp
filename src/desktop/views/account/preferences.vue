@@ -24,6 +24,14 @@
                          :rules="rulesUserForm"
                          ref="userInfoForm">
                   <el-row>
+                    <el-col :lg="24">
+                      <div class="update-success">
+                        <i class="el-icon-check"></i>
+                        <span>{{$t('Your personal information has been updated')}}</span>
+                      </div>
+                    </el-col>
+                  </el-row>
+                  <el-row>
                     <el-col :lg="12">
                       <el-form-item prop="firstName">
                         <div slot="label" class="account-form-label">{{$t('First Name')}}</div>
@@ -236,6 +244,24 @@ export default {
       }
       return countryList
     },
+    starRating() {
+      return [{
+        value: 1,
+        label: `1 ${this.$t('Star')}`,
+      }, {
+        value: 2,
+        label: `2 ${this.$t('Stars')}`,
+      }, {
+        value: 3,
+        label: `3 ${this.$t('Stars')}`,
+      }, {
+        value: 4,
+        label: `4 ${this.$t('Stars')}`,
+      }, {
+        value: 5,
+        label: `5+ ${this.$t('Stars')}`,
+      }]
+    },
   },
   data() {
     const { firstName, lastName } = this.$v
@@ -262,22 +288,6 @@ export default {
       }, {
         value: 1,
         label: this.$t('Mrs'),
-      }],
-      starRating: [{
-        value: 1,
-        label: `1 ${this.$t('Star')}`,
-      }, {
-        value: 2,
-        label: `2 ${this.$t('Stars')}`,
-      }, {
-        value: 3,
-        label: `3 ${this.$t('Stars')}`,
-      }, {
-        value: 4,
-        label: `4 ${this.$t('Stars')}`,
-      }, {
-        value: 5,
-        label: `5+ ${this.$t('Stars')}`,
       }],
       value: '',
     }
@@ -409,6 +419,20 @@ export default {
           background-color: $blue4;
         }
       }
+    }
+  }
+  .update-success{
+    border-radius: 3px;
+    background-color: $green4;
+    padding: 14px 20px;
+    color: $white1;
+    i{
+      margin-right: 25px;
+      font-size: 20px;
+    }
+    span{
+      font-size: 12px;
+      line-height: 20px;
     }
   }
 </style>

@@ -36,5 +36,10 @@
   "Show more": "显示更多",
   "Hide": "收起",
   "First Name": "名",
-  "Last Name": "姓"
+  "Last Name": "姓",
+  "Mr": "Mr",
+  "Mrs": "Mrs",
+  "Star": "星级",
+  "Stars": "星级",
+  "Please use character (A-Z, a-z) values only": "Please use character (A-Z, a-z) values only"
 }
