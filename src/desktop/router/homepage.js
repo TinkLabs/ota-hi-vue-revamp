@@ -1,40 +1,31 @@
-// const Home = () => import('../views/home.vue');
-const Homepage = () => import('../views/homepage.vue')
-const Destimation = () => import('../views/destination.vue')
-
-const hoteldetail = () => import('../views/hotel/hoteldetail.vue')
-const Layout = () => import('../views/layout/Layout.vue')
-
 export default [
-  // { path: '', component: Home },
-  // { path: '', component: Homepage },
   {
     path: '',
-    component: Layout,
+    component: resolve => require(['../views/layout/Layout.vue'], resolve),
     redirect: 'homepage',
     children: [{
       path: '',
-      component: Homepage,
+      component: resolve => require(['../views/homepage.vue'], resolve),
       name: 'homepage',
     }],
   },
   {
     path: '/destination',
-    component: Layout,
+    component: resolve => require(['../views/layout/Layout.vue'], resolve),
     redirect: 'destination',
     children: [{
       path: '',
-      component: Destimation,
+      component: resolve => require(['../views/destination.vue'], resolve),
       name: 'destination',
     }],
   },
   {
     path: '/hotel/:hotelId',
-    component: Layout,
+    component: resolve => require(['../views/layout/Layout.vue'], resolve),
     redirect: '/hotel/:hotelId',
     children: [{
       path: '',
-      component: hoteldetail,
+      component: resolve => require(['../views/hotel/hoteldetail.vue'], resolve),
       name: 'hoteldetail',
     }],
   },

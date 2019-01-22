@@ -169,7 +169,7 @@ export default {
                 margin-top:20px;
                 @include font(28px, bold, #333333, Montserrat);
                 padding:0 40px;
-                background-image: url(../../../../public/images/homepage/Rightarrow.png);
+                background-image: url(/images/homepage/Rightarrow.png);
                 background-repeat: no-repeat;
                 background-position: calc(84%) 50%;
                 background-size: 12% auto;
