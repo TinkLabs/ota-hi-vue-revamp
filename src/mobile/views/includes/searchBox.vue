@@ -171,7 +171,7 @@ export default {
   @import '../../../common/style/mobile_main.scss';
   .searchbox-container{
     width:100%;
-    height:1600px;
+    // height:1600px;
     position: absolute;
     top:0;
     left:0;

@@ -21,11 +21,15 @@
               Adults
             </div>
             <div class="count">
-              <span>-</span>
-              <span class="adult-count nums">
-                {{ adultTotalNumber }}
+              <span @click="reduceAdultNumber($event,index)">
+                -
               </span>
-              <span>+</span>
+              <span class="adult-count nums">
+                {{ item.adultNumber }}
+              </span>
+              <span @click="addAdultNumber($event,index)">
+                +
+              </span>
             </div>
           </div>
           <div class="child-num">
@@ -33,15 +37,25 @@
               Children
             </div>
             <div class="count">
-              <span>-</span>
-              <span class="child-count nums">
-                {{ childTotalNumber }}
+              <span
+                :class="[item.childNumber == 0 ?'isDisabled' :'']"
+                @click="reduceChildNumber($event,index)"
+              >
+                -
               </span>
-              <span>+</span>
+              <span class="child-count nums">
+                {{ item.childNumber }}
+              </span>
+              <span @click="addChildNumber($event,index)">
+                +
+              </span>
             </div>
           </div>
 
-          <div class="child-age">
+          <div
+            v-show="item.childAgeList.length>0"
+            class="child-age"
+          >
             <div
               v-for="(age,ageIndex) in item.childAgeList"
               :key="ageIndex"
@@ -50,7 +64,9 @@
               <h3>How old is child {{ ageIndex+1 }}?</h3>
               <select
                 id="age"
+                v-model="selected[index][ageIndex]"
                 name="age"
+                @change="selectChildAge($event,index,ageIndex)"
               >
                 <option
                   v-for="(num,number) in 10"
@@ -63,7 +79,10 @@
             </div>
           </div>
 
-          <p class="add-room">
+          <p
+            class="add-room"
+            @click="addRoom"
+          >
             + Add another room?
           </p>
         </li>
@@ -71,7 +90,6 @@
     </ul>
   </ul>
 </template>
-
 <script>
 import Header from './header.vue'
 
@@ -83,17 +101,19 @@ export default {
   data() {
     return {
       keyword: '2rooms',
-      selected: null,
+      selected: [[]],
       adultTotalNumber: 2,
       childTotalNumber: 0,
+      isDisabled: true,
       roomList: [
         {
           adultNumber: 2,
           childNumber: 0,
-          childAgeList: [1, 2, 1],
+          childAgeList: [
+
+          ],
         },
       ],
-
     }
   },
   mounted() {
@@ -101,7 +121,48 @@ export default {
   methods: {
     hideSearchBox() {
       // 1:location name 2:check in & out date 3:guest number
+      this.keyword = `${this.roomList.length} rooms, ${
+        this.adultTotalNumber} adults, ${
+        this.childTotalNumber} children`
       this.$emit('hideSearchBox', this.keyword, 3)
+    },
+    addAdultNumber(event, index) {
+      this.roomList[index].adultNumber += 1
+      this.adultTotalNumber += 1
+    },
+    reduceAdultNumber(event, index) {
+      if (this.roomList[index].adultNumber > 1) {
+        this.roomList[index].adultNumber -= 1
+        this.adultTotalNumber -= 1
+      }
+    },
+    addChildNumber(event, index) {
+      this.roomList[index].childNumber += 1
+      this.childTotalNumber += 1
+      this.roomList[index].childAgeList.push(1)
+      this.selected[index].push(1)
+    },
+    reduceChildNumber(event, index) {
+      const target = this.roomList[index]
+      if (target.childNumber > 0) {
+        target.childNumber -= 1
+        target.childAgeList.pop()
+        this.selected[index].pop()
+        this.childTotalNumber -= 1
+      }
+    },
+    selectChildAge(event, index, ageIndex) {
+      this.roomList[index].childAgeList[ageIndex] = 2
+    },
+    //  add room
+    addRoom() {
+      this.roomList.push({
+        adultNumber: 2,
+        childNumber: 0,
+        childAgeList: [],
+      })
+      this.adultTotalNumber += 2
+      this.selected.push([])
     },
   },
 }
@@ -139,6 +200,10 @@ export default {
                 border-radius:10px;
                 border:4px solid $gold;
                 font-size:40px;
+              }
+              span.isDisabled{
+                border-color:#ebebeb;
+                color:#ebebeb;
               }
             }
 
@@ -179,6 +244,5 @@ export default {
         }
       }
     }
-
   }
 </style>
