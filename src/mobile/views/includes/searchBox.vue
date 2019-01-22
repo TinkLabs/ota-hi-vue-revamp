@@ -48,6 +48,7 @@
           <li
             v-for="(item,index) in recommend"
             :key="index"
+            @click="selectRecommend($event,index)"
           >
             <i class="el-icon-third-world2" />
             <span>{{ item }}</span>
@@ -67,6 +68,7 @@
           <li
             v-for="(item,index) in suggestionList"
             :key="index"
+            @click="selectSuggestion($event,index)"
           >
             <i :class="item.icon" />
             <span>{{ item.name }}</span>
@@ -147,10 +149,18 @@ export default {
       }
     },
     hideSearchBox() {
-      this.$emit('hideSearchBox', this.keyword)
+      this.$emit('hideSearchBox', this.keyword, 1)
     },
     selectLocation(event, index) {
       this.keyword = this.searchHistory[index]
+      this.hideSearchBox()
+    },
+    selectRecommend(event, index) {
+      this.keyword = this.recommend[index]
+      this.hideSearchBox()
+    },
+    selectSuggestion(event, index) {
+      this.keyword = this.suggestionList[index].name
       this.hideSearchBox()
     },
   },
