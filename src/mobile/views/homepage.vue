@@ -1,7 +1,10 @@
 <template>
   <div class="home-container">
-    <Header />
-    <div class="mobile-container">
+    <Header v-show="!showSearchBox&&!showRoomPicker" />
+    <div
+      v-show="!showSearchBox&&!showRoomPicker"
+      class="mobile-container"
+    >
       <!-- search bar -->
       <div class="search-container">
         <div class="search-bar">
@@ -49,7 +52,10 @@
         </ul>
       </div>
     </div>
-    <div class="content">
+    <div
+      v-show="!showSearchBox&&!showRoomPicker"
+      class="content"
+    >
       <!-- featrued -->
       <div class="items">
         <div class="featured">
@@ -144,7 +150,7 @@
       </div>
     </div>
 
-    <Footer />
+    <Footer v-show="!showSearchBox&&!showRoomPicker" />
     <SearchBox
       v-show="showSearchBox"
       ref="searchbox"
@@ -154,11 +160,14 @@
       v-show="showRoomPicker"
       @hideSearchBox="hideSearchBox"
     />
+    <!-- MENU -->
+    <Menu />
   </div>
 </template>
 
 <script>
 import Header from './includes/header.vue'
+import Menu from '../component/Menu/index.vue'
 import Footer from './includes/footer.vue'
 import SearchBox from './includes/searchBox.vue'
 import RoomPicker from './includes/roomPicker.vue'
@@ -173,6 +182,7 @@ export default {
   name: 'Homepage',
   components: {
     Header,
+    Menu,
     Footer,
     SearchBox,
     RoomPicker,
@@ -182,7 +192,7 @@ export default {
   data() {
     return {
       showSearchBox: false,
-      showRoomPicker: true,
+      showRoomPicker: false,
       location: '',
       date: '',
       guestNum: '2 adults , 0 children',

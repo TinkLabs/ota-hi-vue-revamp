@@ -569,7 +569,6 @@ export default {
     },
     // searchbar fixed
     handleScroll() {
-      console.log('scroll')
       const eleScrollTop = document.documentElement.scrollTop
       const scrollTop = window.pageYOffset || eleScrollTop || document.body.scrollTop
       const [offsetTop] = [document.querySelector('.search-bar').offsetTop]
