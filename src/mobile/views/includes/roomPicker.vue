@@ -100,6 +100,7 @@ export default {
   },
   methods: {
     hideSearchBox() {
+      // 1:location name 2:check in & out date 3:guest number
       this.$emit('hideSearchBox', this.keyword, 3)
     },
   },

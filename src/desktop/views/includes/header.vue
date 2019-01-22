@@ -569,6 +569,7 @@ export default {
     },
     // searchbar fixed
     handleScroll() {
+      console.log('scroll')
       const eleScrollTop = document.documentElement.scrollTop
       const scrollTop = window.pageYOffset || eleScrollTop || document.body.scrollTop
       const [offsetTop] = [document.querySelector('.search-bar').offsetTop]
@@ -716,7 +717,7 @@ export default {
         li{
           padding:10px 20px;
           color:#505050;
-          width:200px;
+          width:210px;
           &:hover{
             color:#fff;
             background-color:#002b55;
@@ -899,7 +900,7 @@ export default {
       .guests {
         position: relative;
         .guest-num {
-          min-width: 140px;
+          min-width: 180px;
           height: 72px;
           background-color:#ebebeb;
           border-radius: 5px;

@@ -6,6 +6,7 @@
       <h1>{{ $t("Best deals directly to your inbox") }}</h1>
       <div class="subscribe-input">
         <input
+          v-model="emailAddress"
           type="text"
           :placeholder="$t('Enter your email address')"
           :class="[showError==true?'error' :'']"
@@ -13,6 +14,7 @@
         <button
           v-show="!showSuccess"
           :class="[showError==true?'error' :'']"
+          @click="subscribe"
         >
           {{ $t("Join Today") }}
         </button>
@@ -45,11 +47,22 @@ export default {
     return {
       showError: false,
       showSuccess: false,
+      emailAddress: '',
     }
   },
   mounted() {
   },
   methods: {
+    subscribe() {
+      if (this.emailAddress) {
+        this.showSuccess = true
+        this.showError = false
+      } else {
+        this.showError = true
+        this.showSuccess = false
+      }
+    },
+
   },
 }
 </script>
@@ -95,6 +108,8 @@ export default {
       border:none;
       color:#fff;
       font-size: 14px;
+      outline: none;
+      cursor: pointer;
     }
     button.error{
       background-color:#ff4141;

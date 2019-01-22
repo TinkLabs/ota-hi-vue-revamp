@@ -172,6 +172,7 @@ export default {
 .h-container {
   h1.title {
     @include font(26px, 600, #002b55, Montserrat);
+    margin-bottom:30px;
   }
   .content {
     @include font(16px, normal, #333333, MerriweatherSans);
@@ -210,7 +211,7 @@ export default {
       }
     }
     .featured {
-      width: 46%;
+      width: 50%;
       padding: 2%;
       background-image: linear-gradient(
         to bottom,
