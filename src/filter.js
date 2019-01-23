@@ -12,7 +12,7 @@ Vue.filter('d422', (date) => {
   return moment(date).format('YYYY-MM-DD')
 })
 Vue.filter('moment',
-  (date, locale, pattern = 'YYYY-MM-DD') => moment(date).locale(locale).format(pattern))
+  (date, pattern = 'YYYY-MM-DD') => moment(date).format(pattern))
 Vue.filter('price', str => (
   // 'HK$ 100000' -> 'HK$ 100,000'
   str.replace(/[0-9.]+/, (o) => {

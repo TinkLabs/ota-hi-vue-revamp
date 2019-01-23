@@ -7,3 +7,6 @@ export function user(state) {
 export function global(state) {
   return state.global
 }
+export function langCode(state) {
+  return state.langCode
+}

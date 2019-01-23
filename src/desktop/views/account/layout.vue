@@ -80,6 +80,7 @@ export default {
     }
     .account-header-tab{
       padding: 25.5px 0;
+      margin-bottom: -2px;
       span{
         padding: 25.5px 34px 20.5px;
         font-size: 16px;

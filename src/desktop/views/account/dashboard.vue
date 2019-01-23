@@ -105,8 +105,8 @@
 </template>
 
 <script>
-import listItem from './component_listItem'
-import pts from './component_pts'
+import listItem from './component_listItem.vue'
+import pts from './component_pts.vue'
 
 export default {
   name: 'DashBoard',
