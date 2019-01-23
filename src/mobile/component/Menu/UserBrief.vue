@@ -58,7 +58,7 @@ export default {
   justify-content: center;
   align-content: center;
   align-items: center;
-  height:281px;
+  height:280px;
   background: #fafafa;
   .avatar {
     margin-right: 26px;

@@ -37,7 +37,12 @@ export default {
   },
   methods: {
     backToHomepage() {
-      this.$emit('hideSearchBox', true)
+      if (this.isback) {
+        this.$emit('hideSearchBox', true)
+      } else {
+        // SHOW MENU
+        this.$emit('showMenu', true)
+      }
     },
 
   },

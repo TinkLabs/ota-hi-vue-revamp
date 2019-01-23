@@ -53,7 +53,7 @@ export default {
 .menu{
   box-sizing: border-box;
   width:100%;
-  height:100%;
+  height: calc( 100% - 280px);
   overflow: scroll;
   padding:0px 40px;
   color:#333333;

@@ -1,6 +1,12 @@
 <template>
-  <div class="menu-wrapper">
-    <div class="menu-mask" />
+  <div
+    v-show="!hidemenu"
+    class="menu-wrapper"
+  >
+    <div
+      class="menu-mask"
+      @click="maskClick"
+    />
     <div class="menu-page">
       <user-brief />
       <Menu />
@@ -17,11 +23,22 @@ export default {
     UserBrief,
     Menu,
   },
-  // computed: {
-  //   ...mapGetters([
-  //     'user',
-  //   ]),
-  // },
+  props: {
+    hidemenu: {
+      type: Boolean,
+    },
+  },
+  data() {
+    return {
+    }
+  },
+  mounted() {
+  },
+  methods: {
+    maskClick() {
+      this.$emit('maskClick', true)
+    },
+  },
 }
 </script>
 
@@ -39,7 +56,7 @@ export default {
     width: 100%;
     height: 100%;
     z-index: 1;
-    //background: rgba(0,0,0, 0.1);
+    background: rgba(0,0,0, 0.1);
   }
   .menu-page {
     position: absolute;

@@ -1,167 +1,177 @@
 <template>
-  <div class="home-container">
-    <Header v-show="!showSearchBox&&!showRoomPicker" />
+  <div class="home-wrapper">
     <div
-      v-show="!showSearchBox&&!showRoomPicker"
-      class="mobile-container"
+      :class="['home-container',hideMenu?'':'show-menu']"
     >
-      <!-- search bar -->
-      <div class="search-container">
-        <div class="search-bar">
-          <div class="location-input">
-            <input
-              ref="location"
-              type="text"
-              placeholder="Anywhere"
-              :value="location"
-              @focus="startInput"
-            >
-            <i class="el-icon-third-search" />
-          </div>
-          <div class="date-input">
-            <input
-              type="text"
-              value="26 Nov 2018 - 27 Nov 2018"
-            >
-            <i class="el-icon-third-calendar" />
-          </div>
-          <div class="guest-input">
-            <input
-              type="text"
-              :value="guestNum"
-              @focus="selectGuestNum"
-            >
-            <i class="el-icon-third-user1" />
-          </div>
-          <div class="search">
-            SEARCH
+      <Header
+        v-show="!showSearchBox&&!showRoomPicker"
+        @showMenu="toggleMenu"
+      />
+      <div
+        v-show="!showSearchBox&&!showRoomPicker"
+        class="mobile-container"
+      >
+        <!-- search bar -->
+        <div class="search-container">
+          <div class="search-bar">
+            <div class="location-input">
+              <input
+                ref="location"
+                type="text"
+                placeholder="Anywhere"
+                :value="location"
+                @focus="startInput"
+              >
+              <i class="el-icon-third-search" />
+            </div>
+            <div class="date-input">
+              <input
+                type="text"
+                value="26 Nov 2018 - 27 Nov 2018"
+              >
+              <i class="el-icon-third-calendar" />
+            </div>
+            <div class="guest-input">
+              <input
+                type="text"
+                :value="guestNum"
+                @focus="selectGuestNum"
+              >
+              <i class="el-icon-third-user1" />
+            </div>
+            <div class="search">
+              SEARCH
+            </div>
           </div>
         </div>
-      </div>
-      <div class="popular-search">
-        <div class="title">
-          {{ $t("POPULAR SEARCHES") }}
+        <div class="popular-search">
+          <div class="title">
+            {{ $t("POPULAR SEARCHES") }}
+          </div>
+          <ul class="popular-city">
+            <li
+              v-for="(item,index) in popular"
+              :key="index"
+            >
+              {{ item }}
+            </li>
+          </ul>
         </div>
-        <ul class="popular-city">
-          <li
-            v-for="(item,index) in popular"
-            :key="index"
-          >
-            {{ item }}
-          </li>
-        </ul>
       </div>
-    </div>
-    <div
-      v-show="!showSearchBox&&!showRoomPicker"
-      class="content"
-    >
-      <!-- featrued -->
-      <div class="items">
-        <div class="featured">
-          <h2 class="title">
-            {{ $t("Featured") }}
-          </h2>
-          <h1>{{ $t("4000 best hotels around the world") }}</h1>
+      <div
+        v-show="!showSearchBox&&!showRoomPicker"
+        class="content"
+      >
+        <!-- featrued -->
+        <div class="items">
+          <div class="featured">
+            <h2 class="title">
+              {{ $t("Featured") }}
+            </h2>
+            <h1>{{ $t("4000 best hotels around the world") }}</h1>
           <!-- <div class="view-hotel">
               {{ $t("View hotels now") }}
             </div> -->
-        </div>
-        <div class="featured-right">
-          <!-- eat like locals -->
-          <div class="eat-like-locals">
-            <h2 class="title">
-              Eat Like Locals
-            </h2>
-            <div class="content">
-              Lorem ipsum dolor
-            </div>
           </div>
-          <!-- find gems -->
-          <div class="find-gems">
-            <h2 class="title">
-              Find Hidden Gems
-            </h2>
-            <div class="content">
-              Lorem ipsum dolor
-            </div>
-          </div>
-          <!-- hot deals -->
-          <div class="hot-deals">
-            <h2 class="title">
-              Hot Deals
-            </h2>
-            <div class="content">
-              Lorem ipsum dolor
-            </div>
-          </div>
-          <!-- handy -->
-          <div class="handy">
-            <h2 class="title">
-              handy
-            </h2>
-            <div class="content">
-              Your travelling companion
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Top Destinations -->
-      <div class="top-destination">
-        <h1 class="title">
-          {{ $t("Top Destinations") }}
-        </h1>
-        <ul>
-          <li
-            v-for="(item,index) in destinationData"
-            :key="index"
-          >
-            <img :src="item.img">
-            <div class="content">
+          <div class="featured-right">
+            <!-- eat like locals -->
+            <div class="eat-like-locals">
               <h2 class="title">
-                {{ item.location }}
+                Eat Like Locals
               </h2>
-              <p>{{ item.price }}</p>
+              <div class="content">
+                Lorem ipsum dolor
+              </div>
             </div>
-          </li>
-        </ul>
+            <!-- find gems -->
+            <div class="find-gems">
+              <h2 class="title">
+                Find Hidden Gems
+              </h2>
+              <div class="content">
+                Lorem ipsum dolor
+              </div>
+            </div>
+            <!-- hot deals -->
+            <div class="hot-deals">
+              <h2 class="title">
+                Hot Deals
+              </h2>
+              <div class="content">
+                Lorem ipsum dolor
+              </div>
+            </div>
+            <!-- handy -->
+            <div class="handy">
+              <h2 class="title">
+                handy
+              </h2>
+              <div class="content">
+                Your travelling companion
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Destinations -->
+        <div class="top-destination">
+          <h1 class="title">
+            {{ $t("Top Destinations") }}
+          </h1>
+          <ul>
+            <li
+              v-for="(item,index) in destinationData"
+              :key="index"
+            >
+              <img :src="item.img">
+              <div class="content">
+                <h2 class="title">
+                  {{ item.location }}
+                </h2>
+                <p>{{ item.price }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- where to stay -->
+        <div class="to-stay">
+          <h1 class="title">
+            <span>{{ $t("Where to Stay") }}</span>
+            <span
+              class="show-all"
+            >
+              {{ $t("SHOW ALL") }}
+            </span>
+          </h1>
+          <WhereToStay />
+        </div>
+
+        <!--  Featured Hotels-->
+        <div class="featured-hotels">
+          <h1 class="title">
+            {{ $t("Featured Hotels") }}
+          </h1>
+          <FeaturedHotel />
+        </div>
       </div>
 
-      <!-- where to stay -->
-      <div class="to-stay">
-        <h1 class="title">
-          <span>{{ $t("Where to Stay") }}</span>
-          <span
-            class="show-all"
-          >
-            {{ $t("SHOW ALL") }}
-          </span>
-        </h1>
-        <WhereToStay />
-      </div>
-
-      <!--  Featured Hotels-->
-      <div class="featured-hotels">
-        <h1 class="title">
-          {{ $t("Featured Hotels") }}
-        </h1>
-        <FeaturedHotel />
-      </div>
+      <Footer v-show="!showSearchBox&&!showRoomPicker" />
+      <SearchBox
+        v-show="showSearchBox"
+        ref="searchbox"
+        @hideSearchBox="hideSearchBox"
+      />
+      <RoomPicker
+        v-show="showRoomPicker"
+        @hideSearchBox="hideSearchBox"
+      />
     </div>
-
-    <Footer v-show="!showSearchBox&&!showRoomPicker" />
-    <SearchBox
-      v-show="showSearchBox"
-      ref="searchbox"
-      @hideSearchBox="hideSearchBox"
-    />
-    <RoomPicker
-      v-show="showRoomPicker"
-      @hideSearchBox="hideSearchBox"
-    />
     <!-- MENU -->
-    <Menu />
+    <Menu
+      :hidemenu="hideMenu"
+      @maskClick="toggleMenu"
+    />
   </div>
 </template>
 
@@ -193,6 +203,7 @@ export default {
     return {
       showSearchBox: false,
       showRoomPicker: false,
+      hideMenu: true,
       location: '',
       date: '',
       guestNum: '2 adults , 0 children',
@@ -264,14 +275,28 @@ export default {
           break
       }
     },
+    toggleMenu() {
+      this.hideMenu = !this.hideMenu
+    },
   },
 }
 </script>
 
 <style lang='scss'>
 @import '../../common/style/mobile_main.scss';
-
+html,body,.home-wrapper{
+  height:100%;
+}
+.home-container.show-menu{
+  left:580px;
+}
 .home-container{
+  width:100%;
+  height:100%;
+  position: absolute;
+  top:0;
+  left:0;
+  transition: all .2s;
   h1.title{
     @include font(40px, bold, #333, Montserrat);
     letter-spacing: -0.2px;
