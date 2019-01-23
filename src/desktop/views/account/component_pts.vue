@@ -9,8 +9,8 @@
       </div>
     </div>
     <div class="line2">
-      {{pt.from | moment(langCode, 'ddd DD MMMM YYYY')}}
-      - {{pt.to | moment(langCode, 'ddd DD MMMM YYYY')}}
+      {{pt.from | moment('ddd DD MMMM YYYY')}}
+      - {{pt.to | moment('ddd DD MMMM YYYY')}}
     </div>
   </div>
 </template>
