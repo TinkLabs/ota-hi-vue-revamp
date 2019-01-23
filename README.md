@@ -51,8 +51,8 @@ If you want to use local environment you can skip this step, it's not required.
   - shift + option + f
 
 ## 8. Create a vue route
-Because we separate the app to desktop version and mobile version.  
-So you should declare your route below "/src/desktop/router" or "/src/mobile/router".  
+Because we separate the app to desktop version and mobile version in frontend.  
+So you should declare your route below "/src/desktop/router" and "/src/mobile/router".  
 such as  
 &emsp;&emsp;/src/desktop/router/example.js  
 ```$xslt
