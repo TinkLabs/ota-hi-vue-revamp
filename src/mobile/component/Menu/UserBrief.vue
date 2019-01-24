@@ -2,9 +2,14 @@
   <div class="user-brief">
     <div class="avatar">
       <img
+        v-if="avatarUrl"
         :src="avatarUrl"
         :alt="name"
       >
+      <i
+        v-else
+        class="el-icon-third-LC_icon_user_fill_3"
+      />
     </div>
     <div class="info">
       <div class="name">
@@ -65,22 +70,32 @@ export default {
     height: 120px;
     width: 124px;
     border-radius: 100%;
-    background: #999;
+    // background: #999;
+    i{
+      color:#505050;
+      font-size:120px;
+    }
   }
   .info {
     color: #333333;
     line-height: 0.9722rem;
     .name {
-      font-size: 36px;
-      line-height: 70px;
-      font-weight: 500;
+      font-size: 40px;
+      line-height: 80px;
+      font-weight: bold;
+      color:#505050;
     }
     .location {
       font-size: 0.3889rem;
       line-height: 40px;
     }
     .to-login{
-      color:#4574eb;
+      a{
+        color:#cba052;
+      }
+
+      font-size: 30px;
+      text-decoration: underline;
     }
   }
 }

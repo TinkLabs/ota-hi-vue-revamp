@@ -19,7 +19,7 @@
       </span>
       <i
         v-if="item.info"
-        class="fas fa-chevron-right chevron"
+        class="el-icon-third-1201youjiantou"
       />
     </li>
   </ul>
@@ -62,6 +62,13 @@ export default {
      &:last-child{
        border-bottom:none;
      }
+     >i{
+       font-size:26px;
+       color:rgb(173,173,173);
+       vertical-align: middle;
+       float: right;
+       transform:translate(0,38px)
+     }
      font-size: 30px;
      line-height: 102px;
      height:102px;
@@ -73,9 +80,14 @@ export default {
        display: inline-block;
        margin:0 45px 0 40px;
        font-weight: normal;
+       i{
+         font-size:40px;
+         color:#333;
+         vertical-align: middle;
+       }
      }
      .menu-text{
-     font-weight: 500;
+        font-weight: 500;
      }
      .info{
        position: absolute;
@@ -88,6 +100,11 @@ export default {
        top:50%;
        transform: translateY(-50%);
        color:rgb(153,153,153);
+     }
+     &:first-child{
+       .icon i{
+         font-size:50px;
+       }
      }
    }
 }
