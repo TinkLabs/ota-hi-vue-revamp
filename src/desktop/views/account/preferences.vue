@@ -99,12 +99,20 @@
           <div class="account-form">
             <el-row>
               <el-col :lg="24" class="account-form-right">
-                <el-form label-position="top" label-width="80px" :model="formLabelAlign">
+                <el-form label-position="top" label-width="80px" :model="bookInfo">
+                  <el-row>
+                    <el-col :lg="24">
+                      <div class="update-success">
+                        <i class="el-icon-check"></i>
+                        <span>{{$t('Your booking information has been updated')}}</span>
+                      </div>
+                    </el-col>
+                  </el-row>
                   <el-row>
                     <el-col :lg="6">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Title')}}</div>
-                        <el-select v-model="value" filterable :placeholder="$t('Title')">
+                        <el-select v-model="bookInfo.title" filterable :placeholder="$t('Title')">
                           <el-option
                               v-for="item in titles"
                               :key="item.value"
@@ -117,14 +125,14 @@
                     <el-col :lg="9">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('First Name')}}</div>
-                        <el-input v-model="formLabelAlign.name"
+                        <el-input v-model="bookInfo.firstName"
                                   :placeholder="$t('First Name')"></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :lg="9">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Last Name')}}</div>
-                        <el-input v-model="formLabelAlign.region"
+                        <el-input v-model="bookInfo.lastName"
                                   :placeholder="$t('Last Name')"></el-input>
                       </el-form-item>
                     </el-col>
@@ -133,7 +141,7 @@
                     <el-col :lg="24">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Phone number')}}</div>
-                        <el-input v-model="formLabelAlign.type"
+                        <el-input v-model="bookInfo.phone"
                                   :placeholder="$t('Phone number')"></el-input>
                       </el-form-item>
                     </el-col>
@@ -142,7 +150,7 @@
                     <el-col :lg="24">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Email address')}}</div>
-                        <el-input v-model="formLabelAlign.type"
+                        <el-input v-model="bookInfo.email"
                                   :placeholder="$t('Email address')"></el-input>
                       </el-form-item>
                     </el-col>
@@ -151,7 +159,7 @@
                     <el-col :lg="24">
                       <el-form-item>
                         <div slot="label" class="account-form-label">{{$t('Address')}}</div>
-                        <el-input v-model="formLabelAlign.type"
+                        <el-input v-model="bookInfo.address"
                                   :placeholder="$t('Address')"></el-input>
                       </el-form-item>
                     </el-col>
@@ -213,7 +221,14 @@
           <div class="account-form">
             <el-row>
               <el-col :lg="24" class="account-form-right">
-                123
+                <p class="subscribe-email">
+                  <span class="email">
+                    {{subscribeEmail}}
+                  </span>
+                  <span class="edit">
+                    <i class="el-icon-third-pen"></i> Edit
+                  </span>
+                </p>
               </el-col>
             </el-row>
           </div>
@@ -273,6 +288,15 @@ export default {
         country: null,
         avatar: 'https://source.unsplash.com/120x120/?book,library',
       },
+      bookInfo: {
+        title: null,
+        firstName: 'John',
+        lastName: 'Smith',
+        phone: '',
+        email: '',
+        address: '',
+      },
+      subscribeEmail: 'Johnsmith@gmail.com',
       formLabelAlign: {
         name: '',
         region: '',
@@ -312,7 +336,7 @@ export default {
   .preferences-layout{
     margin-top: 50px;
   }
-.left-tab{
+  .left-tab{
   text-align: left;
   font-size: 14px;
   line-height: 18px;
@@ -428,11 +452,30 @@ export default {
     color: $white1;
     i{
       margin-right: 25px;
-      font-size: 20px;
+      font-size: 22px;
     }
     span{
       font-size: 12px;
-      line-height: 20px;
+      line-height: 22px;
+    }
+  }
+  .subscribe-email{
+    margin: 23px 0;
+    &>.email{
+      font-size: 14px;
+      font-weight: bold;
+      color: $black5;
+      min-width: 240px;
+      display: inline-block;
+    }
+    &>.edit{
+      color: $blue5;
+      i{
+        font-size: 13px;
+        font-weight: normal;
+      }
+      font-size: 12px;
+      font-weight: bold;
     }
   }
 </style>
