@@ -34,14 +34,6 @@ export default {
       hideMenu: true,
     }
   },
-  computed: {
-    isHomepage() {
-      return (this.$route.name === 'homepage')
-    },
-  },
-  created() {
-    console.log((this.$route.name === 'homepage'))
-  },
   methods: {
     toggleMenu() {
       this.hideMenu = !this.hideMenu
