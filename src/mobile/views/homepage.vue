@@ -1,5 +1,5 @@
 <template>
-  <div class="home-wrapper">
+  <div :class="['home-wrapper',hideMenu?'':'show-menu']">
     <div
       :class="['home-container',hideMenu?'':'show-menu']"
     >
@@ -156,7 +156,7 @@
         </div>
       </div>
 
-      <Footer v-show="!showSearchBox&&!showRoomPicker" />
+      <!-- <Footer v-show="!showSearchBox&&!showRoomPicker" /> -->
       <SearchBox
         v-show="showSearchBox"
         ref="searchbox"
@@ -167,18 +167,16 @@
         @hideSearchBox="hideSearchBox"
       />
     </div>
-    <!-- MENU -->
+    <!-- MENU
     <Menu
       :hidemenu="hideMenu"
       @maskClick="toggleMenu"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
 import Header from './includes/header.vue'
-import Menu from '../component/Menu/index.vue'
-import Footer from './includes/footer.vue'
 import SearchBox from './includes/searchBox.vue'
 import RoomPicker from './includes/roomPicker.vue'
 import WhereToStay from './includes/whereToStay.vue'
@@ -192,8 +190,6 @@ export default {
   name: 'Homepage',
   components: {
     Header,
-    Menu,
-    Footer,
     SearchBox,
     RoomPicker,
     WhereToStay,
@@ -286,17 +282,17 @@ export default {
 @import '../../common/style/mobile_main.scss';
 html,body,.home-wrapper{
   height:100%;
+  overflow: hidden;
 }
-.home-container.show-menu{
+
+.home-wrapper.show-menu{
   left:580px;
+  overflow: hidden;
 }
+
 .home-container{
-  width:100%;
-  height:100%;
-  position: absolute;
-  top:0;
-  left:0;
-  transition: all .2s;
+  overflow-y: scroll;
+  overflow-x: hidden;
   h1.title{
     @include font(40px, bold, #333, Montserrat);
     letter-spacing: -0.2px;
